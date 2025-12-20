@@ -57,6 +57,24 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        cyan: {
+          600: "#0891B2",
+        },
+        teal: {
+          900: "#134E4A",
+        },
+        warm: {
+          50: "#FAFAF9",
+          300: "#D6D3D1",
+          400: "#A8A29E",
+          600: "#57534E",
+          800: "#292524",
+        },
+      },
+      fontFamily: {
+        inter: ['Inter', '-apple-system', 'sans-serif'],
+        'inter-display': ['Inter Display', '-apple-system', 'sans-serif'],
+        quincy: ['Quincy CF', '-apple-system', 'sans-serif'],
       },
       borderRadius: {
         lg: "var(--radius)",
