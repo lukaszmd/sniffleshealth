@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import { Search, MapPin, ChevronDown, Mic, ChevronRight, Lock, ArrowDown, Stethoscope, FileSignature, Clock, X, Check, Smile } from "lucide-react";
 
 export default function Index() {
@@ -301,7 +302,7 @@ export default function Index() {
 
 function HealthCard({ title, description, image }: { title: string; description: string; image: string }) {
   return (
-    <div className="fade-in-card opacity-0 bg-[#FCFAF8] rounded-[30px] p-6 flex flex-col justify-center items-center gap-3 transition-all duration-500 hover:shadow-lg">
+    <Link to="/medical-profile" className="fade-in-card opacity-0 bg-[#FCFAF8] rounded-[30px] p-6 flex flex-col justify-center items-center gap-3 transition-all duration-500 hover:shadow-lg cursor-pointer">
       <div className="w-full flex flex-col justify-center items-start gap-1">
         <div className="w-full flex items-start justify-between gap-1">
           <h3 className="flex-1 text-[#292524] text-lg font-semibold" style={{ fontFamily: 'Inter Display, -apple-system, sans-serif' }}>
@@ -314,7 +315,7 @@ function HealthCard({ title, description, image }: { title: string; description:
         </p>
       </div>
       <img src={image} alt={title} className="w-full max-w-[195px] h-auto aspect-[39/34] object-contain" loading="lazy" />
-    </div>
+    </Link>
   );
 }
 
