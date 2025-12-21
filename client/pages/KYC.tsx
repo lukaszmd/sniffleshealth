@@ -9,10 +9,10 @@ export default function KYC() {
   );
 
   const handleContinue = () => {
-    // Navigate to next step after KYC upload
-    // In a real app, this would handle file upload first
-    console.log("Selected option:", selectedOption);
-    navigate("/consultation");
+    // Navigate to address details page after KYC
+    // In a real app, this would handle file upload first, then redirect to third-party KYC
+    // After third-party KYC completion, user would be redirected back to address details
+    navigate("/address-details");
   };
 
   return (
