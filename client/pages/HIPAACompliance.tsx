@@ -31,8 +31,8 @@ export default function HIPAACompliance() {
   }, []);
 
   const handleAccept = () => {
-    // Navigate to consultation or next step after accepting
-    navigate("/consultation");
+    // Navigate to KYC page after accepting HIPAA compliance
+    navigate("/kyc");
   };
 
   return (
@@ -165,9 +165,9 @@ export default function HIPAACompliance() {
                         <p className="mb-0">&nbsp;</p>
                         <p className="mb-0">&nbsp;</p>
                         <p className="mb-0">
-                          dignissim risus sit amet, viverra nulla. Proin maximus,
-                          nulla quis elementum mattis, sapien purus cursus
-                          purus, vitae tempus libero massa id nisl. Sed
+                          dignissim risus sit amet, viverra nulla. Proin
+                          maximus, nulla quis elementum mattis, sapien purus
+                          cursus purus, vitae tempus libero massa id nisl. Sed
                           pellentesque felis eu eros hendrerit pretium. Nulla
                           sit amet luctus felis, in pulvinar sapien.
                         </p>
@@ -184,13 +184,13 @@ export default function HIPAACompliance() {
                           Nulla fermentum felis lorem.
                         </p>
                         <p className="mb-0">
-                          Praesent scelerisque auctor felis, vitae ultrices ipsum
-                          rhoncus id. Aenean id metus lacus. Donec scelerisque
-                          rhoncus urna, et gravida mauris sagittis nec. Duis ac
-                          bibendum felis, non pharetra libero. Nunc volutpat sed
-                          eros commodo faucibus. Praesent venenatis iaculis
-                          velit, a venenatis sapien commodo sit amet. Sed
-                          pretium in purus non gravida. Quisque nec neque id
+                          Praesent scelerisque auctor felis, vitae ultrices
+                          ipsum rhoncus id. Aenean id metus lacus. Donec
+                          scelerisque rhoncus urna, et gravida mauris sagittis
+                          nec. Duis ac bibendum felis, non pharetra libero. Nunc
+                          volutpat sed eros commodo faucibus. Praesent venenatis
+                          iaculis velit, a venenatis sapien commodo sit amet.
+                          Sed pretium in purus non gravida. Quisque nec neque id
                           eros cursus aliquam et vel lacus. Ut blandit lorem vel
                           varius tincidunt. Maecenas volutpat hendrerit tellus
                           quis tempor. Sed pharetra, orci eget fringilla
@@ -208,13 +208,13 @@ export default function HIPAACompliance() {
                           Nulla libero elit, aliquet vel tempor id, suscipit sed
                           quam. Aliquam ut vestibulum dui. Sed fermentum
                           elementum velit eu varius. Curabitur fermentum
-                          tincidunt sagittis. Donec commodo tellus eget efficitur
-                          vehicula. Ut eu maximus quam. Aliquam quis mattis est.
-                          Curabitur ultrices ex vitae urna iaculis, sed
-                          sollicitudin diam venenatis. Pellentesque elementum,
-                          turpis a lacinia molestie, ante dolor vestibulum ante,
-                          et luctus dui ante at nulla. Vestibulum et semper
-                          turpis, vel posuere purus.
+                          tincidunt sagittis. Donec commodo tellus eget
+                          efficitur vehicula. Ut eu maximus quam. Aliquam quis
+                          mattis est. Curabitur ultrices ex vitae urna iaculis,
+                          sed sollicitudin diam venenatis. Pellentesque
+                          elementum, turpis a lacinia molestie, ante dolor
+                          vestibulum ante, et luctus dui ante at nulla.
+                          Vestibulum et semper turpis, vel posuere purus.
                         </p>
                       </div>
                     </div>
@@ -230,7 +230,8 @@ export default function HIPAACompliance() {
                               fontFamily: "Inter, -apple-system, sans-serif",
                             }}
                           >
-                            Please scroll to the end of the guidelines to continue
+                            Please scroll to the end of the guidelines to
+                            continue
                           </p>
                         </div>
                       </div>
@@ -291,4 +292,3 @@ export default function HIPAACompliance() {
     </div>
   );
 }
-
