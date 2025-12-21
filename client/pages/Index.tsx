@@ -302,7 +302,7 @@ export default function Index() {
 
 function HealthCard({ title, description, image }: { title: string; description: string; image: string }) {
   return (
-    <Link to="/medical-profile" className="fade-in-card opacity-0 bg-[#FCFAF8] rounded-[30px] p-6 flex flex-col justify-center items-center gap-3 transition-all duration-500 hover:shadow-lg cursor-pointer">
+    <Link to="/symptoms" className="fade-in-card opacity-0 bg-[#FCFAF8] rounded-[30px] p-6 flex flex-col justify-center items-center gap-3 transition-all duration-500 hover:shadow-lg cursor-pointer">
       <div className="w-full flex flex-col justify-center items-start gap-1">
         <div className="w-full flex items-start justify-between gap-1">
           <h3 className="flex-1 text-[#292524] text-lg font-semibold" style={{ fontFamily: 'Inter Display, -apple-system, sans-serif' }}>
