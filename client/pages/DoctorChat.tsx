@@ -1,11 +1,13 @@
 import { useState, useRef, useEffect } from "react";
 import { ArrowLeft, Lock, Plus, Mic, ArrowUp } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface Message {
   type: "ai" | "user";
   text: string;
   sender?: string;
+  linkText?: string;
+  linkUrl?: string;
 }
 
 export default function DoctorChat() {
@@ -59,6 +61,13 @@ export default function DoctorChat() {
       type: "ai",
       text: "Thank you for sharing this information. I recommend you review the summary on the right and let me know if anything is missing, or click 'Confirm & Continue' to proceed.",
       sender: "Dr. Evelyn Reed, MD",
+    },
+    {
+      type: "ai",
+      text: "Based on our consultation, I've prepared your prescription. You can view and download it here:",
+      sender: "Dr. Evelyn Reed, MD",
+      linkText: "View Your Prescription",
+      linkUrl: "/prescription",
     },
   ]);
 
@@ -231,6 +240,8 @@ export default function DoctorChat() {
                         <AIMessage
                           text={message.text}
                           sender={message.sender || "Sniffles Health Assitant"}
+                          linkText={message.linkText}
+                          linkUrl={message.linkUrl}
                         />
                       ) : (
                         <UserMessage text={message.text} />
@@ -410,7 +421,17 @@ export default function DoctorChat() {
   );
 }
 
-function AIMessage({ text, sender }: { text: string; sender: string }) {
+function AIMessage({
+  text,
+  sender,
+  linkText,
+  linkUrl,
+}: {
+  text: string;
+  sender: string;
+  linkText?: string;
+  linkUrl?: string;
+}) {
   // Different styling for "AI Assistant" vs "Sniffles Health Assitant"
   const isAIAssistant = sender === "AI Assistant";
   const bgColor = isAIAssistant ? "#F3F4F6" : "#ECF3F4";
@@ -463,7 +484,7 @@ function AIMessage({ text, sender }: { text: string; sender: string }) {
             paddingBottom: isAIAssistant ? "11.5px" : "20px",
           }}
         >
-          <p
+          <div
             className="text-base leading-6"
             style={{
               fontFamily: "Inter, -apple-system, sans-serif",
@@ -471,8 +492,19 @@ function AIMessage({ text, sender }: { text: string; sender: string }) {
               color: textColor,
             }}
           >
-            {text}
-          </p>
+            <p className="mb-2">{text}</p>
+            {linkText && linkUrl && (
+              <Link
+                to={linkUrl}
+                className="inline-block mt-2 px-4 py-2 bg-[#164E63] text-white rounded-lg hover:bg-[#164E63]/90 transition-colors font-medium text-sm"
+                style={{
+                  fontFamily: "Inter, -apple-system, sans-serif",
+                }}
+              >
+                {linkText}
+              </Link>
+            )}
+          </div>
         </div>
       </div>
     </div>
