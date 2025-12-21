@@ -1,5 +1,6 @@
 import { ArrowLeft, Lock, MessageSquare, Video, Info } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
+import { ROUTES, FONTS } from "@/constants";
 
 export default function Consultation() {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ export default function Consultation() {
           {/* Left Side - Back Button & Title */}
           <div className="flex items-center gap-3">
             <Link
-              to="/medical-profile"
+              to={ROUTES.MEDICAL_PROFILE}
               className="flex items-center justify-center w-10 h-10 rounded-full border border-[#D6D3D1] bg-[#FCFAF8] shadow-sm opacity-90 hover:opacity-100 transition-opacity"
             >
               <ArrowLeft className="w-6 h-6 text-[#1C1917]" />
@@ -157,7 +158,7 @@ export default function Consultation() {
 
                     {/* CTA Button */}
                     <button
-                      onClick={() => navigate("/select-consultation-type")}
+                      onClick={() => navigate(ROUTES.SELECT_CONSULTATION_TYPE)}
                       className="bg-[#0E3240] text-white px-6 py-3 rounded-[18px] font-semibold text-base hover:bg-[#0E3240]/90 transition-colors"
                       style={{
                         fontFamily: "Inter, -apple-system, sans-serif",

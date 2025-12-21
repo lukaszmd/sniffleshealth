@@ -1,78 +1,81 @@
 import { useState, useRef, useEffect } from "react";
 import { ArrowLeft, Lock, Plus, Mic, ArrowUp } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-
-interface Message {
-  type: "ai" | "user";
-  text: string;
-  sender?: string;
-  linkText?: string;
-  linkUrl?: string;
-}
+import type { Message } from "@shared/types";
+import { ROUTES, FONTS } from "@/constants";
+import { useChatStore, useConsultationStore } from "@/stores";
 
 export default function DoctorChat() {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      type: "ai",
-      text: "Hello, I'm Dr. Evelyn Reed. How can I assist you today?",
-      sender: "Dr. Evelyn Reed, MD",
-    },
-    {
-      type: "user",
-      text: "Hi doctor, I've been having a bad headache and some fatigue for the past two days.",
-    },
-    {
-      type: "ai",
-      text: "I'm sorry to hear that. Can you describe your headache—where is it located and how severe is the pain?",
-      sender: "Dr. Evelyn Reed, MD",
-    },
-    {
-      type: "user",
-      text: "It's mostly in my forehead, and the pain is moderate.",
-    },
-    {
-      type: "ai",
-      text: "Do you have any other symptoms, such as fever, cough, or congestion?",
-      sender: "Dr. Evelyn Reed, MD",
-    },
-    {
-      type: "user",
-      text: "I’ve had a slight fever and a little cough.",
-    },
-    {
-      type: "ai",
-      text: "Understood. Have you experienced any nausea, vision changes, or sensitivity to light?",
-      sender: "Dr. Evelyn Reed, MD",
-    },
-    {
-      type: "user",
-      text: "No, none of those.",
-    },
-    {
-      type: "ai",
-      text: "Do you have any chronic medical conditions or take any medications regularly?",
-      sender: "Dr. Evelyn Reed, MD",
-    },
-    {
-      type: "user",
-      text: "No chronic conditions and I’m not taking any medications.",
-    },
-    {
-      type: "ai",
-      text: "Thank you for sharing this information. I recommend you review the summary on the right and let me know if anything is missing, or click 'Confirm & Continue' to proceed.",
-      sender: "Dr. Evelyn Reed, MD",
-    },
-    {
-      type: "ai",
-      text: "Based on our consultation, I've prepared your prescription. You can view and download it here:",
-      sender: "Dr. Evelyn Reed, MD",
-      linkText: "View Your Prescription",
-      linkUrl: "/prescription",
-    },
-  ]);
-
+  const navigate = useNavigate();
+  const { messages, addMessage, setMessages } = useChatStore();
+  const { selectedSymptoms, aiAssessment } = useConsultationStore();
   const [inputValue, setInputValue] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Initialize messages if empty
+  useEffect(() => {
+    if (messages.length === 0) {
+      setMessages([
+        {
+          type: "ai",
+          text: "Hello, I'm Dr. Evelyn Reed. How can I assist you today?",
+          sender: "Dr. Evelyn Reed, MD",
+        },
+        {
+          type: "user",
+          text: "Hi doctor, I've been having a bad headache and some fatigue for the past two days.",
+        },
+        {
+          type: "ai",
+          text: "I'm sorry to hear that. Can you describe your headache—where is it located and how severe is the pain?",
+          sender: "Dr. Evelyn Reed, MD",
+        },
+        {
+          type: "user",
+          text: "It's mostly in my forehead, and the pain is moderate.",
+        },
+        {
+          type: "ai",
+          text: "Do you have any other symptoms, such as fever, cough, or congestion?",
+          sender: "Dr. Evelyn Reed, MD",
+        },
+        {
+          type: "user",
+          text: "I've had a slight fever and a little cough.",
+        },
+        {
+          type: "ai",
+          text: "Understood. Have you experienced any nausea, vision changes, or sensitivity to light?",
+          sender: "Dr. Evelyn Reed, MD",
+        },
+        {
+          type: "user",
+          text: "No, none of those.",
+        },
+        {
+          type: "ai",
+          text: "Do you have any chronic medical conditions or take any medications regularly?",
+          sender: "Dr. Evelyn Reed, MD",
+        },
+        {
+          type: "user",
+          text: "No chronic conditions and I'm not taking any medications.",
+        },
+        {
+          type: "ai",
+          text: "Thank you for sharing this information. I recommend you review the summary on the right and let me know if anything is missing, or click 'Confirm & Continue' to proceed.",
+          sender: "Dr. Evelyn Reed, MD",
+        },
+        {
+          type: "ai",
+          text: "Based on our consultation, I've prepared your prescription. You can view and download it here:",
+          sender: "Dr. Evelyn Reed, MD",
+          linkText: "View Your Prescription",
+          linkUrl: ROUTES.PRESCRIPTION,
+        },
+      ]);
+    }
+  }, [messages.length, setMessages]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -84,20 +87,31 @@ export default function DoctorChat() {
 
   const handleSend = () => {
     if (inputValue.trim()) {
-      setMessages([
-        ...messages,
-        {
-          type: "user",
-          text: inputValue,
-        },
-      ]);
+      addMessage({
+        type: "user",
+        text: inputValue,
+      });
       setInputValue("");
     }
   };
 
-  // Sample data - in a real app, this would come from state/API
-  const symptoms = ["Fever", "Persistent Cough", "Headache", "Fatigue"];
-  const aiAssessment =
+  // Get symptoms from store or use defaults
+  const symptoms =
+    selectedSymptoms.length > 0
+      ? selectedSymptoms.map((id) => {
+          // In a real app, you'd look up the symptom name by ID
+          const symptomNames: Record<string, string> = {
+            "4": "Headache",
+            "5": "Fatigue",
+            "9": "Heartburn",
+            "10": "Fatigue",
+          };
+          return symptomNames[id] || `Symptom ${id}`;
+        })
+      : ["Fever", "Persistent Cough", "Headache", "Fatigue"];
+
+  const currentAiAssessment =
+    aiAssessment ||
     "The AI has identified a potential viral infection based on the symptoms provided. Common causes could include influenza or a common cold. This is not a final diagnosis.";
 
   return (
@@ -108,7 +122,7 @@ export default function DoctorChat() {
           {/* Left Side - Back Button & Title */}
           <div className="flex items-center gap-3">
             <Link
-              to="/finding-doctor"
+              to={ROUTES.FINDING_DOCTOR}
               className="flex items-center justify-center w-10 h-10 rounded-full border border-[#D6D3D1] bg-[#FCFAF8] shadow-[0px_2px_4px_0px_rgba(0,0,0,0.03)] opacity-90 hover:opacity-100 transition-opacity"
             >
               <ArrowLeft className="w-6 h-6 text-[#1C1917]" />
@@ -116,13 +130,13 @@ export default function DoctorChat() {
             <div className="flex flex-col">
               <span
                 className="text-[#4B5563] text-sm leading-5"
-                style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+                style={{ fontFamily: FONTS.inter }}
               >
                 Step 3 of 4
               </span>
               <span
                 className="text-[#111827] text-base font-medium leading-6"
-                style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+                style={{ fontFamily: FONTS.inter }}
               >
                 Building your medical profile
               </span>
@@ -148,7 +162,7 @@ export default function DoctorChat() {
                 <span
                   className="text-[#0891B2] font-semibold text-xl leading-tight"
                   style={{
-                    fontFamily: "Inter Display, -apple-system, sans-serif",
+                    fontFamily: FONTS.interDisplay,
                   }}
                 >
                   Sniffles
@@ -156,7 +170,7 @@ export default function DoctorChat() {
                 <span
                   className="text-[#1F2937] font-medium text-base leading-tight"
                   style={{
-                    fontFamily: "Inter Display, -apple-system, sans-serif",
+                    fontFamily: FONTS.interDisplay,
                   }}
                 >
                   health
@@ -334,7 +348,7 @@ export default function DoctorChat() {
                       letterSpacing: "-0.312px",
                     }}
                   >
-                    {aiAssessment}
+                    {currentAiAssessment}
                   </p>
                 </div>
 
@@ -395,13 +409,13 @@ export default function DoctorChat() {
           <div className="flex items-center gap-3">
             <button
               className="px-3 py-2 text-[#78716C] font-semibold text-base hover:text-[#1C1917] transition-colors"
-              style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+              style={{ fontFamily: FONTS.inter }}
             >
               About Us
             </button>
             <button
               className="px-3 py-2 text-[#78716C] font-semibold text-base hover:text-[#1C1917] transition-colors"
-              style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+              style={{ fontFamily: FONTS.inter }}
             >
               Privacy Policy
             </button>
@@ -410,7 +424,7 @@ export default function DoctorChat() {
             <Lock className="w-6 h-6 text-[#78716C]" />
             <span
               className="text-[#78716C] font-semibold text-base"
-              style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+              style={{ fontFamily: FONTS.inter }}
             >
               HIPAA Compliant
             </span>

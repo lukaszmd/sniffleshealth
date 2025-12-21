@@ -6,6 +6,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ROUTES } from "@/constants";
 import Index from "./pages/Index";
 import Symptoms from "./pages/Symptoms";
 import MedicalProfile from "./pages/MedicalProfile";
@@ -31,26 +32,26 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/symptoms" element={<Symptoms />} />
-          <Route path="/medical-profile" element={<MedicalProfile />} />
-          <Route path="/summary" element={<SummaryConsultation />} />
-          <Route path="/consultation" element={<Consultation />} />
+          <Route path={ROUTES.HOME} element={<Index />} />
+          <Route path={ROUTES.SYMPTOMS} element={<Symptoms />} />
+          <Route path={ROUTES.MEDICAL_PROFILE} element={<MedicalProfile />} />
+          <Route path={ROUTES.SUMMARY} element={<SummaryConsultation />} />
+          <Route path={ROUTES.CONSULTATION} element={<Consultation />} />
           <Route
-            path="/select-consultation-type"
+            path={ROUTES.SELECT_CONSULTATION_TYPE}
             element={<SelectConsultationType />}
           />
           <Route
-            path="/payment-confirmation"
+            path={ROUTES.PAYMENT_CONFIRMATION}
             element={<PaymentConfirmation />}
           />
-          <Route path="/hipaa-compliance" element={<HIPAACompliance />} />
-          <Route path="/kyc" element={<KYC />} />
-          <Route path="/address-details" element={<AddressDetails />} />
-          <Route path="/finding-doctor" element={<FindingDoctor />} />
-          <Route path="/doctor-chat" element={<DoctorChat />} />
-          <Route path="/prescription" element={<Prescription />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path={ROUTES.HIPAA_COMPLIANCE} element={<HIPAACompliance />} />
+          <Route path={ROUTES.KYC} element={<KYC />} />
+          <Route path={ROUTES.ADDRESS_DETAILS} element={<AddressDetails />} />
+          <Route path={ROUTES.FINDING_DOCTOR} element={<FindingDoctor />} />
+          <Route path={ROUTES.DOCTOR_CHAT} element={<DoctorChat />} />
+          <Route path={ROUTES.PRESCRIPTION} element={<Prescription />} />
+          <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

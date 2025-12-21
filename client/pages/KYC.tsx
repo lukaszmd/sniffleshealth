@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Lock, Smile, Car, FileText, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { ROUTES, FONTS } from "@/constants";
+import { useUserStore } from "@/stores";
 
 export default function KYC() {
   const navigate = useNavigate();
@@ -12,7 +14,7 @@ export default function KYC() {
     // Navigate to address details page after KYC
     // In a real app, this would handle file upload first, then redirect to third-party KYC
     // After third-party KYC completion, user would be redirected back to address details
-    navigate("/address-details");
+    navigate(ROUTES.ADDRESS_DETAILS);
   };
 
   return (
@@ -78,7 +80,7 @@ export default function KYC() {
                 <h1
                   className="text-[44px] font-medium leading-[44px] tracking-[-2.2px] text-center text-[#1F2937]"
                   style={{
-                    fontFamily: "Inter Display, -apple-system, sans-serif",
+                    fontFamily: FONTS.interDisplay,
                   }}
                 >
                   Complete KYC
@@ -206,13 +208,13 @@ export default function KYC() {
           <div className="flex items-center gap-3">
             <button
               className="px-3 py-2 text-[#78716C] font-semibold text-base hover:text-[#1C1917] transition-colors"
-              style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+              style={{ fontFamily: FONTS.inter }}
             >
               About Us
             </button>
             <button
               className="px-3 py-2 text-[#78716C] font-semibold text-base hover:text-[#1C1917] transition-colors"
-              style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+              style={{ fontFamily: FONTS.inter }}
             >
               Privacy Policy
             </button>
@@ -221,7 +223,7 @@ export default function KYC() {
             <Lock className="w-6 h-6 text-[#78716C]" />
             <span
               className="text-[#78716C] font-semibold text-base"
-              style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+              style={{ fontFamily: FONTS.inter }}
             >
               HIPAA Compliant
             </span>

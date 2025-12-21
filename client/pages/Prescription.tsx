@@ -1,5 +1,6 @@
 import { ArrowLeft, Lock, Printer } from "lucide-react";
 import { Link } from "react-router-dom";
+import { ROUTES, FONTS } from "@/constants";
 
 export default function Prescription() {
   const symptoms = ["Fever", "Persistent Cough", "Headache", "Fatigue"];
@@ -67,7 +68,7 @@ export default function Prescription() {
               <div className="flex items-center mb-6">
                 <div className="flex items-center gap-3">
                   <Link
-                    to="/doctor-chat"
+                    to={ROUTES.DOCTOR_CHAT}
                     className="flex items-center justify-center w-10 h-10 rounded-full border border-[#D6D3D1] bg-[#FCFAF8] shadow-[0px_2px_4px_0px_rgba(0,0,0,0.03)] opacity-90 hover:opacity-100 transition-opacity"
                   >
                     <ArrowLeft className="w-6 h-6 text-[#1C1917]" />
@@ -169,17 +170,23 @@ export default function Prescription() {
                     >
                       <p className="mb-0">
                         <span className="font-bold">1. Amoxicillin 500mg</span>
-                        <span> - Take one capsule three times daily for 7 days</span>
+                        <span>
+                          {" "}
+                          - Take one capsule three times daily for 7 days
+                        </span>
                       </p>
                       <p className="mb-0">
                         <span className="font-bold">2. Ibuprofen 400mg -</span>
-                        <span> Take as needed for pain, up to 3 times daily</span>
+                        <span>
+                          {" "}
+                          Take as needed for pain, up to 3 times daily
+                        </span>
                       </p>
                       <p className="mb-0">3. Rest and increase fluid intake</p>
                       <p className="mb-0 text-sm">&nbsp;</p>
                       <p className="mb-0">
-                        Follow-up: Schedule a follow-up if symptoms persist after 7
-                        days.
+                        Follow-up: Schedule a follow-up if symptoms persist
+                        after 7 days.
                       </p>
                     </div>
                   </div>
@@ -222,7 +229,8 @@ export default function Prescription() {
                         <span
                           className="text-[#0891B2] font-semibold text-xl leading-tight"
                           style={{
-                            fontFamily: "Inter Display, -apple-system, sans-serif",
+                            fontFamily:
+                              "Inter Display, -apple-system, sans-serif",
                           }}
                         >
                           Sniffles
@@ -230,7 +238,8 @@ export default function Prescription() {
                         <span
                           className="text-[#1F2937] font-medium text-base leading-tight"
                           style={{
-                            fontFamily: "Inter Display, -apple-system, sans-serif",
+                            fontFamily:
+                              "Inter Display, -apple-system, sans-serif",
                           }}
                         >
                           health
@@ -301,4 +310,3 @@ export default function Prescription() {
     </div>
   );
 }
-

@@ -1,30 +1,46 @@
 import { useState, useEffect } from "react";
 import { ArrowLeft, Lock, Loader2, Plus, Mic, ArrowUp } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
+import { ROUTES, FONTS } from "@/constants";
+import { useConsultationStore } from "@/stores";
 
 export default function FindingDoctor() {
   const navigate = useNavigate();
-  const [additionalInfo, setAdditionalInfo] = useState("");
+  const { selectedSymptoms, aiAssessment, additionalInfo, setAdditionalInfo } =
+    useConsultationStore();
+  const [localAdditionalInfo, setLocalAdditionalInfo] = useState(additionalInfo);
   const [activeTab, setActiveTab] = useState<"ai" | "medical">("ai");
 
-  // Sample data - in a real app, this would come from state/API
-  const symptoms = ["Fever", "Persistent Cough", "Headache", "Fatigue"];
-  const aiAssessment =
+  // Get symptoms from store or use defaults
+  const symptoms = selectedSymptoms.length > 0
+    ? selectedSymptoms.map((id) => {
+        const symptomNames: Record<string, string> = {
+          "4": "Headache",
+          "5": "Fatigue",
+          "9": "Heartburn",
+          "10": "Fatigue",
+        };
+        return symptomNames[id] || `Symptom ${id}`;
+      })
+    : ["Fever", "Persistent Cough", "Headache", "Fatigue"];
+
+  const currentAiAssessment =
+    aiAssessment ||
     "The AI has identified a potential viral infection based on the symptoms provided. Common causes could include influenza or a common cold. This is not a final diagnosis.";
 
   // Simulate finding doctor after a delay
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigate("/doctor-chat");
+      navigate(ROUTES.DOCTOR_CHAT);
     }, 3000); // Navigate after 3 seconds
 
     return () => clearTimeout(timer);
   }, [navigate]);
 
   const handleSubmit = () => {
-    // Handle submission of additional information
-    console.log("Additional info:", additionalInfo);
-    setAdditionalInfo("");
+    // Save additional info to store
+    setAdditionalInfo(localAdditionalInfo);
+    setLocalAdditionalInfo("");
   };
 
   return (
@@ -35,7 +51,7 @@ export default function FindingDoctor() {
           {/* Left Side - Back Button & Title */}
           <div className="flex items-center gap-3">
             <Link
-              to="/address-details"
+              to={ROUTES.ADDRESS_DETAILS}
               className="flex items-center justify-center w-10 h-10 rounded-full border border-[#D6D3D1] bg-[#FCFAF8] shadow-sm opacity-90 hover:opacity-100 transition-opacity"
             >
               <ArrowLeft className="w-6 h-6 text-[#1C1917]" />
@@ -43,13 +59,13 @@ export default function FindingDoctor() {
             <div className="flex flex-col">
               <span
                 className="text-[#4B5563] text-sm"
-                style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+                style={{ fontFamily: FONTS.inter }}
               >
                 Step 3 of 4
               </span>
               <span
                 className="text-[#111827] text-base font-medium"
-                style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+                style={{ fontFamily: FONTS.inter }}
               >
                 Building your medical profile
               </span>
@@ -75,7 +91,7 @@ export default function FindingDoctor() {
                 <span
                   className="text-[#0891B2] font-semibold text-xl leading-tight"
                   style={{
-                    fontFamily: "Inter Display, -apple-system, sans-serif",
+                    fontFamily: FONTS.interDisplay,
                   }}
                 >
                   Sniffles
@@ -83,7 +99,7 @@ export default function FindingDoctor() {
                 <span
                   className="text-[#1F2937] font-medium text-base leading-tight"
                   style={{
-                    fontFamily: "Inter Display, -apple-system, sans-serif",
+                    fontFamily: FONTS.interDisplay,
                   }}
                 >
                   health
@@ -121,7 +137,7 @@ export default function FindingDoctor() {
                   <h1
                     className="text-[44px] font-medium leading-[44px] tracking-[-2.2px] text-center text-[#1F2937]"
                     style={{
-                      fontFamily: "Inter Display, -apple-system, sans-serif",
+                      fontFamily: FONTS.interDisplay,
                     }}
                   >
                     Finding your doctor
@@ -146,8 +162,8 @@ export default function FindingDoctor() {
                     <input
                       type="text"
                       placeholder="Add more information, questions while we find you a doctor"
-                      value={additionalInfo}
-                      onChange={(e) => setAdditionalInfo(e.target.value)}
+                      value={localAdditionalInfo}
+                      onChange={(e) => setLocalAdditionalInfo(e.target.value)}
                       className="flex-1 bg-transparent border-none outline-none text-[#374151] text-sm placeholder:text-[#374151]"
                       style={{
                         fontFamily: "Inter, -apple-system, sans-serif",
@@ -214,7 +230,7 @@ export default function FindingDoctor() {
                       letterSpacing: "-0.312px",
                     }}
                   >
-                    {aiAssessment}
+                    {currentAiAssessment}
                   </p>
                 </div>
 
@@ -289,13 +305,13 @@ export default function FindingDoctor() {
           <div className="flex items-center gap-3">
             <button
               className="px-3 py-2 text-[#78716C] font-semibold text-base hover:text-[#1C1917] transition-colors"
-              style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+              style={{ fontFamily: FONTS.inter }}
             >
               About Us
             </button>
             <button
               className="px-3 py-2 text-[#78716C] font-semibold text-base hover:text-[#1C1917] transition-colors"
-              style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+              style={{ fontFamily: FONTS.inter }}
             >
               Privacy Policy
             </button>
@@ -304,7 +320,7 @@ export default function FindingDoctor() {
             <Lock className="w-6 h-6 text-[#78716C]" />
             <span
               className="text-[#78716C] font-semibold text-base"
-              style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+              style={{ fontFamily: FONTS.inter }}
             >
               HIPAA Compliant
             </span>

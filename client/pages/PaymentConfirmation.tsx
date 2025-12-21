@@ -1,5 +1,6 @@
 import { Lock, Check, Download } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { ROUTES, FONTS } from "@/constants";
 
 export default function PaymentConfirmation() {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ export default function PaymentConfirmation() {
 
   const handleContinue = () => {
     // Navigate to HIPAA compliance page
-    navigate("/hipaa-compliance");
+    navigate(ROUTES.HIPAA_COMPLIANCE);
   };
 
   return (

@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { ArrowLeft, Lock } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
+import { ROUTES, FONTS } from "@/constants";
 
 export default function SummaryConsultation() {
   const navigate = useNavigate();
@@ -8,7 +9,7 @@ export default function SummaryConsultation() {
   // Auto-transition to consultation page after a brief moment
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigate("/consultation");
+      navigate(ROUTES.CONSULTATION);
     }, 1500); // 1.5 second delay
 
     return () => clearTimeout(timer);
@@ -22,7 +23,7 @@ export default function SummaryConsultation() {
           {/* Left Side - Back Button & Title */}
           <div className="flex items-center gap-3">
             <Link
-              to="/medical-profile"
+              to={ROUTES.MEDICAL_PROFILE}
               className="flex items-center justify-center w-10 h-10 rounded-full border border-[#D6D3D1] bg-[#FCFAF8] shadow-sm opacity-90 hover:opacity-100 transition-opacity"
             >
               <ArrowLeft className="w-6 h-6 text-[#1C1917]" />
@@ -30,13 +31,13 @@ export default function SummaryConsultation() {
             <div className="flex flex-col">
               <span
                 className="text-[#4B5563] text-sm"
-                style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+                style={{ fontFamily: FONTS.inter }}
               >
                 Step 3 of 4
               </span>
               <span
                 className="text-[#111827] text-base font-medium"
-                style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+                style={{ fontFamily: FONTS.inter }}
               >
                 Building your medical profile
               </span>
@@ -62,7 +63,7 @@ export default function SummaryConsultation() {
                 <span
                   className="text-[#0891B2] font-semibold text-xl leading-tight"
                   style={{
-                    fontFamily: "Inter Display, -apple-system, sans-serif",
+                    fontFamily: FONTS.interDisplay,
                   }}
                 >
                   Sniffles
@@ -70,7 +71,7 @@ export default function SummaryConsultation() {
                 <span
                   className="text-[#1F2937] font-medium text-base leading-tight"
                   style={{
-                    fontFamily: "Inter Display, -apple-system, sans-serif",
+                    fontFamily: FONTS.interDisplay,
                   }}
                 >
                   health
@@ -92,7 +93,7 @@ export default function SummaryConsultation() {
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#0891B2] mx-auto mb-4"></div>
           <p
             className="text-[#4B5563] text-base"
-            style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+            style={{ fontFamily: FONTS.inter }}
           >
             Preparing your summary...
           </p>
@@ -105,13 +106,13 @@ export default function SummaryConsultation() {
           <div className="flex items-center gap-3">
             <button
               className="px-3 py-2 text-[#78716C] font-semibold text-base hover:text-[#1C1917] transition-colors"
-              style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+              style={{ fontFamily: FONTS.inter }}
             >
               About Us
             </button>
             <button
               className="px-3 py-2 text-[#78716C] font-semibold text-base hover:text-[#1C1917] transition-colors"
-              style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+              style={{ fontFamily: FONTS.inter }}
             >
               Privacy Policy
             </button>
@@ -120,7 +121,7 @@ export default function SummaryConsultation() {
             <Lock className="w-6 h-6 text-[#78716C]" />
             <span
               className="text-[#78716C] font-semibold text-base"
-              style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+              style={{ fontFamily: FONTS.inter }}
             >
               HIPAA Compliant
             </span>

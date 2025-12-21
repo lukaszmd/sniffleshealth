@@ -1,62 +1,74 @@
 import { useState, useEffect, useRef } from "react";
 import { ArrowLeft, Lock, Mic, ArrowUp, Plus, X, Info } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-
-interface Message {
-  type: "ai" | "user";
-  text: string;
-  timestamp: Date;
-}
-
-interface MedicalData {
-  age: string;
-  sex: string;
-  weight: string;
-  height: string;
-  allergies: string[];
-  chronicConditions: string[];
-  surgicalHistory: string[];
-  socialHistory: { type: string; level: string }[];
-  familyHistory: string[];
-}
+import type { Message, MedicalData } from "@shared/types";
+import { ROUTES, FONTS } from "@/constants";
+import { useChatStore, useConsultationStore } from "@/stores";
 
 export default function MedicalProfile() {
   const navigate = useNavigate();
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      type: "ai",
-      text: "Hello! I'm your AI assistant. To get started, I need to gather some basic medical information. All your data is kept private and secure. First, what is your age and sex assigned at birth?",
-      timestamp: new Date(),
-    },
-    {
-      type: "user",
-      text: "23 years old",
-      timestamp: new Date(),
-    },
-    {
-      type: "ai",
-      text: "Thank you. What is your approximate height and weight?",
-      timestamp: new Date(),
-    },
-    {
-      type: "user",
-      text: "180, 6'3",
-      timestamp: new Date(),
-    },
-    {
-      type: "ai",
-      text: "Do you have any known allergies to medications?",
-      timestamp: new Date(),
-    },
-    {
-      type: "user",
-      text: "Not that I am aware of",
-      timestamp: new Date(),
-    },
-  ]);
-
+  const { messages, addMessage, setMessages } = useChatStore();
+  const { medicalData, setMedicalData } = useConsultationStore();
   const [inputValue, setInputValue] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Initialize messages if empty
+  useEffect(() => {
+    if (messages.length === 0) {
+      setMessages([
+        {
+          type: "ai",
+          text: "Hello! I'm your AI assistant. To get started, I need to gather some basic medical information. All your data is kept private and secure. First, what is your age and sex assigned at birth?",
+          timestamp: new Date(),
+        },
+        {
+          type: "user",
+          text: "23 years old",
+          timestamp: new Date(),
+        },
+        {
+          type: "ai",
+          text: "Thank you. What is your approximate height and weight?",
+          timestamp: new Date(),
+        },
+        {
+          type: "user",
+          text: "180, 6'3",
+          timestamp: new Date(),
+        },
+        {
+          type: "ai",
+          text: "Do you have any known allergies to medications?",
+          timestamp: new Date(),
+        },
+        {
+          type: "user",
+          text: "Not that I am aware of",
+          timestamp: new Date(),
+        },
+      ]);
+    }
+  }, [messages.length, setMessages]);
+
+  // Initialize medical data if empty
+  useEffect(() => {
+    if (!medicalData) {
+      setMedicalData({
+        age: "23",
+        sex: "M",
+        weight: "190 lbs",
+        height: "6'1\"",
+        allergies: ["None"],
+        chronicConditions: ["Type II Diabetes, 4 Years", "Blood Pressure"],
+        surgicalHistory: ["Type II Diabetes, 4 Years", "Blood Pressure"],
+        socialHistory: [
+          { type: "Smoking", level: "Mild Use" },
+          { type: "Alcohol", level: "Heavy Use" },
+        ],
+        familyHistory: ["Heart Disease"],
+      });
+    }
+  }, [medicalData, setMedicalData]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -68,19 +80,16 @@ export default function MedicalProfile() {
 
   const handleSend = () => {
     if (inputValue.trim()) {
-      setMessages([
-        ...messages,
-        {
-          type: "user" as const,
-          text: inputValue,
-          timestamp: new Date(),
-        },
-      ]);
+      addMessage({
+        type: "user",
+        text: inputValue,
+        timestamp: new Date(),
+      });
       setInputValue("");
     }
   };
 
-  const medicalData: MedicalData = {
+  const currentMedicalData = medicalData || {
     age: "23",
     sex: "M",
     weight: "190 lbs",
@@ -103,7 +112,7 @@ export default function MedicalProfile() {
           {/* Left Side - Back Button & Title */}
           <div className="flex items-center gap-3">
             <Link
-              to="/"
+              to={ROUTES.HOME}
               className="flex items-center justify-center w-10 h-10 rounded-full border border-[#D6D3D1] bg-[#FCFAF8] shadow-sm opacity-90 hover:opacity-100 transition-opacity"
             >
               <ArrowLeft className="w-6 h-6 text-[#1C1917]" />
@@ -111,13 +120,13 @@ export default function MedicalProfile() {
             <div className="flex flex-col">
               <span
                 className="text-[#4B5563] text-sm"
-                style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+                style={{ fontFamily: FONTS.inter }}
               >
                 Step 3 of 4
               </span>
               <span
                 className="text-[#111827] text-base font-medium"
-                style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+                style={{ fontFamily: FONTS.inter }}
               >
                 Building your medical profile
               </span>
@@ -143,7 +152,7 @@ export default function MedicalProfile() {
                 <span
                   className="text-[#0891B2] font-semibold text-xl leading-tight"
                   style={{
-                    fontFamily: "Inter Display, -apple-system, sans-serif",
+                    fontFamily: FONTS.interDisplay,
                   }}
                 >
                   Sniffles
@@ -151,7 +160,7 @@ export default function MedicalProfile() {
                 <span
                   className="text-[#1F2937] font-medium text-base leading-tight"
                   style={{
-                    fontFamily: "Inter Display, -apple-system, sans-serif",
+                    fontFamily: FONTS.interDisplay,
                   }}
                 >
                   health
@@ -203,7 +212,7 @@ export default function MedicalProfile() {
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyPress={(e) => e.key === "Enter" && handleSend()}
                     className="flex-1 bg-transparent border-none outline-none text-[#374151] text-sm"
-                    style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+                    style={{ fontFamily: FONTS.inter }}
                   />
                   <button className="p-2">
                     <Mic className="w-5 h-5 text-[#164E63]" />
@@ -221,10 +230,10 @@ export default function MedicalProfile() {
             {/* Continue Button Section */}
             <div className="bg-white flex flex-col gap-5 items-center justify-center px-0 py-10 shadow-[0px_-100px_111px_0px_rgba(255,255,255,0.4)]">
               <button
-                onClick={() => navigate("/summary")}
+                onClick={() => navigate(ROUTES.SUMMARY)}
                 className="bg-[#0E3240] text-white px-6 py-3 rounded-[18px] font-semibold text-base hover:bg-[#0E3240]/90 transition-colors"
                 style={{
-                  fontFamily: "Inter, -apple-system, sans-serif",
+                  fontFamily: FONTS.inter,
                   lineHeight: "24px",
                 }}
               >
@@ -240,7 +249,7 @@ export default function MedicalProfile() {
                 }}
                 className="text-[#164E63] text-lg font-medium hover:text-[#164E63]/80 transition-colors"
                 style={{
-                  fontFamily: "Inter, -apple-system, sans-serif",
+                  fontFamily: FONTS.inter,
                   lineHeight: "24px",
                   letterSpacing: "-0.3125px",
                 }}
@@ -262,13 +271,13 @@ export default function MedicalProfile() {
               <div className="flex flex-col">
                 <span
                   className="text-[#6A7282] text-xs font-medium"
-                  style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+                  style={{ fontFamily: FONTS.inter }}
                 >
                   Consultation For
                 </span>
                 <span
                   className="text-[#101828] text-base font-medium"
-                  style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+                  style={{ fontFamily: FONTS.inter }}
                 >
                   John Doe
                 </span>
@@ -280,13 +289,13 @@ export default function MedicalProfile() {
               <Info className="w-6 h-6 text-[#4B5563]" />
               <h3
                 className="text-[#101828] text-base font-medium"
-                style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+                style={{ fontFamily: FONTS.inter }}
               >
                 Building your medical profile
               </h3>
               <p
                 className="text-[#1E2939] text-sm"
-                style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+                style={{ fontFamily: FONTS.inter }}
               >
                 This information will be saved and reviewed by a healthcare
                 professional during consultation
@@ -297,15 +306,15 @@ export default function MedicalProfile() {
             <div className="flex flex-col gap-3">
               <h3
                 className="text-[#101828] text-base font-medium"
-                style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+                style={{ fontFamily: FONTS.inter }}
               >
                 Personal Details
               </h3>
               <div className="grid grid-cols-2 gap-2">
-                <DataField label="Age" value={medicalData.age} />
-                <DataField label="Weight" value={medicalData.weight} />
-                <DataField label="Sex" value={medicalData.sex} />
-                <DataField label="Height" value={medicalData.height} />
+                <DataField label="Age" value={currentMedicalData.age} />
+                <DataField label="Weight" value={currentMedicalData.weight} />
+                <DataField label="Sex" value={currentMedicalData.sex} />
+                <DataField label="Height" value={currentMedicalData.height} />
               </div>
             </div>
 
@@ -315,13 +324,13 @@ export default function MedicalProfile() {
             <div className="flex flex-col gap-2">
               <h3
                 className="text-[#101828] text-base font-medium"
-                style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+                style={{ fontFamily: FONTS.inter }}
               >
                 Allergies
               </h3>
               <p
                 className="text-[#1E2939] text-sm"
-                style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+                style={{ fontFamily: FONTS.inter }}
               >
                 None
               </p>
@@ -333,12 +342,12 @@ export default function MedicalProfile() {
             <div className="flex flex-col gap-2">
               <h3
                 className="text-[#101828] text-base font-medium"
-                style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+                style={{ fontFamily: FONTS.inter }}
               >
                 Chronic Conditions
               </h3>
               <div className="flex flex-col gap-2">
-                {medicalData.chronicConditions.map((condition, idx) => (
+                {currentMedicalData.chronicConditions.map((condition, idx) => (
                   <Tag key={idx} text={condition} />
                 ))}
               </div>
@@ -350,12 +359,12 @@ export default function MedicalProfile() {
             <div className="flex flex-col gap-2">
               <h3
                 className="text-[#101828] text-base font-medium"
-                style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+                style={{ fontFamily: FONTS.inter }}
               >
                 Past Surgical History
               </h3>
               <div className="flex flex-col gap-2">
-                {medicalData.surgicalHistory.map((surgery, idx) => (
+                {currentMedicalData.surgicalHistory.map((surgery, idx) => (
                   <Tag key={idx} text={surgery} />
                 ))}
               </div>
@@ -368,20 +377,20 @@ export default function MedicalProfile() {
               <div className="flex flex-col gap-2">
                 <h3
                   className="text-[#101828] text-base font-medium"
-                  style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+                  style={{ fontFamily: FONTS.inter }}
                 >
                   Social History
                 </h3>
                 <p
                   className="text-[#78716C] text-sm"
-                  style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+                  style={{ fontFamily: FONTS.inter }}
                 >
                   Including smoking, alcohol and illicit drug use (like cocaine,
                   PCP, methamphetamine, marijuana)
                 </p>
               </div>
               <div className="flex flex-col gap-2">
-                {medicalData.socialHistory.map((item, idx) => (
+                {currentMedicalData.socialHistory.map((item, idx) => (
                   <DoubleTag key={idx} label={item.type} value={item.level} />
                 ))}
               </div>
@@ -394,20 +403,20 @@ export default function MedicalProfile() {
               <div className="flex flex-col gap-2">
                 <h3
                   className="text-[#101828] text-base font-medium"
-                  style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+                  style={{ fontFamily: FONTS.inter }}
                 >
                   Family History
                 </h3>
                 <p
                   className="text-[#78716C] text-sm"
-                  style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+                  style={{ fontFamily: FONTS.inter }}
                 >
                   Problems that run in a family like heart disease or other
                   genetic issues
                 </p>
               </div>
               <div className="flex flex-col gap-2">
-                {medicalData.familyHistory.map((item, idx) => (
+                {currentMedicalData.familyHistory.map((item, idx) => (
                   <Tag key={idx} text={item} />
                 ))}
               </div>
@@ -422,13 +431,13 @@ export default function MedicalProfile() {
           <div className="flex items-center gap-3">
             <button
               className="px-3 py-2 text-[#78716C] font-semibold text-base hover:text-[#1C1917] transition-colors"
-              style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+              style={{ fontFamily: FONTS.inter }}
             >
               About Us
             </button>
             <button
               className="px-3 py-2 text-[#78716C] font-semibold text-base hover:text-[#1C1917] transition-colors"
-              style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+              style={{ fontFamily: FONTS.inter }}
             >
               Privacy Policy
             </button>
@@ -437,7 +446,7 @@ export default function MedicalProfile() {
             <Lock className="w-6 h-6 text-[#78716C]" />
             <span
               className="text-[#78716C] font-semibold text-base"
-              style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+              style={{ fontFamily: FONTS.inter }}
             >
               HIPAA Compliant
             </span>
@@ -525,14 +534,14 @@ function DataField({ label, value }: { label: string; value: string }) {
     <div className="col-span-1">
       <span
         className="text-[#4A5565] text-sm block mb-1"
-        style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+        style={{ fontFamily: FONTS.inter }}
       >
         {label}
       </span>
       <div className="bg-[#FAFAF9] rounded-lg px-2 py-1">
         <span
           className="text-[#101828] text-base"
-          style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+          style={{ fontFamily: FONTS.inter }}
         >
           {value}
         </span>
@@ -546,7 +555,7 @@ function Tag({ text }: { text: string }) {
     <div className="flex items-center justify-between gap-1 bg-[#F3F4F6] rounded-lg px-3 py-1">
       <span
         className="text-[#1E2939] text-sm"
-        style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+        style={{ fontFamily: FONTS.inter }}
       >
         {text}
       </span>
@@ -561,13 +570,13 @@ function DoubleTag({ label, value }: { label: string; value: string }) {
       <div className="flex items-center gap-2">
         <span
           className="text-[#1E2939] text-sm font-medium"
-          style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+          style={{ fontFamily: FONTS.inter }}
         >
           {label}
         </span>
         <span
           className="text-[#1E2939] text-sm"
-          style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+          style={{ fontFamily: FONTS.inter }}
         >
           {value}
         </span>

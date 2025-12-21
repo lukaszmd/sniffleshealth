@@ -1,15 +1,17 @@
 import { useState } from "react";
 import { ArrowLeft, Lock, MessageSquare, Video, Mic } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
+import type { ConsultationType } from "@shared/types";
+import { ROUTES, FONTS } from "@/constants";
 
 export default function SelectConsultationType() {
   const navigate = useNavigate();
-  const [selectedType, setSelectedType] = useState<"text" | "video">("video");
+  const [selectedType, setSelectedType] = useState<ConsultationType>("video");
 
   const handleContinue = () => {
     // Navigate to payment confirmation page
     // In a real app, this would process payment first
-    navigate("/payment-confirmation");
+    navigate(ROUTES.PAYMENT_CONFIRMATION);
   };
 
   return (
@@ -20,7 +22,7 @@ export default function SelectConsultationType() {
           {/* Left Side - Back Button & Title */}
           <div className="flex items-center gap-3">
             <Link
-              to="/consultation"
+              to={ROUTES.CONSULTATION}
               className="flex items-center justify-center w-10 h-10 rounded-full border border-[#D6D3D1] bg-[#FCFAF8] shadow-sm opacity-90 hover:opacity-100 transition-opacity"
             >
               <ArrowLeft className="w-6 h-6 text-[#1C1917]" />
@@ -28,13 +30,13 @@ export default function SelectConsultationType() {
             <div className="flex flex-col">
               <span
                 className="text-[#4B5563] text-sm"
-                style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+                style={{ fontFamily: FONTS.inter }}
               >
                 Step 3 of 4
               </span>
               <span
                 className="text-[#111827] text-base font-medium"
-                style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+                style={{ fontFamily: FONTS.inter }}
               >
                 Building your medical profile
               </span>
@@ -60,7 +62,7 @@ export default function SelectConsultationType() {
                 <span
                   className="text-[#0891B2] font-semibold text-xl leading-tight"
                   style={{
-                    fontFamily: "Inter Display, -apple-system, sans-serif",
+                    fontFamily: FONTS.interDisplay,
                   }}
                 >
                   Sniffles
@@ -68,7 +70,7 @@ export default function SelectConsultationType() {
                 <span
                   className="text-[#1F2937] font-medium text-base leading-tight"
                   style={{
-                    fontFamily: "Inter Display, -apple-system, sans-serif",
+                    fontFamily: FONTS.interDisplay,
                   }}
                 >
                   health
@@ -111,7 +113,7 @@ export default function SelectConsultationType() {
                   <h1
                     className="text-[44px] font-medium leading-[44px] tracking-[-2.2px] text-center text-[#1F2937]"
                     style={{
-                      fontFamily: "Inter Display, -apple-system, sans-serif",
+                      fontFamily: FONTS.interDisplay,
                     }}
                   >
                     Select your consultation type
@@ -148,7 +150,7 @@ export default function SelectConsultationType() {
                               : "text-[#1F2937]"
                           }`}
                           style={{
-                            fontFamily: "Inter Display, -apple-system, sans-serif",
+                            fontFamily: FONTS.interDisplay,
                           }}
                         >
                           $25
@@ -200,7 +202,7 @@ export default function SelectConsultationType() {
                               : "text-[#1F2937]"
                           }`}
                           style={{
-                            fontFamily: "Inter Display, -apple-system, sans-serif",
+                            fontFamily: FONTS.interDisplay,
                           }}
                         >
                           $40
@@ -265,13 +267,13 @@ export default function SelectConsultationType() {
           <div className="flex items-center gap-3">
             <button
               className="px-3 py-2 text-[#78716C] font-semibold text-base hover:text-[#1C1917] transition-colors"
-              style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+              style={{ fontFamily: FONTS.inter }}
             >
               About Us
             </button>
             <button
               className="px-3 py-2 text-[#78716C] font-semibold text-base hover:text-[#1C1917] transition-colors"
-              style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+              style={{ fontFamily: FONTS.inter }}
             >
               Privacy Policy
             </button>
@@ -280,7 +282,7 @@ export default function SelectConsultationType() {
             <Lock className="w-6 h-6 text-[#78716C]" />
             <span
               className="text-[#78716C] font-semibold text-base"
-              style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+              style={{ fontFamily: FONTS.inter }}
             >
               HIPAA Compliant
             </span>
@@ -290,4 +292,3 @@ export default function SelectConsultationType() {
     </div>
   );
 }
-

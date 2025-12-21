@@ -1,27 +1,30 @@
 import { useState } from "react";
 import { Lock, MapPin, Mail, Phone, ChevronDown } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import type { AddressData } from "@shared/types";
+import { ROUTES, FONTS } from "@/constants";
+import { useUserStore } from "@/stores";
 
 export default function AddressDetails() {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    email: "johndoe@gmail.com",
-    phone: "+021 7348-2839",
-    addressLine1: "",
-    addressLine2: "",
-    pincode: "",
-    city: "New York",
+  const { profile, setAddressData } = useUserStore();
+  const [formData, setFormData] = useState<AddressData>({
+    email: profile?.addressData?.email || "johndoe@gmail.com",
+    phone: profile?.addressData?.phone || "+021 7348-2839",
+    addressLine1: profile?.addressData?.addressLine1 || "",
+    addressLine2: profile?.addressData?.addressLine2 || "",
+    pincode: profile?.addressData?.pincode || "",
+    city: profile?.addressData?.city || "New York",
   });
 
-  const handleInputChange = (field: string, value: string) => {
+  const handleInputChange = (field: keyof AddressData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   const handleContinue = () => {
-    // Navigate to finding doctor page after address details
-    // In a real app, this would validate and save the data
-    console.log("Form data:", formData);
-    navigate("/finding-doctor");
+    // Save address data to store
+    setAddressData(formData);
+    navigate(ROUTES.FINDING_DOCTOR);
   };
 
   return (
@@ -87,7 +90,7 @@ export default function AddressDetails() {
                 <h1
                   className="text-[44px] font-medium leading-[44px] tracking-[-2.2px] text-center text-[#1F2937]"
                   style={{
-                    fontFamily: "Inter Display, -apple-system, sans-serif",
+                    fontFamily: FONTS.interDisplay,
                   }}
                 >
                   Address and Details
@@ -236,13 +239,13 @@ export default function AddressDetails() {
           <div className="flex items-center gap-3">
             <button
               className="px-3 py-2 text-[#78716C] font-semibold text-base hover:text-[#1C1917] transition-colors"
-              style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+              style={{ fontFamily: FONTS.inter }}
             >
               About Us
             </button>
             <button
               className="px-3 py-2 text-[#78716C] font-semibold text-base hover:text-[#1C1917] transition-colors"
-              style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+              style={{ fontFamily: FONTS.inter }}
             >
               Privacy Policy
             </button>
@@ -251,7 +254,7 @@ export default function AddressDetails() {
             <Lock className="w-6 h-6 text-[#78716C]" />
             <span
               className="text-[#78716C] font-semibold text-base"
-              style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+              style={{ fontFamily: FONTS.inter }}
             >
               HIPAA Compliant
             </span>

@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import { Lock, ChevronDown } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { ROUTES, FONTS } from "@/constants";
+import { useUserStore } from "@/stores";
 
 export default function HIPAACompliance() {
   const navigate = useNavigate();
@@ -32,7 +34,7 @@ export default function HIPAACompliance() {
 
   const handleAccept = () => {
     // Navigate to KYC page after accepting HIPAA compliance
-    navigate("/kyc");
+    navigate(ROUTES.KYC);
   };
 
   return (
@@ -98,7 +100,7 @@ export default function HIPAACompliance() {
                 <h1
                   className="text-[44px] font-medium leading-[44px] tracking-[-2.2px] text-center text-[#1F2937]"
                   style={{
-                    fontFamily: "Inter Display, -apple-system, sans-serif",
+                    fontFamily: FONTS.interDisplay,
                   }}
                 >
                   HIPAA Compliance
@@ -267,13 +269,13 @@ export default function HIPAACompliance() {
           <div className="flex items-center gap-3">
             <button
               className="px-3 py-2 text-[#78716C] font-semibold text-base hover:text-[#1C1917] transition-colors"
-              style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+              style={{ fontFamily: FONTS.inter }}
             >
               About Us
             </button>
             <button
               className="px-3 py-2 text-[#78716C] font-semibold text-base hover:text-[#1C1917] transition-colors"
-              style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+              style={{ fontFamily: FONTS.inter }}
             >
               Privacy Policy
             </button>
@@ -282,7 +284,7 @@ export default function HIPAACompliance() {
             <Lock className="w-6 h-6 text-[#78716C]" />
             <span
               className="text-[#78716C] font-semibold text-base"
-              style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+              style={{ fontFamily: FONTS.inter }}
             >
               HIPAA Compliant
             </span>

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { ROUTES, FONTS } from "@/constants";
 import {
   Home,
   MessageSquare,
@@ -59,7 +60,7 @@ export default function Dashboard() {
           {/* Navigation */}
           <div className="flex flex-col gap-2">
             <Link
-              to="/dashboard"
+              to={ROUTES.DASHBOARD}
               className="bg-[#F5F5F4] flex gap-[7px] items-center p-2 rounded-[12px] text-[#1C1917]"
             >
               <Home className="w-6 h-6" />
@@ -73,7 +74,7 @@ export default function Dashboard() {
               </span>
             </Link>
             <Link
-              to="/doctor-chat"
+              to={ROUTES.DOCTOR_CHAT}
               className="flex gap-[7px] items-center p-2 rounded-[12px] text-[#57534E] hover:bg-[#F5F5F4] transition-colors"
             >
               <MessageSquare className="w-6 h-6" />
@@ -87,7 +88,7 @@ export default function Dashboard() {
               </span>
             </Link>
             <Link
-              to="/prescription"
+              to={ROUTES.PRESCRIPTION}
               className="flex gap-[7px] items-center p-2 rounded-[12px] text-[#57534E] hover:bg-[#F5F5F4] transition-colors"
             >
               <ShoppingBag className="w-6 h-6" />
@@ -101,7 +102,7 @@ export default function Dashboard() {
               </span>
             </Link>
             <Link
-              to="/medical-profile"
+              to={ROUTES.MEDICAL_PROFILE}
               className="flex gap-[7px] items-center p-2 rounded-[12px] text-[#57534E] hover:bg-[#F5F5F4] transition-colors"
             >
               <Stethoscope className="w-6 h-6" />
