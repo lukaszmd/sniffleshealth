@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Search,
@@ -15,9 +15,20 @@ import {
   Check,
   Smile,
 } from "lucide-react";
+import { useDebounce } from "@/hooks";
 
 export default function Index() {
   const observerRef = useRef<IntersectionObserver | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const debouncedSearchQuery = useDebounce(searchQuery, { delay: 300 });
+
+  // Handle debounced search - this could trigger API calls or filtering
+  useEffect(() => {
+    if (debouncedSearchQuery) {
+      // TODO: Implement search functionality when API layer is ready
+      // This would trigger search API call or filter results
+    }
+  }, [debouncedSearchQuery]);
 
   useEffect(() => {
     // Smooth scrolling
@@ -135,6 +146,8 @@ export default function Index() {
                   <input
                     type="text"
                     placeholder="Search By Name, keyword"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
                     className="flex-1 bg-transparent border-none outline-none text-[#292524] text-sm"
                     style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
                   />

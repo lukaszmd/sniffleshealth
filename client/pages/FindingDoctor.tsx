@@ -2,14 +2,14 @@ import { useState, useEffect } from "react";
 import { Loader2, Plus, Mic, ArrowUp } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { ROUTES, FONTS } from "@/constants";
-import { useConsultationStore } from "@/stores";
 import { PageHeader, AppFooter } from "@/components/layout";
 import { ChatInput } from "@/components/chat/ChatInput";
+import { useConsultationFlow } from "@/hooks";
 
 export default function FindingDoctor() {
   const navigate = useNavigate();
   const { selectedSymptoms, aiAssessment, additionalInfo, setAdditionalInfo } =
-    useConsultationStore();
+    useConsultationFlow();
   const [localAdditionalInfo, setLocalAdditionalInfo] =
     useState(additionalInfo);
   const [activeTab, setActiveTab] = useState<"ai" | "medical">("ai");

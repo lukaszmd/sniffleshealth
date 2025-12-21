@@ -1,58 +1,65 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { X, Info } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import type { MedicalData } from "@shared/types";
 import { ROUTES, FONTS } from "@/constants";
-import { useChatStore, useConsultationStore } from "@/stores";
 import { PageHeader, AppFooter } from "@/components/layout";
 import { AIMessage, UserMessage } from "@/components/chat/MessageBubble";
 import { ChatInput } from "@/components/chat/ChatInput";
-import { useScrollToBottom } from "@/hooks/useScrollToBottom";
+import {
+  useScrollToBottom,
+  useChat,
+  useConsultationFlow,
+  useFormNavigation,
+} from "@/hooks";
 
 export default function MedicalProfile() {
   const navigate = useNavigate();
-  const { messages, addMessage, setMessages } = useChatStore();
-  const { medicalData, setMedicalData } = useConsultationStore();
-  const [inputValue, setInputValue] = useState("");
+  const { medicalData, setMedicalData, goToSummary } = useConsultationFlow();
+  const { getStepInfo } = useFormNavigation();
+  const stepInfo = getStepInfo();
+  const {
+    messages,
+    inputValue,
+    setInputValue,
+    sendMessage,
+    initializeMessages,
+  } = useChat({
+    autoInitialize: true,
+    initialMessages: [
+      {
+        type: "ai",
+        text: "Hello! I'm your AI assistant. To get started, I need to gather some basic medical information. All your data is kept private and secure. First, what is your age and sex assigned at birth?",
+        timestamp: new Date(),
+      },
+      {
+        type: "user",
+        text: "23 years old",
+        timestamp: new Date(),
+      },
+      {
+        type: "ai",
+        text: "Thank you. What is your approximate height and weight?",
+        timestamp: new Date(),
+      },
+      {
+        type: "user",
+        text: "180, 6'3",
+        timestamp: new Date(),
+      },
+      {
+        type: "ai",
+        text: "Do you have any known allergies to medications?",
+        timestamp: new Date(),
+      },
+      {
+        type: "user",
+        text: "Not that I am aware of",
+        timestamp: new Date(),
+      },
+    ],
+  });
   const { messagesEndRef } = useScrollToBottom(messages);
-
-  // Initialize messages if empty
-  useEffect(() => {
-    if (messages.length === 0) {
-      setMessages([
-        {
-          type: "ai",
-          text: "Hello! I'm your AI assistant. To get started, I need to gather some basic medical information. All your data is kept private and secure. First, what is your age and sex assigned at birth?",
-          timestamp: new Date(),
-        },
-        {
-          type: "user",
-          text: "23 years old",
-          timestamp: new Date(),
-        },
-        {
-          type: "ai",
-          text: "Thank you. What is your approximate height and weight?",
-          timestamp: new Date(),
-        },
-        {
-          type: "user",
-          text: "180, 6'3",
-          timestamp: new Date(),
-        },
-        {
-          type: "ai",
-          text: "Do you have any known allergies to medications?",
-          timestamp: new Date(),
-        },
-        {
-          type: "user",
-          text: "Not that I am aware of",
-          timestamp: new Date(),
-        },
-      ]);
-    }
-  }, [messages.length, setMessages]);
 
   // Initialize medical data if empty
   useEffect(() => {
@@ -75,14 +82,7 @@ export default function MedicalProfile() {
   }, [medicalData, setMedicalData]);
 
   const handleSend = () => {
-    if (inputValue.trim()) {
-      addMessage({
-        type: "user",
-        text: inputValue,
-        timestamp: new Date(),
-      });
-      setInputValue("");
-    }
+    sendMessage(inputValue);
   };
 
   const currentMedicalData = medicalData || {
@@ -103,9 +103,9 @@ export default function MedicalProfile() {
   return (
     <div className="min-h-screen bg-[#FCFAF8] flex flex-col">
       <PageHeader
-        backTo={ROUTES.HOME}
-        step="Step 3 of 4"
-        title="Building your medical profile"
+        backTo={ROUTES.SYMPTOMS}
+        step={stepInfo?.step}
+        title={stepInfo?.title}
       />
 
       {/* Main Content */}
@@ -146,7 +146,7 @@ export default function MedicalProfile() {
             {/* Continue Button Section */}
             <div className="bg-white flex flex-col gap-5 items-center justify-center px-0 py-10 shadow-[0px_-100px_111px_0px_rgba(255,255,255,0.4)]">
               <button
-                onClick={() => navigate(ROUTES.SUMMARY)}
+                onClick={goToSummary}
                 className="bg-[#0E3240] text-white px-6 py-3 rounded-[18px] font-semibold text-base hover:bg-[#0E3240]/90 transition-colors"
                 style={{
                   fontFamily: FONTS.inter,

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { MapPin, Mail, Phone, ChevronDown } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import type { AddressData } from "@shared/types";
@@ -6,18 +5,28 @@ import { ROUTES, FONTS } from "@/constants";
 import { useUserStore } from "@/stores";
 import { PageHeader, AppFooter } from "@/components/layout";
 import { Logo } from "@/components/layout";
+import { useLocalStorage } from "@/hooks";
+
+const STORAGE_KEY = "address-details-draft";
 
 export default function AddressDetails() {
   const navigate = useNavigate();
   const { profile, setAddressData } = useUserStore();
-  const [formData, setFormData] = useState<AddressData>({
-    email: profile?.addressData?.email || "johndoe@gmail.com",
-    phone: profile?.addressData?.phone || "+021 7348-2839",
-    addressLine1: profile?.addressData?.addressLine1 || "",
-    addressLine2: profile?.addressData?.addressLine2 || "",
-    pincode: profile?.addressData?.pincode || "",
-    city: profile?.addressData?.city || "New York",
-  });
+  
+  // Use localStorage to persist form data, with fallback to store or defaults
+  const { value: formData, setValue: setFormData } = useLocalStorage<AddressData>(
+    STORAGE_KEY,
+    {
+      defaultValue: profile?.addressData || {
+        email: "johndoe@gmail.com",
+        phone: "+021 7348-2839",
+        addressLine1: "",
+        addressLine2: "",
+        pincode: "",
+        city: "New York",
+      },
+    }
+  );
 
   const handleInputChange = (field: keyof AddressData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -26,6 +35,8 @@ export default function AddressDetails() {
   const handleContinue = () => {
     // Save address data to store
     setAddressData(formData);
+    // Clear localStorage draft after successful submission
+    // Note: We could keep it for "edit" functionality, but clearing for now
     navigate(ROUTES.FINDING_DOCTOR);
   };
 

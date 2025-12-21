@@ -1,90 +1,83 @@
-import { useState, useEffect } from "react";
 import { ROUTES } from "@/constants";
-import { useChatStore, useConsultationStore } from "@/stores";
 import { PageHeader, AppFooter } from "@/components/layout";
 import { AIMessage, UserMessage } from "@/components/chat/MessageBubble";
 import { ChatInput } from "@/components/chat/ChatInput";
-import { useScrollToBottom } from "@/hooks/useScrollToBottom";
+import { useScrollToBottom, useChat, useConsultationFlow } from "@/hooks";
 
 export default function DoctorChat() {
-  const { messages, addMessage, setMessages } = useChatStore();
-  const { selectedSymptoms, aiAssessment } = useConsultationStore();
-  const [inputValue, setInputValue] = useState("");
+  const { selectedSymptoms, aiAssessment } = useConsultationFlow();
+  const {
+    messages,
+    inputValue,
+    setInputValue,
+    sendMessage,
+    initializeMessages,
+  } = useChat({
+    autoInitialize: true,
+    initialMessages: [
+      {
+        type: "ai",
+        text: "Hello, I'm Dr. Evelyn Reed. How can I assist you today?",
+        sender: "Dr. Evelyn Reed, MD",
+      },
+      {
+        type: "user",
+        text: "Hi doctor, I've been having a bad headache and some fatigue for the past two days.",
+      },
+      {
+        type: "ai",
+        text: "I'm sorry to hear that. Can you describe your headache—where is it located and how severe is the pain?",
+        sender: "Dr. Evelyn Reed, MD",
+      },
+      {
+        type: "user",
+        text: "It's mostly in my forehead, and the pain is moderate.",
+      },
+      {
+        type: "ai",
+        text: "Do you have any other symptoms, such as fever, cough, or congestion?",
+        sender: "Dr. Evelyn Reed, MD",
+      },
+      {
+        type: "user",
+        text: "I've had a slight fever and a little cough.",
+      },
+      {
+        type: "ai",
+        text: "Understood. Have you experienced any nausea, vision changes, or sensitivity to light?",
+        sender: "Dr. Evelyn Reed, MD",
+      },
+      {
+        type: "user",
+        text: "No, none of those.",
+      },
+      {
+        type: "ai",
+        text: "Do you have any chronic medical conditions or take any medications regularly?",
+        sender: "Dr. Evelyn Reed, MD",
+      },
+      {
+        type: "user",
+        text: "No chronic conditions and I'm not taking any medications.",
+      },
+      {
+        type: "ai",
+        text: "Thank you for sharing this information. I recommend you review the summary on the right and let me know if anything is missing, or click 'Confirm & Continue' to proceed.",
+        sender: "Dr. Evelyn Reed, MD",
+      },
+      {
+        type: "ai",
+        text: "Based on our consultation, I've prepared your prescription. You can view and download it here:",
+        sender: "Dr. Evelyn Reed, MD",
+        linkText: "View Your Prescription",
+        linkUrl: ROUTES.PRESCRIPTION,
+      },
+    ],
+  });
   const { messagesEndRef } = useScrollToBottom(messages);
 
-  // Initialize messages if empty
-  useEffect(() => {
-    if (messages.length === 0) {
-      setMessages([
-        {
-          type: "ai",
-          text: "Hello, I'm Dr. Evelyn Reed. How can I assist you today?",
-          sender: "Dr. Evelyn Reed, MD",
-        },
-        {
-          type: "user",
-          text: "Hi doctor, I've been having a bad headache and some fatigue for the past two days.",
-        },
-        {
-          type: "ai",
-          text: "I'm sorry to hear that. Can you describe your headache—where is it located and how severe is the pain?",
-          sender: "Dr. Evelyn Reed, MD",
-        },
-        {
-          type: "user",
-          text: "It's mostly in my forehead, and the pain is moderate.",
-        },
-        {
-          type: "ai",
-          text: "Do you have any other symptoms, such as fever, cough, or congestion?",
-          sender: "Dr. Evelyn Reed, MD",
-        },
-        {
-          type: "user",
-          text: "I've had a slight fever and a little cough.",
-        },
-        {
-          type: "ai",
-          text: "Understood. Have you experienced any nausea, vision changes, or sensitivity to light?",
-          sender: "Dr. Evelyn Reed, MD",
-        },
-        {
-          type: "user",
-          text: "No, none of those.",
-        },
-        {
-          type: "ai",
-          text: "Do you have any chronic medical conditions or take any medications regularly?",
-          sender: "Dr. Evelyn Reed, MD",
-        },
-        {
-          type: "user",
-          text: "No chronic conditions and I'm not taking any medications.",
-        },
-        {
-          type: "ai",
-          text: "Thank you for sharing this information. I recommend you review the summary on the right and let me know if anything is missing, or click 'Confirm & Continue' to proceed.",
-          sender: "Dr. Evelyn Reed, MD",
-        },
-        {
-          type: "ai",
-          text: "Based on our consultation, I've prepared your prescription. You can view and download it here:",
-          sender: "Dr. Evelyn Reed, MD",
-          linkText: "View Your Prescription",
-          linkUrl: ROUTES.PRESCRIPTION,
-        },
-      ]);
-    }
-  }, [messages.length, setMessages]);
-
   const handleSend = () => {
-    if (inputValue.trim()) {
-      addMessage({
-        type: "user",
-        text: inputValue,
-      });
-      setInputValue("");
-    }
+    sendMessage(inputValue);
   };
 
   // Get symptoms from store or use defaults

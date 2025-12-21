@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Search } from "lucide-react";
 import { DoctorList } from "./DoctorList";
 import type { Doctor } from "@shared/types";
 import { FONTS } from "@/constants";
 import { cn } from "@/lib/utils";
+import { useDebounce } from "@/hooks";
 
 export interface DoctorSearchProps {
   doctors: Doctor[];
@@ -13,6 +14,7 @@ export interface DoctorSearchProps {
   icon?: React.ReactNode;
   placeholder?: string;
   className?: string;
+  debounceDelay?: number;
 }
 
 /**
@@ -26,20 +28,34 @@ export function DoctorSearch({
   icon,
   placeholder = "Search for a doctor...",
   className,
+  debounceDelay = 300,
 }: DoctorSearchProps) {
   const [searchQuery, setSearchQuery] = useState("");
+  const debouncedSearchQuery = useDebounce(searchQuery, {
+    delay: debounceDelay,
+  });
 
   const handleSearchChange = (value: string) => {
     setSearchQuery(value);
-    onSearch?.(value);
   };
 
-  // Filter doctors based on search query
-  const filteredDoctors = searchQuery
+  // Call onSearch callback with debounced value
+  useEffect(() => {
+    if (onSearch) {
+      onSearch(debouncedSearchQuery);
+    }
+  }, [debouncedSearchQuery, onSearch]);
+
+  // Filter doctors based on debounced search query
+  const filteredDoctors = debouncedSearchQuery
     ? doctors.filter(
         (doctor) =>
-          doctor.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          doctor.specialty.toLowerCase().includes(searchQuery.toLowerCase())
+          doctor.name
+            .toLowerCase()
+            .includes(debouncedSearchQuery.toLowerCase()) ||
+          doctor.specialty
+            .toLowerCase()
+            .includes(debouncedSearchQuery.toLowerCase()),
       )
     : doctors;
 
@@ -68,4 +84,3 @@ export function DoctorSearch({
     </div>
   );
 }
-

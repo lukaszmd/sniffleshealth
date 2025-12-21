@@ -4,9 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { ROUTES, FONTS } from "@/constants";
 import { PageHeader, AppFooter } from "@/components/layout";
 import { DoctorCard } from "@/components/doctor";
+import { useFormNavigation } from "@/hooks";
 
 export default function Consultation() {
   const navigate = useNavigate();
+  const { getStepInfo } = useFormNavigation();
+  const stepInfo = getStepInfo();
   // Pre-select the text chat doctor (Dr. Evelyn Reed)
   const [selectedDoctorId, setSelectedDoctorId] = useState<string>("1");
 
@@ -18,9 +21,9 @@ export default function Consultation() {
   return (
     <div className="min-h-screen bg-[#F3F4F6] flex flex-col">
       <PageHeader
-        backTo={ROUTES.MEDICAL_PROFILE}
-        step="Step 3 of 4"
-        title="Building your medical profile"
+        backTo={ROUTES.SUMMARY}
+        step={stepInfo?.step}
+        title={stepInfo?.title}
       />
 
       {/* Main Content */}

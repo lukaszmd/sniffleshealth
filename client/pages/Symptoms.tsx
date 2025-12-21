@@ -1,11 +1,13 @@
-import { useState } from "react";
 import { Mic } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 import type { Symptom } from "@shared/types";
 import { ROUTES, FONTS } from "@/constants";
-import { useConsultationStore } from "@/stores";
 import { PageHeader, AppFooter } from "@/components/layout";
 import { SymptomSelector } from "@/components/consultation";
+import {
+  useConsultationFlow,
+  useFormNavigation,
+  useLocalStorage,
+} from "@/hooks";
 
 const commonSymptoms: Symptom[] = [
   { id: "1", name: "Sweatness", category: "common" },
@@ -24,20 +26,31 @@ const stomachSymptoms: Symptom[] = [
 ];
 
 export default function Symptoms() {
-  const navigate = useNavigate();
-  const { selectedSymptoms, toggleSymptom } = useConsultationStore();
-  const [customSymptom, setCustomSymptom] = useState("");
+  const {
+    selectedSymptoms,
+    toggleSymptom,
+    goToMedicalProfile,
+    canProceedToMedicalProfile,
+  } = useConsultationFlow();
+  const { getStepInfo } = useFormNavigation();
+  const stepInfo = getStepInfo();
+  
+  // Persist custom symptom input across page refreshes
+  const { value: customSymptom, setValue: setCustomSymptom } =
+    useLocalStorage<string>("custom-symptom-input", { defaultValue: "" });
 
   const handleContinue = () => {
-    navigate(ROUTES.MEDICAL_PROFILE);
+    if (canProceedToMedicalProfile) {
+      goToMedicalProfile();
+    }
   };
 
   return (
     <div className="min-h-screen bg-[#FCFAF8] flex flex-col">
       <PageHeader
         backTo={ROUTES.HOME}
-        step="Step 2 of 4"
-        title="Select symptoms"
+        step={stepInfo?.step}
+        title={stepInfo?.title}
       />
 
       {/* Main Content */}

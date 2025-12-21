@@ -4,23 +4,26 @@ import { useNavigate } from "react-router-dom";
 import type { ConsultationType } from "@shared/types";
 import { ROUTES, FONTS } from "@/constants";
 import { PageHeader, AppFooter } from "@/components/layout";
+import { useFormNavigation } from "@/hooks";
 
 export default function SelectConsultationType() {
   const navigate = useNavigate();
+  const { getStepInfo, goToNext } = useFormNavigation();
+  const stepInfo = getStepInfo();
   const [selectedType, setSelectedType] = useState<ConsultationType>("video");
 
   const handleContinue = () => {
     // Navigate to payment confirmation page
     // In a real app, this would process payment first
-    navigate(ROUTES.PAYMENT_CONFIRMATION);
+    goToNext(); // Use hook's navigation helper
   };
 
   return (
     <div className="min-h-screen bg-[#F3F4F6] flex flex-col">
       <PageHeader
         backTo={ROUTES.CONSULTATION}
-        step="Step 3 of 4"
-        title="Building your medical profile"
+        step={stepInfo?.step}
+        title={stepInfo?.title}
       />
 
       {/* Main Content */}
