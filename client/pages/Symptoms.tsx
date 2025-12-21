@@ -1,12 +1,9 @@
 import { useState } from "react";
 import { ArrowLeft, Lock, Mic, Check } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-
-interface Symptom {
-  id: string;
-  name: string;
-  category: string;
-}
+import type { Symptom } from "@shared/types";
+import { ROUTES, FONTS } from "@/constants";
+import { useConsultationStore } from "@/stores";
 
 const commonSymptoms: Symptom[] = [
   { id: "1", name: "Sweatness", category: "common" },
@@ -26,24 +23,11 @@ const stomachSymptoms: Symptom[] = [
 
 export default function Symptoms() {
   const navigate = useNavigate();
-  const [selectedSymptoms, setSelectedSymptoms] = useState<string[]>([
-    "4",
-    "5",
-    "9",
-    "10",
-  ]);
+  const { selectedSymptoms, toggleSymptom } = useConsultationStore();
   const [customSymptom, setCustomSymptom] = useState("");
 
-  const toggleSymptom = (symptomId: string) => {
-    setSelectedSymptoms((prev) =>
-      prev.includes(symptomId)
-        ? prev.filter((id) => id !== symptomId)
-        : [...prev, symptomId],
-    );
-  };
-
   const handleContinue = () => {
-    navigate("/medical-profile");
+    navigate(ROUTES.MEDICAL_PROFILE);
   };
 
   return (
@@ -54,7 +38,7 @@ export default function Symptoms() {
           {/* Left Side - Back Button & Title */}
           <div className="flex items-center gap-3">
             <Link
-              to="/"
+              to={ROUTES.HOME}
               className="flex items-center justify-center w-10 h-10 rounded-full border border-[#D6D3D1] bg-[#FCFAF8] shadow-sm opacity-90 hover:opacity-100 transition-opacity"
             >
               <ArrowLeft className="w-6 h-6 text-[#1C1917]" />
@@ -62,13 +46,13 @@ export default function Symptoms() {
             <div className="flex flex-col">
               <span
                 className="text-[#4B5563] text-sm"
-                style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+                style={{ fontFamily: FONTS.inter }}
               >
                 Step 2 of 4
               </span>
               <span
                 className="text-[#111827] text-base font-medium"
-                style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+                style={{ fontFamily: FONTS.inter }}
               >
                 Select symptoms
               </span>
@@ -94,7 +78,7 @@ export default function Symptoms() {
                 <span
                   className="text-[#0891B2] font-semibold text-xl leading-tight"
                   style={{
-                    fontFamily: "Inter Display, -apple-system, sans-serif",
+                    fontFamily: FONTS.interDisplay,
                   }}
                 >
                   Sniffles
@@ -102,7 +86,7 @@ export default function Symptoms() {
                 <span
                   className="text-[#1F2937] font-medium text-base leading-tight"
                   style={{
-                    fontFamily: "Inter Display, -apple-system, sans-serif",
+                    fontFamily: FONTS.interDisplay,
                   }}
                 >
                   health
@@ -151,7 +135,7 @@ export default function Symptoms() {
                     <h2
                       className="text-[#111827] text-xl font-semibold"
                       style={{
-                        fontFamily: "Inter, -apple-system, sans-serif",
+                        fontFamily: FONTS.inter,
                         lineHeight: "28px",
                       }}
                     >
@@ -174,7 +158,7 @@ export default function Symptoms() {
                     <h2
                       className="text-[#111827] text-xl font-semibold"
                       style={{
-                        fontFamily: "Inter, -apple-system, sans-serif",
+                        fontFamily: FONTS.inter,
                         lineHeight: "28px",
                       }}
                     >
@@ -205,7 +189,7 @@ export default function Symptoms() {
                     value={customSymptom}
                     onChange={(e) => setCustomSymptom(e.target.value)}
                     className="flex-1 bg-transparent border-none outline-none text-[#374151] text-sm"
-                    style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+                    style={{ fontFamily: FONTS.inter }}
                   />
                   <button className="p-2 bg-[#F5F5F4] rounded-xl">
                     <Mic className="w-4 h-4 text-[#164E63]" />
@@ -214,7 +198,7 @@ export default function Symptoms() {
                 <button
                   onClick={handleContinue}
                   className="w-full md:w-auto px-12 py-4 bg-[#164E63] text-white font-semibold text-base rounded-[18px] hover:bg-[#164E63]/90 transition-colors"
-                  style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+                  style={{ fontFamily: FONTS.inter }}
                 >
                   Continue
                 </button>
@@ -230,13 +214,13 @@ export default function Symptoms() {
           <div className="flex items-center gap-3">
             <button
               className="px-3 py-2 text-[#78716C] font-semibold text-base hover:text-[#1C1917] transition-colors"
-              style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+              style={{ fontFamily: FONTS.inter }}
             >
               About Us
             </button>
             <button
               className="px-3 py-2 text-[#78716C] font-semibold text-base hover:text-[#1C1917] transition-colors"
-              style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+              style={{ fontFamily: FONTS.inter }}
             >
               Privacy Policy
             </button>
@@ -245,7 +229,7 @@ export default function Symptoms() {
             <Lock className="w-6 h-6 text-[#78716C]" />
             <span
               className="text-[#78716C] font-semibold text-base"
-              style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+              style={{ fontFamily: FONTS.inter }}
             >
               HIPAA Compliant
             </span>
@@ -279,7 +263,7 @@ function SymptomPill({
         className={`text-base font-${selected ? "600" : "500"} ${
           selected ? "text-[#164E63]" : "text-[#4B5563]"
         }`}
-        style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+        style={{ fontFamily: FONTS.inter }}
       >
         {name}
       </span>
