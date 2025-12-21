@@ -1,7 +1,8 @@
 import { ArrowLeft, Lock, MessageSquare, Video, Info } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Consultation() {
+  const navigate = useNavigate();
   // Sample data - in a real app, this would come from state/API
   const symptoms = ["Fever", "Persistent Cough", "Headache", "Fatigue"];
   const aiAssessment =
@@ -111,7 +112,9 @@ export default function Consultation() {
                         fontFamily: "Inter Display, -apple-system, sans-serif",
                       }}
                     >
-                      <span className="text-[#1F2937]">Consult with a doctor now</span>
+                      <span className="text-[#1F2937]">
+                        Consult with a doctor now
+                      </span>
                       <br />
                       <span className="text-[#1F2937]">starting at </span>
                       <span className="text-[#06B6D4]">$25</span>
@@ -125,7 +128,9 @@ export default function Consultation() {
                         name="Dr. Evelyn Reed, MD"
                         specialty="General Practice"
                         waitTime="~ Text 2 min wait"
-                        icon={<MessageSquare className="w-4 h-4 text-[#4B5563]" />}
+                        icon={
+                          <MessageSquare className="w-4 h-4 text-[#4B5563]" />
+                        }
                       />
 
                       {/* Doctor 2 */}
@@ -152,6 +157,7 @@ export default function Consultation() {
 
                     {/* CTA Button */}
                     <button
+                      onClick={() => navigate("/select-consultation-type")}
                       className="bg-[#0E3240] text-white px-6 py-3 rounded-[18px] font-semibold text-base hover:bg-[#0E3240]/90 transition-colors"
                       style={{
                         fontFamily: "Inter, -apple-system, sans-serif",
