@@ -3,8 +3,8 @@ import { MessageSquare, Video, Info } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { ROUTES, FONTS } from "@/constants";
 import { PageHeader, AppFooter } from "@/components/layout";
-import { DoctorCard } from "@/components/doctor";
-import { useFormNavigation } from "@/hooks";
+import { DoctorCard } from "@/features/doctor/components";
+import { useFormNavigation } from "../hooks";
 
 export default function Consultation() {
   const navigate = useNavigate();

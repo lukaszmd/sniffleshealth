@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import type { ConsultationType } from "@shared/types";
 import { ROUTES, FONTS } from "@/constants";
 import { PageHeader, AppFooter } from "@/components/layout";
-import { useFormNavigation } from "@/hooks";
+import { useFormNavigation } from "@/features/consultation/hooks";
 
 export default function SelectConsultationType() {
   const navigate = useNavigate();

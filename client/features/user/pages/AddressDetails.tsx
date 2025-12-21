@@ -46,38 +46,7 @@ export default function AddressDetails() {
       <div className="bg-[#FCFAF8] border-b border-[#D6D3D1] px-6 py-4">
         <div className="max-w-[1464px] mx-auto flex items-center justify-center relative">
           {/* Center - Logo */}
-          <div className="flex items-center gap-[5px]">
-            <svg
-              width="40"
-              height="52"
-              viewBox="0 0 56 73"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M55.5 36.5C55.5 16.3416 43.1584 0 27.5 0C11.8416 0 0 16.3416 0 36.5V36.5484C0 56.7068 12.3416 73.0484 28 73.0484H28.5C44.1584 73.0484 55.5 56.7068 55.5 36.5484V36.5Z"
-                fill="#0891B2"
-              />
-            </svg>
-            <div className="flex flex-col">
-              <span
-                className="text-[#0891B2] font-semibold text-xl leading-tight"
-                style={{
-                  fontFamily: "Inter Display, -apple-system, sans-serif",
-                }}
-              >
-                Sniffles
-              </span>
-              <span
-                className="text-[#1F2937] font-medium text-base leading-tight"
-                style={{
-                  fontFamily: "Inter Display, -apple-system, sans-serif",
-                }}
-              >
-                health
-              </span>
-            </div>
-          </div>
+          <Logo size="md" />
         </div>
       </div>
 

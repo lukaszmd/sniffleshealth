@@ -2,12 +2,12 @@ import { Mic } from "lucide-react";
 import type { Symptom } from "@shared/types";
 import { ROUTES, FONTS } from "@/constants";
 import { PageHeader, AppFooter } from "@/components/layout";
-import { SymptomSelector } from "@/components/consultation";
+import { SymptomSelector } from "../components";
 import {
   useConsultationFlow,
   useFormNavigation,
-  useLocalStorage,
-} from "@/hooks";
+} from "../hooks";
+import { useLocalStorage } from "@/hooks";
 
 const commonSymptoms: Symptom[] = [
   { id: "1", name: "Sweatness", category: "common" },

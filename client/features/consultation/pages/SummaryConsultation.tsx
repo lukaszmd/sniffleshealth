@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ROUTES, FONTS } from "@/constants";
 import { PageHeader, AppFooter } from "@/components/layout";
-import { useFormNavigation } from "@/hooks";
+import { useFormNavigation } from "../hooks";
 
 export default function SummaryConsultation() {
   const navigate = useNavigate();

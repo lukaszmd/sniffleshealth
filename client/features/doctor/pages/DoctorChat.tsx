@@ -2,7 +2,8 @@ import { ROUTES } from "@/constants";
 import { PageHeader, AppFooter } from "@/components/layout";
 import { AIMessage, UserMessage } from "@/components/chat/MessageBubble";
 import { ChatInput } from "@/components/chat/ChatInput";
-import { useScrollToBottom, useChat, useConsultationFlow } from "@/hooks";
+import { useChat, useConsultationFlow } from "@/features/consultation/hooks";
+import { useScrollToBottom } from "@/hooks";
 
 export default function DoctorChat() {
   const { selectedSymptoms, aiAssessment } = useConsultationFlow();

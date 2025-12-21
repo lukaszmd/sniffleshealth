@@ -78,10 +78,7 @@ export function MedicalForm({
           </span>
           <div className="flex flex-wrap gap-2">
             {data.socialHistory.map((item, index) => (
-              <Tag
-                key={index}
-                text={`${item.type}: ${item.level}`}
-              />
+              <Tag key={index} text={`${item.type}: ${item.level}`} />
             ))}
           </div>
         </div>
@@ -148,4 +145,3 @@ function Tag({ text }: TagProps) {
     </span>
   );
 }
-

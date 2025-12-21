@@ -7,11 +7,11 @@ import { PageHeader, AppFooter } from "@/components/layout";
 import { AIMessage, UserMessage } from "@/components/chat/MessageBubble";
 import { ChatInput } from "@/components/chat/ChatInput";
 import {
-  useScrollToBottom,
-  useChat,
   useConsultationFlow,
   useFormNavigation,
-} from "@/hooks";
+  useChat,
+} from "../hooks";
+import { useScrollToBottom } from "@/hooks";
 
 export default function MedicalProfile() {
   const navigate = useNavigate();

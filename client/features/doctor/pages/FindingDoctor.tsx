@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { ROUTES, FONTS } from "@/constants";
 import { PageHeader, AppFooter } from "@/components/layout";
 import { ChatInput } from "@/components/chat/ChatInput";
-import { useConsultationFlow } from "@/hooks";
+import { useConsultationFlow } from "@/features/consultation/hooks";
 
 export default function FindingDoctor() {
   const navigate = useNavigate();
