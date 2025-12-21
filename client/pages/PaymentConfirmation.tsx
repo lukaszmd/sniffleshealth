@@ -16,8 +16,8 @@ export default function PaymentConfirmation() {
   };
 
   const handleContinue = () => {
-    // Navigate to consultation or next step
-    navigate("/consultation");
+    // Navigate to HIPAA compliance page
+    navigate("/hipaa-compliance");
   };
 
   return (

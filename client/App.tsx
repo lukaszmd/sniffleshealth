@@ -13,6 +13,7 @@ import SummaryConsultation from "./pages/SummaryConsultation";
 import Consultation from "./pages/Consultation";
 import SelectConsultationType from "./pages/SelectConsultationType";
 import PaymentConfirmation from "./pages/PaymentConfirmation";
+import HIPAACompliance from "./pages/HIPAACompliance";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -31,6 +32,7 @@ const App = () => (
           <Route path="/consultation" element={<Consultation />} />
           <Route path="/select-consultation-type" element={<SelectConsultationType />} />
           <Route path="/payment-confirmation" element={<PaymentConfirmation />} />
+          <Route path="/hipaa-compliance" element={<HIPAACompliance />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

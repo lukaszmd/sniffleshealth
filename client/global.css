@@ -21,6 +21,16 @@
       transform: translateY(0);
     }
   }
+
+  .animate-bounce-delay-1 {
+    animation: bounce 1.5s infinite;
+    animation-delay: 0.2s;
+  }
+
+  .animate-bounce-delay-2 {
+    animation: bounce 1.5s infinite;
+    animation-delay: 0.4s;
+  }
 }
 
 @layer base {
