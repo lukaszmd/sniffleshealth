@@ -393,4 +393,3 @@ function DoctorCard({
     </div>
   );
 }
-
