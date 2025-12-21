@@ -3,6 +3,7 @@ import { Lock, ChevronDown } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { ROUTES, FONTS } from "@/constants";
 import { useUserStore } from "@/stores";
+import { PageHeader, AppFooter } from "@/components/layout";
 
 export default function HIPAACompliance() {
   const navigate = useNavigate();

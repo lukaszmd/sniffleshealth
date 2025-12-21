@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { Mic, Check } from "lucide-react";
+import { Mic } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import type { Symptom } from "@shared/types";
 import { ROUTES, FONTS } from "@/constants";
 import { useConsultationStore } from "@/stores";
 import { PageHeader, AppFooter } from "@/components/layout";
+import { SymptomSelector } from "@/components/consultation";
 
 const commonSymptoms: Symptom[] = [
   { id: "1", name: "Sweatness", category: "common" },
@@ -68,50 +69,21 @@ export default function Symptoms() {
                 {/* Symptoms Sections */}
                 <div className="flex flex-col gap-[19px]">
                   {/* Common Symptoms */}
-                  <div className="flex flex-col gap-[19px]">
-                    <h2
-                      className="text-[#111827] text-xl font-semibold"
-                      style={{
-                        fontFamily: FONTS.inter,
-                        lineHeight: "28px",
-                      }}
-                    >
-                      Common symptoms
-                    </h2>
-                    <div className="flex flex-wrap items-center gap-6">
-                      {commonSymptoms.map((symptom) => (
-                        <SymptomPill
-                          key={symptom.id}
-                          name={symptom.name}
-                          selected={selectedSymptoms.includes(symptom.id)}
-                          onClick={() => toggleSymptom(symptom.id)}
-                        />
-                      ))}
-                    </div>
-                  </div>
+                  <SymptomSelector
+                    symptoms={commonSymptoms}
+                    selectedSymptomIds={selectedSymptoms}
+                    onToggleSymptom={toggleSymptom}
+                    title="Common symptoms"
+                  />
 
                   {/* Stomach & Digestion */}
-                  <div className="flex flex-col gap-[19px] mt-8">
-                    <h2
-                      className="text-[#111827] text-xl font-semibold"
-                      style={{
-                        fontFamily: FONTS.inter,
-                        lineHeight: "28px",
-                      }}
-                    >
-                      Stomach & Digestion
-                    </h2>
-                    <div className="flex flex-wrap items-center gap-6">
-                      {stomachSymptoms.map((symptom) => (
-                        <SymptomPill
-                          key={symptom.id}
-                          name={symptom.name}
-                          selected={selectedSymptoms.includes(symptom.id)}
-                          onClick={() => toggleSymptom(symptom.id)}
-                        />
-                      ))}
-                    </div>
-                  </div>
+                  <SymptomSelector
+                    symptoms={stomachSymptoms}
+                    selectedSymptomIds={selectedSymptoms}
+                    onToggleSymptom={toggleSymptom}
+                    title="Stomach & Digestion"
+                    className="mt-8"
+                  />
                 </div>
               </div>
             </div>
@@ -147,36 +119,5 @@ export default function Symptoms() {
 
       <AppFooter />
     </div>
-  );
-}
-
-function SymptomPill({
-  name,
-  selected,
-  onClick,
-}: {
-  name: string;
-  selected: boolean;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      className={`flex items-center gap-2 px-5 py-5 rounded-[18px] border-2 transition-all ${
-        selected
-          ? "border-[#0891B2] bg-white"
-          : "border-[#D1D5DB] bg-white hover:border-[#0891B2]/50"
-      }`}
-    >
-      {selected && <Check className="w-6 h-6 text-[#155E75]" />}
-      <span
-        className={`text-base font-${selected ? "600" : "500"} ${
-          selected ? "text-[#164E63]" : "text-[#4B5563]"
-        }`}
-        style={{ fontFamily: FONTS.inter }}
-      >
-        {name}
-      </span>
-    </button>
   );
 }

@@ -1,10 +1,15 @@
+import { useState } from "react";
 import { MessageSquare, Video, Info } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { ROUTES, FONTS } from "@/constants";
 import { PageHeader, AppFooter } from "@/components/layout";
+import { DoctorCard } from "@/components/doctor";
 
 export default function Consultation() {
   const navigate = useNavigate();
+  // Pre-select the text chat doctor (Dr. Evelyn Reed)
+  const [selectedDoctorId, setSelectedDoctorId] = useState<string>("1");
+
   // Sample data - in a real app, this would come from state/API
   const symptoms = ["Fever", "Persistent Cough", "Headache", "Fatigue"];
   const aiAssessment =
@@ -60,24 +65,40 @@ export default function Consultation() {
 
                     {/* Doctor Cards */}
                     <div className="flex gap-4 w-full">
-                      {/* Doctor 1 */}
+                      {/* Doctor 1 - Text Chat (Pre-selected) */}
                       <DoctorCard
-                        initials="ER"
-                        name="Dr. Evelyn Reed, MD"
-                        specialty="General Practice"
+                        doctor={{
+                          id: "1",
+                          name: "Dr. Evelyn Reed, MD",
+                          title: "MD",
+                          specialty: "General Practice",
+                          experience: "12 yrs experience",
+                          location: "New York",
+                          initials: "ER",
+                        }}
                         waitTime="~ Text 2 min wait"
                         icon={
                           <MessageSquare className="w-4 h-4 text-[#4B5563]" />
                         }
+                        selected={selectedDoctorId === "1"}
+                        onClick={() => setSelectedDoctorId("1")}
                       />
 
                       {/* Doctor 2 */}
                       <DoctorCard
-                        initials="MC"
-                        name="Dr. Marcus Chen, DO"
-                        specialty="Internal Medicine"
+                        doctor={{
+                          id: "2",
+                          name: "Dr. Marcus Chen, DO",
+                          title: "DO",
+                          specialty: "Internal Medicine",
+                          experience: "10 yrs experience",
+                          location: "New York",
+                          initials: "MC",
+                        }}
                         waitTime="~ Video/Audio 15 min wait"
                         icon={<Video className="w-4 h-4 text-[#4B5563]" />}
+                        selected={selectedDoctorId === "2"}
+                        onClick={() => setSelectedDoctorId("2")}
                       />
                     </div>
 
@@ -234,79 +255,6 @@ export default function Consultation() {
       </div>
 
       <AppFooter />
-    </div>
-  );
-}
-
-function DoctorCard({
-  initials,
-  name,
-  specialty,
-  waitTime,
-  icon,
-}: {
-  initials: string;
-  name: string;
-  specialty: string;
-  waitTime: string;
-  icon: React.ReactNode;
-}) {
-  return (
-    <div className="flex-1 bg-white border border-[#E5E7EB] rounded-[10px] p-[17px] flex flex-col gap-3">
-      <div className="flex items-start gap-3">
-        {/* Avatar */}
-        <div className="w-12 h-12 rounded-full bg-[#E5E7EB] flex items-center justify-center flex-shrink-0">
-          <span
-            className="text-[#4A5565] text-base font-normal"
-            style={{
-              fontFamily: "Inter, -apple-system, sans-serif",
-              lineHeight: "24px",
-              letterSpacing: "-0.312px",
-            }}
-          >
-            {initials}
-          </span>
-        </div>
-
-        {/* Doctor Info */}
-        <div className="flex flex-col gap-0.5 flex-1 min-w-0">
-          <h3
-            className="text-[#101828] text-base font-normal truncate"
-            style={{
-              fontFamily: "Inter, -apple-system, sans-serif",
-              lineHeight: "24px",
-              letterSpacing: "-0.312px",
-            }}
-          >
-            {name}
-          </h3>
-          <p
-            className="text-[#6A7282] text-sm font-normal"
-            style={{
-              fontFamily: "Inter, -apple-system, sans-serif",
-              lineHeight: "20px",
-              letterSpacing: "-0.1504px",
-            }}
-          >
-            {specialty}
-          </p>
-        </div>
-      </div>
-
-      {/* Wait Time */}
-      <div className="flex items-center gap-2">
-        {icon}
-        <span
-          className="text-[#4A5565] text-sm font-normal"
-          style={{
-            fontFamily: "Inter, -apple-system, sans-serif",
-            lineHeight: "20px",
-            letterSpacing: "-0.1504px",
-          }}
-        >
-          {waitTime}
-        </span>
-      </div>
     </div>
   );
 }
