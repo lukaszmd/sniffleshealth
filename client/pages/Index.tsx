@@ -1,6 +1,20 @@
 import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { Search, MapPin, ChevronDown, Mic, ChevronRight, Lock, ArrowDown, Stethoscope, FileSignature, Clock, X, Check, Smile } from "lucide-react";
+import {
+  Search,
+  MapPin,
+  ChevronDown,
+  Mic,
+  ChevronRight,
+  Lock,
+  ArrowDown,
+  Stethoscope,
+  FileSignature,
+  Clock,
+  X,
+  Check,
+  Smile,
+} from "lucide-react";
 
 export default function Index() {
   const observerRef = useRef<IntersectionObserver | null>(null);
@@ -22,7 +36,7 @@ export default function Index() {
       {
         threshold: 0.1,
         rootMargin: "0px 0px -50px 0px",
-      }
+      },
     );
 
     // Observe all cards and sections
@@ -42,23 +56,58 @@ export default function Index() {
           <div className="bg-[#DCE9EB] rounded-[30px] px-6 md:px-12 lg:px-[72px] pt-10 md:pt-[40px] pb-0 flex flex-col items-center gap-8 md:gap-[60px]">
             {/* Logo */}
             <div className="flex items-center gap-[5px]">
-              <svg width="56" height="73" viewBox="0 0 56 73" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M55.5 36.5C55.5 16.3416 43.1584 0 27.5 0C11.8416 0 0 16.3416 0 36.5V36.5484C0 56.7068 12.3416 73.0484 28 73.0484H28.5C44.1584 73.0484 55.5 56.7068 55.5 36.5484V36.5Z" fill="#0891B2"/>
+              <svg
+                width="56"
+                height="73"
+                viewBox="0 0 56 73"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M55.5 36.5C55.5 16.3416 43.1584 0 27.5 0C11.8416 0 0 16.3416 0 36.5V36.5484C0 56.7068 12.3416 73.0484 28 73.0484H28.5C44.1584 73.0484 55.5 56.7068 55.5 36.5484V36.5Z"
+                  fill="#0891B2"
+                />
               </svg>
               <div className="flex flex-col">
-                <span className="text-[#0891B2] font-semibold text-2xl md:text-3xl leading-tight" style={{ fontFamily: 'Inter Display, -apple-system, sans-serif' }}>Sniffles</span>
-                <span className="text-[#1F2937] font-medium text-lg md:text-xl leading-tight" style={{ fontFamily: 'Inter Display, -apple-system, sans-serif' }}>health</span>
+                <span
+                  className="text-[#0891B2] font-semibold text-2xl md:text-3xl leading-tight"
+                  style={{
+                    fontFamily: "Inter Display, -apple-system, sans-serif",
+                  }}
+                >
+                  Sniffles
+                </span>
+                <span
+                  className="text-[#1F2937] font-medium text-lg md:text-xl leading-tight"
+                  style={{
+                    fontFamily: "Inter Display, -apple-system, sans-serif",
+                  }}
+                >
+                  health
+                </span>
               </div>
             </div>
 
             {/* Header */}
             <div className="w-full max-w-[1256px] flex flex-col justify-center items-center gap-2">
-              <h1 className="text-4xl md:text-5xl lg:text-[72px] font-medium text-center leading-tight" style={{ letterSpacing: '-3.6px', fontFamily: 'Inter Display, -apple-system, sans-serif' }}>
+              <h1
+                className="text-4xl md:text-5xl lg:text-[72px] font-medium text-center leading-tight"
+                style={{
+                  letterSpacing: "-3.6px",
+                  fontFamily: "Inter Display, -apple-system, sans-serif",
+                }}
+              >
                 <span className="text-[#1F2937]">Get your </span>
                 <span className="text-[#0891B2]">consultation</span>
                 <span className="text-[#1F2937]"> in minutes</span>
               </h1>
-              <p className="text-[#6B7280] text-xl md:text-2xl lg:text-[32px] font-normal text-center" style={{ lineHeight: '34px', fontFamily: 'Inter Display, -apple-system, sans-serif' }}>
+              <p
+                className="text-[#6B7280] text-xl md:text-2xl lg:text-[32px] font-normal text-center"
+                style={{
+                  lineHeight: "34px",
+                  fontFamily: "Inter Display, -apple-system, sans-serif",
+                }}
+              >
                 Super charging US private healthcare
               </p>
             </div>
@@ -70,7 +119,12 @@ export default function Index() {
                 {/* Location Selector */}
                 <div className="flex items-center gap-2 bg-[#FCFAF8] rounded-[40px] px-4 py-3">
                   <MapPin className="w-6 h-6 text-[#4B5563]" />
-                  <span className="text-[#111827] font-semibold text-base" style={{ fontFamily: 'Inter, -apple-system, sans-serif' }}>New York</span>
+                  <span
+                    className="text-[#111827] font-semibold text-base"
+                    style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+                  >
+                    New York
+                  </span>
                   <div className="w-[9px] h-[9px] rounded-full bg-[#34D399]"></div>
                   <ChevronDown className="w-6 h-6 text-[#4B5563]" />
                 </div>
@@ -82,7 +136,7 @@ export default function Index() {
                     type="text"
                     placeholder="Search By Name, keyword"
                     className="flex-1 bg-transparent border-none outline-none text-[#292524] text-sm"
-                    style={{ fontFamily: 'Inter, -apple-system, sans-serif' }}
+                    style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
                   />
                   <button className="w-8 h-8 rounded-full bg-[#1F2937] flex items-center justify-center">
                     <Mic className="w-4 h-4 text-[#D1D5DB]" />
@@ -118,15 +172,30 @@ export default function Index() {
               <div className="w-full flex flex-col md:flex-row justify-between items-center gap-4 px-1 pb-8">
                 <div className="flex items-center gap-2 bg-[#E7EEEE] rounded-[20px] px-6 py-3 shadow-sm">
                   <Lock className="w-6 h-6 text-[#4B5563]" />
-                  <span className="text-[#4B5563] font-semibold text-base" style={{ fontFamily: 'Inter, -apple-system, sans-serif' }}>HIPAA compliant</span>
+                  <span
+                    className="text-[#4B5563] font-semibold text-base"
+                    style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+                  >
+                    HIPAA compliant
+                  </span>
                 </div>
                 <div className="flex items-center gap-2 bg-[#E7EEEE] rounded-t-[24px] px-6 py-4 shadow-sm">
                   <ArrowDown className="w-6 h-6 text-[#4B5563]" />
-                  <span className="text-[#4B5563] font-semibold text-base" style={{ fontFamily: 'Inter, -apple-system, sans-serif' }}>Scroll down to see how</span>
+                  <span
+                    className="text-[#4B5563] font-semibold text-base"
+                    style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+                  >
+                    Scroll down to see how
+                  </span>
                 </div>
                 <div className="flex items-center gap-2 bg-[#E7EEEE] rounded-[20px] px-6 py-3 shadow-sm">
                   <Lock className="w-6 h-6 text-[#4B5563]" />
-                  <span className="text-[#4B5563] font-semibold text-base" style={{ fontFamily: 'Inter, -apple-system, sans-serif' }}>HIPAA compliant</span>
+                  <span
+                    className="text-[#4B5563] font-semibold text-base"
+                    style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+                  >
+                    HIPAA compliant
+                  </span>
                 </div>
               </div>
             </div>
@@ -143,21 +212,60 @@ export default function Index() {
               {/* Left Content */}
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-8">
-                  <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/d70e756501509614b665deb946de13d9f2aab9da" alt="Doctor" className="w-12 h-12 rounded-full" />
-                  <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/d70e756501509614b665deb946de13d9f2aab9da" alt="Doctor" className="w-12 h-12 rounded-full -ml-4" />
-                  <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/d70e756501509614b665deb946de13d9f2aab9da" alt="Doctor" className="w-12 h-12 rounded-full -ml-4" />
+                  <img
+                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/d70e756501509614b665deb946de13d9f2aab9da"
+                    alt="Doctor"
+                    className="w-12 h-12 rounded-full"
+                  />
+                  <img
+                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/d70e756501509614b665deb946de13d9f2aab9da"
+                    alt="Doctor"
+                    className="w-12 h-12 rounded-full -ml-4"
+                  />
+                  <img
+                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/d70e756501509614b665deb946de13d9f2aab9da"
+                    alt="Doctor"
+                    className="w-12 h-12 rounded-full -ml-4"
+                  />
                 </div>
-                <h2 className="text-white text-3xl md:text-4xl lg:text-5xl font-medium mb-6" style={{ fontFamily: 'Quincy CF, -apple-system, sans-serif', lineHeight: '1.2' }}>
+                <h2
+                  className="text-white text-3xl md:text-4xl lg:text-5xl font-medium mb-6"
+                  style={{
+                    fontFamily: "Quincy CF, -apple-system, sans-serif",
+                    lineHeight: "1.2",
+                  }}
+                >
                   Your Care, Your Terms, Just a Click Away
                 </h2>
-                <p className="text-white/90 text-base md:text-lg leading-relaxed max-w-xl" style={{ fontFamily: 'Inter, -apple-system, sans-serif' }}>
-                  Quality care you can trust. Fast, affordable, and transparent—no hidden costs. Connect with licensed doctors in your state and get medical advice instantly, all from the comfort of your home.
+                <p
+                  className="text-white/90 text-base md:text-lg leading-relaxed max-w-xl"
+                  style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+                >
+                  Quality care you can trust. Fast, affordable, and
+                  transparent—no hidden costs. Connect with licensed doctors in
+                  your state and get medical advice instantly, all from the
+                  comfort of your home.
                 </p>
                 <div className="mt-8">
-                  <svg width="112" height="32" viewBox="0 0 112 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M16 0C18.1217 0 20.1566 0.842855 21.6569 2.34315C23.1571 3.84344 24 5.87827 24 8V24C24 26.1217 23.1571 28.1566 21.6569 29.6569C20.1566 31.1571 18.1217 32 16 32C13.8783 32 11.8434 31.1571 10.3431 29.6569C8.84285 28.1566 8 26.1217 8 24V8C8 5.87827 8.84285 3.84344 10.3431 2.34315C11.8434 0.842855 13.8783 0 16 0Z" fill="white"/>
-                    <path d="M48 0C50.1217 0 52.1566 0.842855 53.6569 2.34315C55.1571 3.84344 56 5.87827 56 8V24C56 26.1217 55.1571 28.1566 53.6569 29.6569C52.1566 31.1571 50.1217 32 48 32C45.8783 32 43.8434 31.1571 42.3431 29.6569C40.8429 28.1566 40 26.1217 40 24V8C40 5.87827 40.8429 3.84344 42.3431 2.34315C43.8434 0.842855 45.8783 0 48 0Z" fill="white"/>
-                    <path d="M80 0C82.1217 0 84.1566 0.842855 85.6569 2.34315C87.1571 3.84344 88 5.87827 88 8V24C88 26.1217 87.1571 28.1566 85.6569 29.6569C84.1566 31.1571 82.1217 32 80 32C77.8783 32 75.8434 31.1571 74.3431 29.6569C72.8429 28.1566 72 26.1217 72 24V8C72 5.87827 72.8429 3.84344 74.3431 2.34315C75.8434 0.842855 77.8783 0 80 0Z" fill="white"/>
+                  <svg
+                    width="112"
+                    height="32"
+                    viewBox="0 0 112 32"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M16 0C18.1217 0 20.1566 0.842855 21.6569 2.34315C23.1571 3.84344 24 5.87827 24 8V24C24 26.1217 23.1571 28.1566 21.6569 29.6569C20.1566 31.1571 18.1217 32 16 32C13.8783 32 11.8434 31.1571 10.3431 29.6569C8.84285 28.1566 8 26.1217 8 24V8C8 5.87827 8.84285 3.84344 10.3431 2.34315C11.8434 0.842855 13.8783 0 16 0Z"
+                      fill="white"
+                    />
+                    <path
+                      d="M48 0C50.1217 0 52.1566 0.842855 53.6569 2.34315C55.1571 3.84344 56 5.87827 56 8V24C56 26.1217 55.1571 28.1566 53.6569 29.6569C52.1566 31.1571 50.1217 32 48 32C45.8783 32 43.8434 31.1571 42.3431 29.6569C40.8429 28.1566 40 26.1217 40 24V8C40 5.87827 40.8429 3.84344 42.3431 2.34315C43.8434 0.842855 45.8783 0 48 0Z"
+                      fill="white"
+                    />
+                    <path
+                      d="M80 0C82.1217 0 84.1566 0.842855 85.6569 2.34315C87.1571 3.84344 88 5.87827 88 8V24C88 26.1217 87.1571 28.1566 85.6569 29.6569C84.1566 31.1571 82.1217 32 80 32C77.8783 32 75.8434 31.1571 74.3431 29.6569C72.8429 28.1566 72 26.1217 72 24V8C72 5.87827 72.8429 3.84344 74.3431 2.34315C75.8434 0.842855 77.8783 0 80 0Z"
+                      fill="white"
+                    />
                   </svg>
                 </div>
               </div>
@@ -204,7 +312,13 @@ export default function Index() {
         <div className="max-w-[1393px] mx-auto">
           <div className="bg-[#192D31] rounded-[30px] px-6 md:px-12 lg:px-[120px] py-12 md:py-[80px] relative overflow-hidden">
             <div className="relative z-10 flex flex-col items-start gap-6">
-              <h2 className="text-[#FAFAF9] text-3xl md:text-4xl lg:text-[52px] font-medium max-w-2xl" style={{ letterSpacing: '-2.6px', fontFamily: 'Quincy CF, -apple-system, sans-serif' }}>
+              <h2
+                className="text-[#FAFAF9] text-3xl md:text-4xl lg:text-[52px] font-medium max-w-2xl"
+                style={{
+                  letterSpacing: "-2.6px",
+                  fontFamily: "Quincy CF, -apple-system, sans-serif",
+                }}
+              >
                 Don't know what to search?
               </h2>
               <div className="w-full flex items-center gap-6 bg-[#DCE9EB] rounded-[24px] border-2 border-[#134E4A] px-6 py-6">
@@ -213,7 +327,10 @@ export default function Index() {
                   type="text"
                   placeholder="I have a fever..."
                   className="flex-1 bg-transparent border-none outline-none text-[#171717] text-2xl md:text-3xl lg:text-[40px] font-medium placeholder:text-[#171717]"
-                  style={{ letterSpacing: '-2px', fontFamily: 'Inter Display, -apple-system, sans-serif' }}
+                  style={{
+                    letterSpacing: "-2px",
+                    fontFamily: "Inter Display, -apple-system, sans-serif",
+                  }}
                 />
               </div>
             </div>
@@ -228,7 +345,13 @@ export default function Index() {
             <div className="flex flex-col lg:flex-row items-start gap-8 lg:gap-12">
               {/* Left Side */}
               <div className="flex flex-col justify-between gap-8 lg:gap-0 lg:h-full lg:min-h-[371px]">
-                <h2 className="text-[#171717] text-3xl md:text-4xl lg:text-[52px] font-medium" style={{ letterSpacing: '-2.6px', fontFamily: 'Inter Display, -apple-system, sans-serif' }}>
+                <h2
+                  className="text-[#171717] text-3xl md:text-4xl lg:text-[52px] font-medium"
+                  style={{
+                    letterSpacing: "-2.6px",
+                    fontFamily: "Inter Display, -apple-system, sans-serif",
+                  }}
+                >
                   What we treat
                 </h2>
                 <div className="flex items-center gap-6">
@@ -266,7 +389,13 @@ export default function Index() {
             <div className="flex flex-col lg:flex-row items-start gap-8">
               {/* Left Side */}
               <div className="flex flex-col justify-between gap-8">
-                <h2 className="text-[#7F1D1D] text-2xl md:text-3xl lg:text-[40px] font-medium max-w-sm opacity-60" style={{ letterSpacing: '-2px', fontFamily: 'Inter Display, -apple-system, sans-serif' }}>
+                <h2
+                  className="text-[#7F1D1D] text-2xl md:text-3xl lg:text-[40px] font-medium max-w-sm opacity-60"
+                  style={{
+                    letterSpacing: "-2px",
+                    fontFamily: "Inter Display, -apple-system, sans-serif",
+                  }}
+                >
                   What we don't treat
                 </h2>
                 <div className="flex items-center gap-0">
@@ -290,7 +419,13 @@ export default function Index() {
                 <DontTreatItem text="Oral Herpes" />
               </div>
             </div>
-            <p className="text-[#7F1D1D] text-lg md:text-2xl font-medium text-center mt-8" style={{ letterSpacing: '-1.2px', fontFamily: 'Inter Display, -apple-system, sans-serif' }}>
+            <p
+              className="text-[#7F1D1D] text-lg md:text-2xl font-medium text-center mt-8"
+              style={{
+                letterSpacing: "-1.2px",
+                fontFamily: "Inter Display, -apple-system, sans-serif",
+              }}
+            >
               we do not prescribe narcotics & sedatives
             </p>
           </div>
@@ -300,39 +435,86 @@ export default function Index() {
   );
 }
 
-function HealthCard({ title, description, image }: { title: string; description: string; image: string }) {
+function HealthCard({
+  title,
+  description,
+  image,
+}: {
+  title: string;
+  description: string;
+  image: string;
+}) {
   return (
-    <Link to="/symptoms" className="fade-in-card opacity-0 bg-[#FCFAF8] rounded-[30px] p-6 flex flex-col justify-center items-center gap-3 transition-all duration-500 hover:shadow-lg cursor-pointer">
+    <Link
+      to="/symptoms"
+      className="fade-in-card opacity-0 bg-[#FCFAF8] rounded-[30px] p-6 flex flex-col justify-center items-center gap-3 transition-all duration-500 hover:shadow-lg cursor-pointer"
+    >
       <div className="w-full flex flex-col justify-center items-start gap-1">
         <div className="w-full flex items-start justify-between gap-1">
-          <h3 className="flex-1 text-[#292524] text-lg font-semibold" style={{ fontFamily: 'Inter Display, -apple-system, sans-serif' }}>
+          <h3
+            className="flex-1 text-[#292524] text-lg font-semibold"
+            style={{ fontFamily: "Inter Display, -apple-system, sans-serif" }}
+          >
             {title}
           </h3>
           <ChevronRight className="w-6 h-6 text-[#111827]" />
         </div>
-        <p className="text-[#57534E] text-sm" style={{ fontFamily: 'Inter, -apple-system, sans-serif' }}>
+        <p
+          className="text-[#57534E] text-sm"
+          style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
+        >
           {description}
         </p>
       </div>
-      <img src={image} alt={title} className="w-full max-w-[195px] h-auto aspect-[39/34] object-contain" loading="lazy" />
+      <img
+        src={image}
+        alt={title}
+        className="w-full max-w-[195px] h-auto aspect-[39/34] object-contain"
+        loading="lazy"
+      />
     </Link>
   );
 }
 
-function FeatureCard({ icon, title, className = "" }: { icon: React.ReactNode; title: string; className?: string }) {
+function FeatureCard({
+  icon,
+  title,
+  className = "",
+}: {
+  icon: React.ReactNode;
+  title: string;
+  className?: string;
+}) {
   return (
-    <div className={`fade-in-card opacity-0 w-full max-w-[321px] rounded-[30px] p-6 flex flex-col justify-between items-start gap-3 shadow-md transition-all duration-500 ${className}`}>
+    <div
+      className={`fade-in-card opacity-0 w-full max-w-[321px] rounded-[30px] p-6 flex flex-col justify-between items-start gap-3 shadow-md transition-all duration-500 ${className}`}
+    >
       {icon}
-      <h3 className="text-[#111827] text-xl md:text-[23px] font-medium leading-6" style={{ fontFamily: 'Quincy CF, -apple-system, sans-serif' }}>
+      <h3
+        className="text-[#111827] text-xl md:text-[23px] font-medium leading-6"
+        style={{ fontFamily: "Quincy CF, -apple-system, sans-serif" }}
+      >
         {title}
       </h3>
     </div>
   );
 }
 
-function ConditionItem({ text, active = false }: { text: string; active?: boolean }) {
+function ConditionItem({
+  text,
+  active = false,
+}: {
+  text: string;
+  active?: boolean;
+}) {
   return (
-    <div className={`${active ? 'text-[#A8A29E]' : 'text-[#D6D3D1]'} text-2xl md:text-3xl lg:text-[52px] font-medium leading-tight`} style={{ letterSpacing: '-2.6px', fontFamily: 'Inter Display, -apple-system, sans-serif' }}>
+    <div
+      className={`${active ? "text-[#A8A29E]" : "text-[#D6D3D1]"} text-2xl md:text-3xl lg:text-[52px] font-medium leading-tight`}
+      style={{
+        letterSpacing: "-2.6px",
+        fontFamily: "Inter Display, -apple-system, sans-serif",
+      }}
+    >
       {text}
     </div>
   );
@@ -340,7 +522,13 @@ function ConditionItem({ text, active = false }: { text: string; active?: boolea
 
 function DontTreatItem({ text }: { text: string }) {
   return (
-    <div className="text-[#7F1D1D] text-xl md:text-2xl lg:text-[32px] font-medium leading-tight" style={{ letterSpacing: '-1.6px', fontFamily: 'Inter Display, -apple-system, sans-serif' }}>
+    <div
+      className="text-[#7F1D1D] text-xl md:text-2xl lg:text-[32px] font-medium leading-tight"
+      style={{
+        letterSpacing: "-1.6px",
+        fontFamily: "Inter Display, -apple-system, sans-serif",
+      }}
+    >
       {text}
     </div>
   );
