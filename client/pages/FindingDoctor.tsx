@@ -1,28 +1,32 @@
 import { useState, useEffect } from "react";
-import { ArrowLeft, Lock, Loader2, Plus, Mic, ArrowUp } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Loader2, Plus, Mic, ArrowUp } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { ROUTES, FONTS } from "@/constants";
 import { useConsultationStore } from "@/stores";
+import { PageHeader, AppFooter } from "@/components/layout";
+import { ChatInput } from "@/components/chat/ChatInput";
 
 export default function FindingDoctor() {
   const navigate = useNavigate();
   const { selectedSymptoms, aiAssessment, additionalInfo, setAdditionalInfo } =
     useConsultationStore();
-  const [localAdditionalInfo, setLocalAdditionalInfo] = useState(additionalInfo);
+  const [localAdditionalInfo, setLocalAdditionalInfo] =
+    useState(additionalInfo);
   const [activeTab, setActiveTab] = useState<"ai" | "medical">("ai");
 
   // Get symptoms from store or use defaults
-  const symptoms = selectedSymptoms.length > 0
-    ? selectedSymptoms.map((id) => {
-        const symptomNames: Record<string, string> = {
-          "4": "Headache",
-          "5": "Fatigue",
-          "9": "Heartburn",
-          "10": "Fatigue",
-        };
-        return symptomNames[id] || `Symptom ${id}`;
-      })
-    : ["Fever", "Persistent Cough", "Headache", "Fatigue"];
+  const symptoms =
+    selectedSymptoms.length > 0
+      ? selectedSymptoms.map((id) => {
+          const symptomNames: Record<string, string> = {
+            "4": "Headache",
+            "5": "Fatigue",
+            "9": "Heartburn",
+            "10": "Fatigue",
+          };
+          return symptomNames[id] || `Symptom ${id}`;
+        })
+      : ["Fever", "Persistent Cough", "Headache", "Fatigue"];
 
   const currentAiAssessment =
     aiAssessment ||
@@ -45,75 +49,11 @@ export default function FindingDoctor() {
 
   return (
     <div className="min-h-screen bg-[#F3F4F6] flex flex-col">
-      {/* Header */}
-      <div className="bg-[#FCFAF8] border-b border-[#D6D3D1] px-6 py-4">
-        <div className="max-w-[1464px] mx-auto flex items-center justify-between relative">
-          {/* Left Side - Back Button & Title */}
-          <div className="flex items-center gap-3">
-            <Link
-              to={ROUTES.ADDRESS_DETAILS}
-              className="flex items-center justify-center w-10 h-10 rounded-full border border-[#D6D3D1] bg-[#FCFAF8] shadow-sm opacity-90 hover:opacity-100 transition-opacity"
-            >
-              <ArrowLeft className="w-6 h-6 text-[#1C1917]" />
-            </Link>
-            <div className="flex flex-col">
-              <span
-                className="text-[#4B5563] text-sm"
-                style={{ fontFamily: FONTS.inter }}
-              >
-                Step 3 of 4
-              </span>
-              <span
-                className="text-[#111827] text-base font-medium"
-                style={{ fontFamily: FONTS.inter }}
-              >
-                Building your medical profile
-              </span>
-            </div>
-          </div>
-
-          {/* Center - Logo */}
-          <div className="absolute left-1/2 transform -translate-x-1/2">
-            <div className="flex items-center gap-[5px]">
-              <svg
-                width="40"
-                height="52"
-                viewBox="0 0 56 73"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M55.5 36.5C55.5 16.3416 43.1584 0 27.5 0C11.8416 0 0 16.3416 0 36.5V36.5484C0 56.7068 12.3416 73.0484 28 73.0484H28.5C44.1584 73.0484 55.5 56.7068 55.5 36.5484V36.5Z"
-                  fill="#0891B2"
-                />
-              </svg>
-              <div className="flex flex-col">
-                <span
-                  className="text-[#0891B2] font-semibold text-xl leading-tight"
-                  style={{
-                    fontFamily: FONTS.interDisplay,
-                  }}
-                >
-                  Sniffles
-                </span>
-                <span
-                  className="text-[#1F2937] font-medium text-base leading-tight"
-                  style={{
-                    fontFamily: FONTS.interDisplay,
-                  }}
-                >
-                  health
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Right Side - Placeholder for symmetry */}
-          <button className="flex items-center justify-center w-10 h-10 rounded-full border border-[#D1D5DB] shadow-sm opacity-0 pointer-events-none">
-            <ArrowLeft className="w-6 h-6 text-[#4B5563]" />
-          </button>
-        </div>
-      </div>
+      <PageHeader
+        backTo={ROUTES.ADDRESS_DETAILS}
+        step="Step 3 of 4"
+        title="Building your medical profile"
+      />
 
       {/* Main Content */}
       <div className="flex-1 overflow-auto bg-[#F3F4F6]">
@@ -155,30 +95,13 @@ export default function FindingDoctor() {
                   </p>
 
                   {/* Additional Info Input */}
-                  <div className="bg-white border border-[#D1D5DB] rounded-[18px] p-5 flex items-center gap-2 w-full h-[57px]">
-                    <div className="flex items-center justify-center p-1 rounded-lg opacity-75 flex-shrink-0">
-                      <Plus className="w-5 h-5 text-[#4B5563]" />
-                    </div>
-                    <input
-                      type="text"
-                      placeholder="Add more information, questions while we find you a doctor"
-                      value={localAdditionalInfo}
-                      onChange={(e) => setLocalAdditionalInfo(e.target.value)}
-                      className="flex-1 bg-transparent border-none outline-none text-[#374151] text-sm placeholder:text-[#374151]"
-                      style={{
-                        fontFamily: "Inter, -apple-system, sans-serif",
-                      }}
-                    />
-                    <button className="flex items-center justify-center p-2 rounded-xl hover:bg-[#F3F4F6] transition-colors flex-shrink-0">
-                      <Mic className="w-6 h-6 text-[#164E63]" />
-                    </button>
-                    <button
-                      onClick={handleSubmit}
-                      className="bg-[#164E63] flex items-center justify-center p-2 rounded-xl hover:bg-[#164E63]/90 transition-colors flex-shrink-0 h-10 w-10"
-                    >
-                      <ArrowUp className="w-5 h-5 text-white" />
-                    </button>
-                  </div>
+                  <ChatInput
+                    value={localAdditionalInfo}
+                    onChange={setLocalAdditionalInfo}
+                    onSend={handleSubmit}
+                    placeholder="Add more information, questions while we find you a doctor"
+                    className="w-full"
+                  />
                 </div>
               </div>
             </div>
@@ -299,34 +222,7 @@ export default function FindingDoctor() {
         </div>
       </div>
 
-      {/* Footer */}
-      <div className="bg-[#FCFAF8] border-t border-[#D6D3D1] px-6 py-4">
-        <div className="max-w-[1464px] mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <button
-              className="px-3 py-2 text-[#78716C] font-semibold text-base hover:text-[#1C1917] transition-colors"
-              style={{ fontFamily: FONTS.inter }}
-            >
-              About Us
-            </button>
-            <button
-              className="px-3 py-2 text-[#78716C] font-semibold text-base hover:text-[#1C1917] transition-colors"
-              style={{ fontFamily: FONTS.inter }}
-            >
-              Privacy Policy
-            </button>
-          </div>
-          <div className="flex items-center gap-2 px-3 py-2 border border-[#78716C] rounded-full">
-            <Lock className="w-6 h-6 text-[#78716C]" />
-            <span
-              className="text-[#78716C] font-semibold text-base"
-              style={{ fontFamily: FONTS.inter }}
-            >
-              HIPAA Compliant
-            </span>
-          </div>
-        </div>
-      </div>
+      <AppFooter />
     </div>
   );
 }
