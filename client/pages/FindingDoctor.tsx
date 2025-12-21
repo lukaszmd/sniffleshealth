@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ArrowLeft, Lock, Loader2, Plus, Mic, ArrowUp } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function FindingDoctor() {
+  const navigate = useNavigate();
   const [additionalInfo, setAdditionalInfo] = useState("");
   const [activeTab, setActiveTab] = useState<"ai" | "medical">("ai");
 
@@ -10,6 +11,15 @@ export default function FindingDoctor() {
   const symptoms = ["Fever", "Persistent Cough", "Headache", "Fatigue"];
   const aiAssessment =
     "The AI has identified a potential viral infection based on the symptoms provided. Common causes could include influenza or a common cold. This is not a final diagnosis.";
+
+  // Simulate finding doctor after a delay
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      navigate("/doctor-chat");
+    }, 3000); // Navigate after 3 seconds
+
+    return () => clearTimeout(timer);
+  }, [navigate]);
 
   const handleSubmit = () => {
     // Handle submission of additional information
