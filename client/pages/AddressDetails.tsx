@@ -18,10 +18,10 @@ export default function AddressDetails() {
   };
 
   const handleContinue = () => {
-    // Navigate to next step after address details
+    // Navigate to finding doctor page after address details
     // In a real app, this would validate and save the data
     console.log("Form data:", formData);
-    navigate("/consultation");
+    navigate("/finding-doctor");
   };
 
   return (

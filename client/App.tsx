@@ -16,6 +16,7 @@ import PaymentConfirmation from "./pages/PaymentConfirmation";
 import HIPAACompliance from "./pages/HIPAACompliance";
 import KYC from "./pages/KYC";
 import AddressDetails from "./pages/AddressDetails";
+import FindingDoctor from "./pages/FindingDoctor";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -43,6 +44,7 @@ const App = () => (
           <Route path="/hipaa-compliance" element={<HIPAACompliance />} />
           <Route path="/kyc" element={<KYC />} />
           <Route path="/address-details" element={<AddressDetails />} />
+          <Route path="/finding-doctor" element={<FindingDoctor />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
