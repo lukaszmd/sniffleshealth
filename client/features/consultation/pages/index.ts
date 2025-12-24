@@ -7,3 +7,4 @@ export { default as MedicalProfile } from "./MedicalProfile";
 export { default as Consultation } from "./Consultation";
 export { default as SummaryConsultation } from "./SummaryConsultation";
 
+
