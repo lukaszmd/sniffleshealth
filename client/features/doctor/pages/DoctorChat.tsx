@@ -1,9 +1,82 @@
+import { useEffect } from "react";
 import { ROUTES } from "@/constants";
 import { PageHeader, AppFooter } from "@/components/layout";
 import { AIMessage, UserMessage } from "@/components/chat/MessageBubble";
 import { ChatInput } from "@/components/chat/ChatInput";
 import { useChat, useConsultationFlow } from "@/features/consultation/hooks";
 import { useScrollToBottom } from "@/hooks";
+
+const DOCTOR_CHAT_INITIAL_MESSAGES = [
+  {
+    type: "ai" as const,
+    text: "Hello, I'm Dr. Evelyn Reed. How can I assist you today?",
+    sender: "Dr. Evelyn Reed, MD",
+    timestamp: new Date(),
+  },
+  {
+    type: "user" as const,
+    text: "Hi doctor, I've been having a bad headache and some fatigue for the past two days.",
+    timestamp: new Date(),
+  },
+  {
+    type: "ai" as const,
+    text: "I'm sorry to hear that. Can you describe your headache—where is it located and how severe is the pain?",
+    sender: "Dr. Evelyn Reed, MD",
+    timestamp: new Date(),
+  },
+  {
+    type: "user" as const,
+    text: "It's mostly in my forehead, and the pain is moderate.",
+    timestamp: new Date(),
+  },
+  {
+    type: "ai" as const,
+    text: "Do you have any other symptoms, such as fever, cough, or congestion?",
+    sender: "Dr. Evelyn Reed, MD",
+    timestamp: new Date(),
+  },
+  {
+    type: "user" as const,
+    text: "I've had a slight fever and a little cough.",
+    timestamp: new Date(),
+  },
+  {
+    type: "ai" as const,
+    text: "Understood. Have you experienced any nausea, vision changes, or sensitivity to light?",
+    sender: "Dr. Evelyn Reed, MD",
+    timestamp: new Date(),
+  },
+  {
+    type: "user" as const,
+    text: "No, none of those.",
+    timestamp: new Date(),
+  },
+  {
+    type: "ai" as const,
+    text: "Do you have any chronic medical conditions or take any medications regularly?",
+    sender: "Dr. Evelyn Reed, MD",
+    timestamp: new Date(),
+  },
+  {
+    type: "user" as const,
+    text: "No chronic conditions and I'm not taking any medications.",
+    timestamp: new Date(),
+  },
+  {
+    type: "ai" as const,
+    text: "Thank you for sharing this information. I recommend you review the summary on the right and let me know if anything is missing, or click 'Confirm & Continue' to proceed.",
+    sender: "Dr. Evelyn Reed, MD",
+    timestamp: new Date(),
+  },
+  {
+    type: "ai" as const,
+    text: "Based on our consultation, I've prepared your prescription. You can view and download it here:",
+    sender: "Dr. Evelyn Reed, MD",
+    linkText: "View Your Prescription",
+    linkUrl: ROUTES.PRESCRIPTION,
+    timestamp: new Date(),
+  },
+];
 
 export default function DoctorChat() {
   const { selectedSymptoms, aiAssessment } = useConsultationFlow();
@@ -13,68 +86,16 @@ export default function DoctorChat() {
     setInputValue,
     sendMessage,
     initializeMessages,
-  } = useChat({
-    autoInitialize: true,
-    initialMessages: [
-      {
-        type: "ai",
-        text: "Hello, I'm Dr. Evelyn Reed. How can I assist you today?",
-        sender: "Dr. Evelyn Reed, MD",
-      },
-      {
-        type: "user",
-        text: "Hi doctor, I've been having a bad headache and some fatigue for the past two days.",
-      },
-      {
-        type: "ai",
-        text: "I'm sorry to hear that. Can you describe your headache—where is it located and how severe is the pain?",
-        sender: "Dr. Evelyn Reed, MD",
-      },
-      {
-        type: "user",
-        text: "It's mostly in my forehead, and the pain is moderate.",
-      },
-      {
-        type: "ai",
-        text: "Do you have any other symptoms, such as fever, cough, or congestion?",
-        sender: "Dr. Evelyn Reed, MD",
-      },
-      {
-        type: "user",
-        text: "I've had a slight fever and a little cough.",
-      },
-      {
-        type: "ai",
-        text: "Understood. Have you experienced any nausea, vision changes, or sensitivity to light?",
-        sender: "Dr. Evelyn Reed, MD",
-      },
-      {
-        type: "user",
-        text: "No, none of those.",
-      },
-      {
-        type: "ai",
-        text: "Do you have any chronic medical conditions or take any medications regularly?",
-        sender: "Dr. Evelyn Reed, MD",
-      },
-      {
-        type: "user",
-        text: "No chronic conditions and I'm not taking any medications.",
-      },
-      {
-        type: "ai",
-        text: "Thank you for sharing this information. I recommend you review the summary on the right and let me know if anything is missing, or click 'Confirm & Continue' to proceed.",
-        sender: "Dr. Evelyn Reed, MD",
-      },
-      {
-        type: "ai",
-        text: "Based on our consultation, I've prepared your prescription. You can view and download it here:",
-        sender: "Dr. Evelyn Reed, MD",
-        linkText: "View Your Prescription",
-        linkUrl: ROUTES.PRESCRIPTION,
-      },
-    ],
-  });
+    clearMessages,
+  } = useChat();
+
+  // Clear previous chat and initialize with doctor chat messages when component mounts
+  useEffect(() => {
+    clearMessages();
+    initializeMessages(DOCTOR_CHAT_INITIAL_MESSAGES);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Only run on mount
+
   const { messagesEndRef } = useScrollToBottom(messages);
 
   const handleSend = () => {
