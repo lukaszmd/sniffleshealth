@@ -19,7 +19,7 @@ export default function SelectConsultationType() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F3F4F6] flex flex-col">
+    <div className="min-h-screen bg-neutral-light-gray flex flex-col">
       <PageHeader
         backTo={ROUTES.CONSULTATION}
         step={stepInfo?.step}
@@ -27,9 +27,9 @@ export default function SelectConsultationType() {
       />
 
       {/* Main Content */}
-      <div className="flex-1 overflow-auto bg-[#F3F4F6]">
+      <div className="flex-1 overflow-auto bg-neutral-light-gray">
         <div className="max-w-[1464px] mx-auto p-6">
-          <div className="bg-white border border-[#D6D3D1] rounded-xl overflow-hidden relative min-h-[750px]">
+          <div className="bg-white border border-neutral-gray rounded-xl overflow-hidden relative min-h-[750px]">
             {/* Background decoration */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
               <svg
@@ -50,12 +50,7 @@ export default function SelectConsultationType() {
               <div className="flex flex-col gap-6 items-center max-w-[650px]">
                 {/* Header */}
                 <div className="flex flex-col gap-6 items-center">
-                  <h1
-                    className="text-[44px] font-medium leading-[44px] tracking-[-2.2px] text-center text-[#1F2937]"
-                    style={{
-                      fontFamily: FONTS.interDisplay,
-                    }}
-                  >
+                  <h1 className="text-5xl font-inter-display font-medium leading-44 tracking-tight text-center text-neutral-charcoal">
                     Select your consultation type
                   </h1>
 
@@ -64,49 +59,43 @@ export default function SelectConsultationType() {
                     {/* Text Based Consultation Card */}
                     <button
                       onClick={() => setSelectedType("text")}
-                      className={`w-[302px] bg-white border rounded-[18px] p-[20px] flex flex-col gap-2 items-start transition-all ${
+                      className={`w-[302px] bg-white border rounded-2xl p-5 flex flex-col gap-2 items-start transition-all ${
                         selectedType === "text"
-                          ? "border-2 border-[#0891B2]"
-                          : "border border-[#D1D5DB]"
+                          ? "border-2 border-brand-cyan"
+                          : "border border-border-medium"
                       }`}
                     >
                       <p
-                        className={`text-base leading-6 w-[194px] ${
+                        className={`text-base font-inter leading-6 w-[194px] ${
                           selectedType === "text"
-                            ? "font-semibold text-[#1C1917] tracking-[-0.3125px]"
-                            : "font-medium text-[#4B5563]"
+                            ? "font-semibold text-text-primary tracking-body-tight"
+                            : "font-medium text-text-secondary"
                         }`}
-                        style={{
-                          fontFamily: "Inter, -apple-system, sans-serif",
-                        }}
                       >
                         Single Text Based Consultation
                       </p>
                       <div className="flex items-center justify-between w-full">
                         <p
-                          className={`text-[32px] font-medium leading-[32px] tracking-[-1.6px] ${
+                          className={`text-2xl font-inter-display font-medium leading-8 tracking-tight ${
                             selectedType === "text"
-                              ? "text-[#06B6D4]"
-                              : "text-[#1F2937]"
+                              ? "text-cyan-500"
+                              : "text-neutral-charcoal"
                           }`}
-                          style={{
-                            fontFamily: FONTS.interDisplay,
-                          }}
                         >
                           $25
                         </p>
                         <div
-                          className={`flex items-center p-1 rounded-[2222px] ${
+                          className={`flex items-center p-1 rounded-full ${
                             selectedType === "text"
-                              ? "bg-[#C9E7EC]"
-                              : "bg-[#F3F4F6]"
+                              ? "bg-brand-cyan-pale"
+                              : "bg-neutral-light-gray"
                           }`}
                         >
                           <MessageSquare
                             className={`w-6 h-6 ${
                               selectedType === "text"
-                                ? "text-[#0891B2]"
-                                : "text-[#6B7280]"
+                                ? "text-brand-cyan"
+                                : "text-text-light"
                             }`}
                           />
                         </div>
@@ -116,65 +105,59 @@ export default function SelectConsultationType() {
                     {/* Voice or Video call consultation Card */}
                     <button
                       onClick={() => setSelectedType("video")}
-                      className={`w-[302px] bg-white border rounded-[18px] p-[20px] flex flex-col gap-2 items-start transition-all ${
+                      className={`w-[302px] bg-white border rounded-2xl p-5 flex flex-col gap-2 items-start transition-all ${
                         selectedType === "video"
-                          ? "border-2 border-[#0891B2]"
-                          : "border border-[#D1D5DB]"
+                          ? "border-2 border-brand-cyan"
+                          : "border border-border-medium"
                       }`}
                     >
                       <p
-                        className={`text-base leading-6 w-[194px] ${
+                        className={`text-base font-inter leading-6 w-[194px] ${
                           selectedType === "video"
-                            ? "font-semibold text-[#1C1917] tracking-[-0.3125px]"
-                            : "font-medium text-[#4B5563]"
+                            ? "font-semibold text-text-primary tracking-body-tight"
+                            : "font-medium text-text-secondary"
                         }`}
-                        style={{
-                          fontFamily: "Inter, -apple-system, sans-serif",
-                        }}
                       >
                         Voice or Video call consultation
                       </p>
                       <div className="flex items-center justify-between w-full">
                         <p
-                          className={`text-[32px] font-medium leading-[32px] tracking-[-1.6px] ${
+                          className={`text-2xl font-inter-display font-medium leading-8 tracking-tight ${
                             selectedType === "video"
-                              ? "text-[#06B6D4]"
-                              : "text-[#1F2937]"
+                              ? "text-cyan-500"
+                              : "text-neutral-charcoal"
                           }`}
-                          style={{
-                            fontFamily: FONTS.interDisplay,
-                          }}
                         >
                           $40
                         </p>
                         <div className="flex gap-[7px] items-center">
                           <div
-                            className={`flex items-center justify-center p-1 rounded-[2222px] ${
+                            className={`flex items-center justify-center p-1 rounded-full ${
                               selectedType === "video"
-                                ? "bg-[#C9E7EC]"
-                                : "bg-[#F3F4F6]"
+                                ? "bg-brand-cyan-pale"
+                                : "bg-neutral-light-gray"
                             }`}
                           >
                             <Video
                               className={`w-6 h-6 ${
                                 selectedType === "video"
-                                  ? "text-[#0891B2]"
-                                  : "text-[#6B7280]"
+                                  ? "text-brand-cyan"
+                                  : "text-text-light"
                               }`}
                             />
                           </div>
                           <div
-                            className={`flex items-center justify-center p-1 rounded-[2222px] ${
+                            className={`flex items-center justify-center p-1 rounded-full ${
                               selectedType === "video"
-                                ? "bg-[#C9E7EC]"
-                                : "bg-[#F3F4F6]"
+                                ? "bg-brand-cyan-pale"
+                                : "bg-neutral-light-gray"
                             }`}
                           >
                             <Mic
                               className={`w-6 h-6 ${
                                 selectedType === "video"
-                                  ? "text-[#0891B2]"
-                                  : "text-[#6B7280]"
+                                  ? "text-brand-cyan"
+                                  : "text-text-light"
                               }`}
                             />
                           </div>
@@ -186,11 +169,7 @@ export default function SelectConsultationType() {
                   {/* Continue Button */}
                   <button
                     onClick={handleContinue}
-                    className="bg-[#0E3240] text-white px-6 py-3 rounded-[18px] font-semibold text-base hover:bg-[#0E3240]/90 transition-colors h-[57px] flex items-center justify-center"
-                    style={{
-                      fontFamily: "Inter, -apple-system, sans-serif",
-                      lineHeight: "24px",
-                    }}
+                    className="bg-brand-cyan-dark text-white font-inter px-6 py-3 rounded-2xl font-semibold text-base leading-6 hover:bg-brand-cyan-dark/90 transition-colors h-[57px] flex items-center justify-center"
                   >
                     Continue with payment
                   </button>

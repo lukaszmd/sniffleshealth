@@ -14,6 +14,7 @@ export default {
     },
     extend: {
       colors: {
+        // Semantic color system using CSS variables
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -57,6 +58,61 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        // Brand colors - direct hex values for utility classes
+        brand: {
+          cyan: "#0891B2",
+          "cyan-dark": "#164E63",
+          "cyan-darker": "#045866",
+          "cyan-message": "#3e5e6a", // User message bubble color
+          "cyan-light": "#DCE9EB",
+          "cyan-lighter": "#ECF3F4",
+          "cyan-lightest": "#D9F2F7",
+          "cyan-pale": "#C9E7EC",
+          "cyan-pale-blue": "#B5E3EA",
+        },
+        neutral: {
+          white: "#FFFFFF",
+          "off-white": "#FCFAF8",
+          "light-gray": "#F3F4F6",
+          gray: "#D6D3D1",
+          "dark-gray": "#78716C",
+          "darker-gray": "#4B5563",
+          "darkest-gray": "#1C1917",
+          black: "#111827",
+          charcoal: "#1F2937",
+          slate: "#292524",
+          stone: "#57534E",
+        },
+        semantic: {
+          success: "#00C950",
+          green: "#34D399",
+          error: "#7F1D1D",
+          "error-light": "#FCE5E5",
+          "error-medium": "#AD6767",
+        },
+        text: {
+          primary: "#1C1917",
+          secondary: "#4B5563",
+          tertiary: "#78716C",
+          light: "#6A7282",
+          dark: "#111827",
+          charcoal: "#1F2937",
+          slate: "#364153",
+        },
+        bg: {
+          default: "#FCFAF8",
+          light: "#F3F4F6",
+          white: "#FFFFFF",
+          "off-white": "#FCFAF8",
+          dark: "#192D31",
+          darker: "#134E4A",
+        },
+        "border-color": {
+          light: "#D6D3D1",
+          medium: "#D1D5DB",
+          dark: "#E5E7EB",
+        },
+        // Legacy support (will be deprecated)
         cyan: {
           600: "#0891B2",
         },
@@ -72,14 +128,73 @@ export default {
         },
       },
       fontFamily: {
-        inter: ['Inter', '-apple-system', 'sans-serif'],
-        'inter-display': ['Inter Display', '-apple-system', 'sans-serif'],
-        quincy: ['Quincy CF', '-apple-system', 'sans-serif'],
+        inter: ["Inter", "-apple-system", "sans-serif"],
+        "inter-display": ["Inter Display", "-apple-system", "sans-serif"],
+        quincy: ["Quincy CF", "-apple-system", "sans-serif"],
+        // Aliases for consistency
+        sans: ["Inter", "-apple-system", "sans-serif"],
+        display: ["Inter Display", "-apple-system", "sans-serif"],
+      },
+      fontSize: {
+        // Typography scale matching design system
+        xs: ["12px", { lineHeight: "16px" }],
+        sm: ["14px", { lineHeight: "20px" }],
+        base: ["16px", { lineHeight: "24px" }],
+        lg: ["19px", { lineHeight: "28px" }],
+        xl: ["23px", { lineHeight: "32px" }],
+        "2xl": ["32px", { lineHeight: "40px" }],
+        "3xl": ["34px", { lineHeight: "42px" }],
+        "4xl": ["40px", { lineHeight: "48px" }],
+        "5xl": ["44px", { lineHeight: "52px" }],
+        "6xl": ["52px", { lineHeight: "60px" }],
+        "7xl": ["72px", { lineHeight: "80px" }],
+      },
+      letterSpacing: {
+        // Letter spacing scale
+        tighter: "-0.05em",
+        tight: "-0.025em",
+        normal: "0em",
+        wide: "0.025em",
+        wider: "0.05em",
+        widest: "0.1em",
+        // Specific values from design system
+        "display-tight": "-2.6px",
+        "display-tighter": "-3.6px",
+        "display-normal": "-2px",
+        "body-tight": "-0.312px",
+      },
+      lineHeight: {
+        // Line height scale
+        none: "1",
+        tight: "1.25",
+        snug: "1.375",
+        normal: "1.5",
+        relaxed: "1.625",
+        loose: "2",
+        // Specific values from design system
+        "34": "34px",
+        "36": "36px",
+      },
+      spacing: {
+        // Extended spacing scale for design system values
+        "18": "4.5rem", // 72px
+        "15": "3.75rem", // 60px
+        "22": "5.5rem", // 88px
+        "30": "7.5rem", // 120px
       },
       borderRadius: {
-        lg: "var(--radius)",
+        // Design system border radius values
+        none: "0",
+        sm: "0.125rem", // 2px
+        DEFAULT: "0.5rem", // 8px
         md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        lg: "var(--radius)", // 0.5rem
+        xl: "0.75rem", // 12px
+        "2xl": "1.125rem", // 18px
+        "2.5xl": "1.5rem", // 24px
+        "3xl": "1.875rem", // 30px
+        "4xl": "2.5rem", // 40px
+        full: "9999px",
       },
       keyframes: {
         "accordion-down": {

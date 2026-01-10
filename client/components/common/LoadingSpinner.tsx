@@ -25,12 +25,12 @@ export function LoadingSpinner({
     <div className={cn("flex flex-col items-center justify-center gap-2", className)}>
       <Loader2
         className={cn(
-          "text-[#0891B2] animate-spin",
+          "text-brand-cyan animate-spin",
           sizeClasses[size]
         )}
       />
       {text && (
-        <p className="text-[#6A7282] text-sm" style={{ fontFamily: "Inter, -apple-system, sans-serif" }}>
+        <p className="text-text-light text-sm font-inter">
           {text}
         </p>
       )}

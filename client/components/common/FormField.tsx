@@ -31,32 +31,19 @@ export function FormField({
       {label && (
         <Label
           className={cn(
-            "text-[#111827] text-sm font-medium",
-            required && "after:content-['*'] after:ml-1 after:text-[#DC2626]",
+            "text-text-dark text-sm font-inter font-medium",
+            required && "after:content-['*'] after:ml-1 after:text-destructive",
             labelClassName,
           )}
-          style={{ fontFamily: FONTS.inter }}
         >
           {label}
         </Label>
       )}
       {children}
       {hint && !error && (
-        <p
-          className="text-[#6A7282] text-xs"
-          style={{ fontFamily: FONTS.inter }}
-        >
-          {hint}
-        </p>
+        <p className="text-text-light text-xs font-inter">{hint}</p>
       )}
-      {error && (
-        <p
-          className="text-[#DC2626] text-xs"
-          style={{ fontFamily: FONTS.inter }}
-        >
-          {error}
-        </p>
-      )}
+      {error && <p className="text-destructive text-xs font-inter">{error}</p>}
     </div>
   );
 }

@@ -23,85 +23,54 @@ export default function PaymentConfirmation() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F3F4F6] flex flex-col">
+    <div className="min-h-screen bg-neutral-light-gray flex flex-col">
       <PageHeader showLogo={true} />
 
       {/* Main Content */}
-      <div className="flex-1 overflow-auto bg-[#F3F4F6] flex items-center justify-center">
+      <div className="flex-1 overflow-auto bg-neutral-light-gray flex items-center justify-center">
         <div className="max-w-[1464px] mx-auto p-6 w-full flex items-center justify-center">
-          <div
-            className="w-[482px] border border-[#D6D3D1] rounded-[24px] overflow-hidden relative min-h-[745px] flex flex-col"
-            style={{
-              backgroundImage:
-                "linear-gradient(179.869deg, rgb(217, 242, 247) 0%, rgb(255, 255, 255) 23.573%)",
-            }}
-          >
+          <div className="w-[482px] border border-neutral-gray rounded-3xl overflow-hidden relative min-h-[745px] flex flex-col bg-gradient-to-b from-brand-cyan-lightest to-white">
             {/* Content */}
             <div className="flex flex-col items-center justify-center h-full p-6 pt-10 pb-0">
               <div className="flex flex-col gap-6 items-center w-full max-w-[400px]">
                 {/* Success Icon */}
-                <div className="bg-[#C9E7EC] flex items-center justify-center p-1 rounded-[2222px]">
-                  <Check className="w-6 h-6 text-[#0891B2]" />
+                <div className="bg-brand-cyan-pale flex items-center justify-center p-1 rounded-full">
+                  <Check className="w-6 h-6 text-brand-cyan" />
                 </div>
 
                 {/* Success Heading */}
-                <h1
-                  className="text-[44px] font-medium leading-[44px] tracking-[-2.2px] text-center text-[#1F2937]"
-                  style={{
-                    fontFamily: "Inter Display, -apple-system, sans-serif",
-                  }}
-                >
+                <h1 className="text-5xl font-inter-display font-medium leading-44 tracking-tight text-center text-neutral-charcoal">
                   Payment Successful
                 </h1>
 
                 {/* Success Message */}
-                <p
-                  className="text-[#4B5563] text-base leading-6 text-center w-full"
-                  style={{
-                    fontFamily: "Inter, -apple-system, sans-serif",
-                  }}
-                >
+                <p className="text-text-secondary text-base font-inter leading-6 text-center w-full">
                   Your payment of USD 25 is complete. You can download the
                   invoice for the payment below
                 </p>
 
                 {/* Invoice Card */}
-                <div className="w-[302px] bg-white border border-[#D1D5DB] rounded-[18px] p-5 flex flex-col gap-2">
+                <div className="w-[302px] bg-white border border-border-medium rounded-2xl p-5 flex flex-col gap-2">
                   {/* Invoice Details */}
                   <div className="flex flex-col gap-2 items-start w-full">
-                    <p
-                      className="text-[#4B5563] text-base font-medium leading-6"
-                      style={{
-                        fontFamily: "Inter, -apple-system, sans-serif",
-                      }}
-                    >
+                    <p className="text-text-secondary text-base font-inter font-medium leading-6">
                       Invoice ID #{invoiceId}
                     </p>
-                    <p
-                      className="text-[#4B5563] text-base font-medium leading-6"
-                      style={{
-                        fontFamily: "Inter, -apple-system, sans-serif",
-                      }}
-                    >
+                    <p className="text-text-secondary text-base font-inter font-medium leading-6">
                       {paymentDate}
                     </p>
                   </div>
 
                   {/* Amount and Download */}
                   <div className="flex items-center justify-between w-full">
-                    <p
-                      className="text-[32px] font-medium leading-[32px] tracking-[-1.6px] text-[#1F2937]"
-                      style={{
-                        fontFamily: "Inter Display, -apple-system, sans-serif",
-                      }}
-                    >
+                    <p className="text-2xl font-inter-display font-medium leading-8 tracking-tight text-neutral-charcoal">
                       {amount}
                     </p>
                     <button
                       onClick={handleDownloadInvoice}
-                      className="bg-[#F3F4F6] flex items-center justify-center p-1 rounded-[2222px] hover:bg-[#E5E7EB] transition-colors"
+                      className="bg-neutral-light-gray flex items-center justify-center p-1 rounded-full hover:bg-border-dark transition-colors"
                     >
-                      <Download className="w-6 h-6 text-[#6B7280]" />
+                      <Download className="w-6 h-6 text-text-light" />
                     </button>
                   </div>
                 </div>
@@ -109,11 +78,7 @@ export default function PaymentConfirmation() {
                 {/* Continue Button */}
                 <button
                   onClick={handleContinue}
-                  className="bg-[#0E3240] text-white px-6 py-3 rounded-[18px] font-semibold text-base hover:bg-[#0E3240]/90 transition-colors h-[57px] flex items-center justify-center w-full"
-                  style={{
-                    fontFamily: "Inter, -apple-system, sans-serif",
-                    lineHeight: "24px",
-                  }}
+                  className="bg-brand-cyan-dark text-white font-inter px-6 py-3 rounded-2xl font-semibold text-base leading-6 hover:bg-brand-cyan-dark/90 transition-colors h-[57px] flex items-center justify-center w-full"
                 >
                   Continue with consultation
                 </button>

@@ -122,7 +122,7 @@ export default function DoctorChat() {
     "The AI has identified a potential viral infection based on the symptoms provided. Common causes could include influenza or a common cold. This is not a final diagnosis.";
 
   return (
-    <div className="min-h-screen bg-[#F3F4F6] flex flex-col">
+    <div className="min-h-screen bg-neutral-light-gray flex flex-col">
       <PageHeader
         backTo={ROUTES.FINDING_DOCTOR}
         step="Step 3 of 4"
@@ -130,54 +130,31 @@ export default function DoctorChat() {
       />
 
       {/* Main Content */}
-      <div className="flex-1 overflow-hidden bg-[#F3F4F6]">
+      <div className="flex-1 overflow-hidden bg-neutral-light-gray">
         <div className="max-w-[1464px] mx-auto p-6 h-full">
           <div className="flex gap-3 h-full min-h-[750px]">
             {/* Left Panel - Chat */}
-            <div className="flex-1 bg-white border border-[#D6D3D1] rounded-xl overflow-hidden flex flex-col max-w-[1110px] h-full">
+            <div className="flex-1 bg-white border border-neutral-gray rounded-xl overflow-hidden flex flex-col max-w-[1110px] h-full">
               {/* Connected Header */}
-              <div className="border-b border-[#D6D3D1] p-6 flex-shrink-0">
+              <div className="border-b border-neutral-gray p-6 flex-shrink-0">
                 <div className="flex flex-col gap-3">
                   <div className="flex items-center gap-2">
-                    <div className="bg-[#00C950] rounded-full w-2 h-2"></div>
-                    <span
-                      className="text-[#4A5565] text-sm leading-5"
-                      style={{
-                        fontFamily: "Inter, -apple-system, sans-serif",
-                        letterSpacing: "-0.1504px",
-                      }}
-                    >
+                    <div className="bg-semantic-success rounded-full w-2 h-2"></div>
+                    <span className="text-text-secondary text-sm font-inter leading-5 tracking-tight">
                       Connected with
                     </span>
                   </div>
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-[#ECF3F4] flex items-center justify-center flex-shrink-0">
-                      <span
-                        className="text-[#4A5565] text-base font-normal leading-6"
-                        style={{
-                          fontFamily: "Inter, -apple-system, sans-serif",
-                          letterSpacing: "-0.312px",
-                        }}
-                      >
+                    <div className="w-12 h-12 rounded-full bg-brand-cyan-lighter flex items-center justify-center flex-shrink-0">
+                      <span className="text-text-secondary text-base font-inter font-normal leading-6 tracking-body-tight">
                         ER
                       </span>
                     </div>
                     <div className="flex flex-col">
-                      <h3
-                        className="text-[#1C1917] text-base font-medium leading-6"
-                        style={{
-                          fontFamily: "Inter, -apple-system, sans-serif",
-                        }}
-                      >
+                      <h3 className="text-text-primary text-base font-inter font-medium leading-6">
                         Dr. Evelyn Reed, MD
                       </h3>
-                      <p
-                        className="text-[#78716C] text-sm leading-5"
-                        style={{
-                          fontFamily: "Inter, -apple-system, sans-serif",
-                          letterSpacing: "-0.1504px",
-                        }}
-                      >
+                      <p className="text-neutral-dark-gray text-sm font-inter leading-5 tracking-tight">
                         General Practice | 12 yrs experience | NYC
                       </p>
                     </div>
@@ -210,7 +187,7 @@ export default function DoctorChat() {
               </div>
 
               {/* Input Area */}
-              <div className="border-t border-[#E5E7EB] flex-shrink-0">
+              <div className="border-t border-border-dark flex-shrink-0">
                 <div className="flex items-center justify-center p-6">
                   <ChatInput
                     value={inputValue}
@@ -223,13 +200,7 @@ export default function DoctorChat() {
             </div>
 
             {/* Right Panel - AI Summary */}
-            <div
-              className="w-[342px] border border-[#D6D3D1] rounded-[10px] overflow-hidden flex flex-col"
-              style={{
-                background:
-                  "linear-gradient(179.813deg, rgb(217, 242, 247) 0%, rgb(255, 255, 255) 23.573%)",
-              }}
-            >
+            <div className="w-[342px] border border-neutral-gray rounded-xl overflow-hidden flex flex-col bg-gradient-to-b from-brand-cyan-lightest to-white">
               {/* Icon */}
               <div className="flex justify-center p-6">
                 <div className="w-[57px] h-[57px] flex items-center justify-center">
@@ -253,44 +224,24 @@ export default function DoctorChat() {
               <div className="flex flex-col gap-11 flex-1 px-6 py-0">
                 {/* AI Preliminary Assessment */}
                 <div className="flex flex-col gap-3">
-                  <h2
-                    className="text-[#1F2937] text-2xl font-semibold leading-8"
-                    style={{
-                      fontFamily: "Inter, -apple-system, sans-serif",
-                    }}
-                  >
+                  <h2 className="text-neutral-charcoal text-2xl font-inter font-semibold leading-8">
                     AI Preliminary Assessment
                   </h2>
-                  <p
-                    className="text-[#1C1917] text-base font-normal leading-6"
-                    style={{
-                      fontFamily: "Inter, -apple-system, sans-serif",
-                      letterSpacing: "-0.312px",
-                    }}
-                  >
+                  <p className="text-text-primary text-base font-inter font-normal leading-6 tracking-body-tight">
                     {currentAiAssessment}
                   </p>
                 </div>
 
                 {/* Reported Symptoms */}
                 <div className="flex flex-col gap-3">
-                  <h3
-                    className="text-[#1C1917] text-base font-normal leading-6"
-                    style={{
-                      fontFamily: "Inter, -apple-system, sans-serif",
-                      letterSpacing: "-0.312px",
-                    }}
-                  >
+                  <h3 className="text-text-primary text-base font-inter font-normal leading-6 tracking-body-tight">
                     Reported Symptoms
                   </h3>
                   <div className="flex flex-wrap gap-2">
                     {symptoms.map((symptom, index) => (
                       <span
                         key={index}
-                        className="bg-[#F3F4F6] border border-transparent rounded-full px-[13px] py-[5px] text-[#364153] text-xs font-medium leading-4"
-                        style={{
-                          fontFamily: "Inter, -apple-system, sans-serif",
-                        }}
+                        className="bg-neutral-light-gray border border-transparent rounded-full px-[13px] py-[5px] text-text-slate text-xs font-inter font-medium leading-4"
                       >
                         {symptom}
                       </span>
@@ -300,21 +251,11 @@ export default function DoctorChat() {
               </div>
 
               {/* Tabs */}
-              <div className="bg-white border-t border-[#D6D3D1] p-3 flex items-center gap-6">
-                <button
-                  className="bg-[#F5F5F4] px-3 py-1 rounded-lg font-medium text-base text-[#1C1917] leading-6"
-                  style={{
-                    fontFamily: "Inter, -apple-system, sans-serif",
-                  }}
-                >
+              <div className="bg-white border-t border-neutral-gray p-3 flex items-center gap-6">
+                <button className="bg-warm-50 px-3 py-1 rounded-lg font-inter font-medium text-base text-text-primary leading-6">
                   AI Summary
                 </button>
-                <button
-                  className="px-3 py-1 rounded-lg font-medium text-base text-[#78716C] hover:text-[#1C1917] transition-colors leading-6"
-                  style={{
-                    fontFamily: "Inter, -apple-system, sans-serif",
-                  }}
-                >
+                <button className="px-3 py-1 rounded-lg font-inter font-medium text-base text-neutral-dark-gray hover:text-text-primary transition-colors leading-6">
                   Medical Summary
                 </button>
               </div>

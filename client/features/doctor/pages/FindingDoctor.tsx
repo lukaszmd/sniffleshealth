@@ -48,7 +48,7 @@ export default function FindingDoctor() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F3F4F6] flex flex-col">
+    <div className="min-h-screen bg-neutral-light-gray flex flex-col">
       <PageHeader
         backTo={ROUTES.ADDRESS_DETAILS}
         step="Step 3 of 4"
@@ -56,40 +56,30 @@ export default function FindingDoctor() {
       />
 
       {/* Main Content */}
-      <div className="flex-1 overflow-auto bg-[#F3F4F6]">
+      <div className="flex-1 overflow-auto bg-neutral-light-gray">
         <div className="max-w-[1464px] mx-auto p-6">
           <div className="flex gap-3 h-full min-h-[750px]">
             {/* Left Panel - Finding Doctor */}
-            <div className="flex-1 bg-white border border-[#D6D3D1] rounded-xl overflow-hidden relative">
+            <div className="flex-1 bg-white border border-neutral-gray rounded-xl overflow-hidden relative">
               {/* Content */}
               <div className="relative z-10 flex flex-col items-center justify-center h-full p-10">
                 <div className="flex flex-col gap-5 items-center max-w-[620px]">
                   {/* Loading Spinner */}
-                  <div className="bg-[#C9E7EC] flex items-center justify-center p-3 rounded-[2222px]">
+                  <div className="bg-brand-cyan-pale flex items-center justify-center p-3 rounded-full">
                     <div className="flex items-center justify-center">
                       <div className="flex-none rotate-[270deg]">
-                        <Loader2 className="w-6 h-6 text-[#0891B2] animate-spin" />
+                        <Loader2 className="w-6 h-6 text-brand-cyan animate-spin" />
                       </div>
                     </div>
                   </div>
 
                   {/* Heading */}
-                  <h1
-                    className="text-[44px] font-medium leading-[44px] tracking-[-2.2px] text-center text-[#1F2937]"
-                    style={{
-                      fontFamily: FONTS.interDisplay,
-                    }}
-                  >
+                  <h1 className="text-5xl font-inter-display font-medium leading-44 tracking-tight text-center text-neutral-charcoal">
                     Finding your doctor
                   </h1>
 
                   {/* Message */}
-                  <p
-                    className="text-[#4B5563] text-base font-normal leading-6 text-center w-[428px]"
-                    style={{
-                      fontFamily: "Inter, -apple-system, sans-serif",
-                    }}
-                  >
+                  <p className="text-text-secondary text-base font-inter font-normal leading-6 text-center w-[428px]">
                     Connecting you to a doctor for you query. Please hang tight
                     it might take a few minutes
                   </p>
@@ -107,13 +97,7 @@ export default function FindingDoctor() {
             </div>
 
             {/* Right Panel - AI Summary */}
-            <div
-              className="w-[393px] border border-[#D6D3D1] rounded-[10px] overflow-hidden flex flex-col"
-              style={{
-                background:
-                  "linear-gradient(179.838deg, rgb(217, 242, 247) 0%, rgb(255, 255, 255) 23.573%)",
-              }}
-            >
+            <div className="w-[393px] border border-neutral-gray rounded-xl overflow-hidden flex flex-col bg-gradient-to-b from-brand-cyan-lightest to-white">
               {/* Icon */}
               <div className="flex justify-center pt-6">
                 <div className="w-[57px] h-[57px] flex items-center justify-center">
@@ -137,47 +121,24 @@ export default function FindingDoctor() {
               <div className="flex flex-col gap-11 flex-1 px-6 py-0">
                 {/* AI Preliminary Assessment */}
                 <div className="flex flex-col gap-3">
-                  <h2
-                    className="text-[#1F2937] text-2xl font-semibold"
-                    style={{
-                      fontFamily: "Inter, -apple-system, sans-serif",
-                      lineHeight: "32px",
-                    }}
-                  >
+                  <h2 className="text-neutral-charcoal text-2xl font-inter font-semibold leading-8">
                     AI Preliminary Assessment
                   </h2>
-                  <p
-                    className="text-[#1C1917] text-base font-normal leading-6"
-                    style={{
-                      fontFamily: "Inter, -apple-system, sans-serif",
-                      letterSpacing: "-0.312px",
-                    }}
-                  >
+                  <p className="text-text-primary text-base font-inter font-normal leading-6 tracking-body-tight">
                     {currentAiAssessment}
                   </p>
                 </div>
 
                 {/* Reported Symptoms */}
                 <div className="flex flex-col gap-3">
-                  <h3
-                    className="text-[#1C1917] text-base font-normal"
-                    style={{
-                      fontFamily: "Inter, -apple-system, sans-serif",
-                      lineHeight: "24px",
-                      letterSpacing: "-0.312px",
-                    }}
-                  >
+                  <h3 className="text-text-primary text-base font-inter font-normal leading-6 tracking-body-tight">
                     Reported Symptoms
                   </h3>
                   <div className="flex flex-wrap gap-2">
                     {symptoms.map((symptom, index) => (
                       <span
                         key={index}
-                        className="bg-[#F3F4F6] border border-transparent rounded-full px-[13px] py-[5px] text-[#364153] text-xs font-medium"
-                        style={{
-                          fontFamily: "Inter, -apple-system, sans-serif",
-                          lineHeight: "16px",
-                        }}
+                        className="bg-neutral-light-gray border border-transparent rounded-full px-[13px] py-[5px] text-text-slate text-xs font-inter font-medium leading-4"
                       >
                         {symptom}
                       </span>
@@ -187,32 +148,24 @@ export default function FindingDoctor() {
               </div>
 
               {/* Tabs */}
-              <div className="bg-white border-t border-[#D6D3D1] p-3 flex items-center gap-6">
+              <div className="bg-white border-t border-neutral-gray p-3 flex items-center gap-6">
                 <button
                   onClick={() => setActiveTab("ai")}
-                  className={`px-3 py-1 rounded-lg font-medium text-base transition-colors ${
+                  className={`px-3 py-1 rounded-lg font-inter font-medium text-base leading-6 transition-colors ${
                     activeTab === "ai"
-                      ? "bg-[#F5F5F4] text-[#1C1917]"
-                      : "text-[#78716C] hover:text-[#1C1917]"
+                      ? "bg-warm-50 text-text-primary"
+                      : "text-neutral-dark-gray hover:text-text-primary"
                   }`}
-                  style={{
-                    fontFamily: "Inter, -apple-system, sans-serif",
-                    lineHeight: "24px",
-                  }}
                 >
                   AI Summary
                 </button>
                 <button
                   onClick={() => setActiveTab("medical")}
-                  className={`px-3 py-1 rounded-lg font-medium text-base transition-colors ${
+                  className={`px-3 py-1 rounded-lg font-inter font-medium text-base leading-6 transition-colors ${
                     activeTab === "medical"
-                      ? "bg-[#F5F5F4] text-[#1C1917]"
-                      : "text-[#78716C] hover:text-[#1C1917]"
+                      ? "bg-warm-50 text-text-primary"
+                      : "text-neutral-dark-gray hover:text-text-primary"
                   }`}
-                  style={{
-                    fontFamily: "Inter, -apple-system, sans-serif",
-                    lineHeight: "24px",
-                  }}
                 >
                   Medical Summary
                 </button>

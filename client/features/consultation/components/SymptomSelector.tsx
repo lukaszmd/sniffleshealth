@@ -25,13 +25,7 @@ export function SymptomSelector({
   return (
     <div className={cn("flex flex-col gap-[19px]", className)}>
       {title && (
-        <h2
-          className="text-[#111827] text-xl font-semibold"
-          style={{
-            fontFamily: FONTS.inter,
-            lineHeight: "28px",
-          }}
-        >
+        <h2 className="text-text-dark text-xl font-inter font-semibold leading-7">
           {title}
         </h2>
       )}
@@ -60,19 +54,18 @@ function SymptomPill({ name, selected, onClick }: SymptomPillProps) {
     <button
       onClick={onClick}
       className={cn(
-        "flex items-center gap-2 px-5 py-5 rounded-[18px] border-2 transition-all",
+        "flex items-center gap-2 px-5 py-5 rounded-2xl border-2 font-inter transition-all",
         selected
-          ? "border-[#0891B2] bg-white"
-          : "border-[#D1D5DB] bg-white hover:border-[#0891B2]/50"
+          ? "border-brand-cyan bg-white"
+          : "border-border-medium bg-white hover:border-brand-cyan/50"
       )}
     >
-      {selected && <Check className="w-6 h-6 text-[#155E75]" />}
+      {selected && <Check className="w-6 h-6 text-brand-cyan-dark" />}
       <span
         className={cn(
           "text-base",
-          selected ? "font-600 text-[#164E63]" : "font-500 text-[#4B5563]"
+          selected ? "font-semibold text-brand-cyan-dark" : "font-medium text-text-secondary"
         )}
-        style={{ fontFamily: FONTS.inter }}
       >
         {name}
       </span>

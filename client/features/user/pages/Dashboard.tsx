@@ -18,9 +18,9 @@ import {
 
 export default function Dashboard() {
   return (
-    <div className="min-h-screen bg-[#F3F4F6] flex">
+    <div className="min-h-screen bg-neutral-light-gray flex">
       {/* Left Sidebar */}
-      <div className="bg-white border-r border-[#D6D3D1] w-[252px] flex flex-col">
+      <div className="bg-white border-r border-neutral-gray w-[252px] flex flex-col">
         <div className="p-[13px] flex flex-col gap-11">
           {/* Logo */}
           <div className="h-[47px] flex items-center p-3">
@@ -31,79 +31,49 @@ export default function Dashboard() {
           <div className="flex flex-col gap-2">
             <Link
               to={ROUTES.DASHBOARD}
-              className="bg-[#F5F5F4] flex gap-[7px] items-center p-2 rounded-[12px] text-[#1C1917]"
+              className="bg-warm-50 flex gap-[7px] items-center p-2 rounded-xl text-text-primary"
             >
               <Home className="w-6 h-6" />
-              <span
-                className="font-medium text-sm leading-5"
-                style={{
-                  fontFamily: "Inter, -apple-system, sans-serif",
-                }}
-              >
+              <span className="font-inter font-medium text-sm leading-5">
                 My Dashboard
               </span>
             </Link>
             <Link
               to={ROUTES.DOCTOR_CHAT}
-              className="flex gap-[7px] items-center p-2 rounded-[12px] text-[#57534E] hover:bg-[#F5F5F4] transition-colors"
+              className="flex gap-[7px] items-center p-2 rounded-xl text-neutral-stone hover:bg-warm-50 transition-colors"
             >
               <MessageSquare className="w-6 h-6" />
-              <span
-                className="font-medium text-sm leading-5"
-                style={{
-                  fontFamily: "Inter, -apple-system, sans-serif",
-                }}
-              >
+              <span className="font-inter font-medium text-sm leading-5">
                 My Consultations
               </span>
             </Link>
             <Link
               to={ROUTES.PRESCRIPTION}
-              className="flex gap-[7px] items-center p-2 rounded-[12px] text-[#57534E] hover:bg-[#F5F5F4] transition-colors"
+              className="flex gap-[7px] items-center p-2 rounded-xl text-neutral-stone hover:bg-warm-50 transition-colors"
             >
               <ShoppingBag className="w-6 h-6" />
-              <span
-                className="font-medium text-sm leading-5"
-                style={{
-                  fontFamily: "Inter, -apple-system, sans-serif",
-                }}
-              >
+              <span className="font-inter font-medium text-sm leading-5">
                 My Prescriptions
               </span>
             </Link>
             <Link
               to={ROUTES.MEDICAL_PROFILE}
-              className="flex gap-[7px] items-center p-2 rounded-[12px] text-[#57534E] hover:bg-[#F5F5F4] transition-colors"
+              className="flex gap-[7px] items-center p-2 rounded-xl text-neutral-stone hover:bg-warm-50 transition-colors"
             >
               <Stethoscope className="w-6 h-6" />
-              <span
-                className="font-medium text-sm leading-5"
-                style={{
-                  fontFamily: "Inter, -apple-system, sans-serif",
-                }}
-              >
+              <span className="font-inter font-medium text-sm leading-5">
                 My Medical Profile
               </span>
             </Link>
-            <button className="flex gap-[7px] items-center p-2 rounded-[12px] text-[#57534E] hover:bg-[#F5F5F4] transition-colors text-left">
+            <button className="flex gap-[7px] items-center p-2 rounded-xl text-neutral-stone hover:bg-warm-50 transition-colors text-left">
               <User className="w-6 h-6" />
-              <span
-                className="font-medium text-sm leading-5"
-                style={{
-                  fontFamily: "Inter, -apple-system, sans-serif",
-                }}
-              >
+              <span className="font-inter font-medium text-sm leading-5">
                 My Profile
               </span>
             </button>
-            <button className="flex gap-[7px] items-center p-2 rounded-[12px] text-[#57534E] hover:bg-[#F5F5F4] transition-colors text-left">
+            <button className="flex gap-[7px] items-center p-2 rounded-xl text-neutral-stone hover:bg-warm-50 transition-colors text-left">
               <CreditCard className="w-6 h-6" />
-              <span
-                className="font-medium text-sm leading-5"
-                style={{
-                  fontFamily: "Inter, -apple-system, sans-serif",
-                }}
-              >
+              <span className="font-inter font-medium text-sm leading-5">
                 Subscriptions
               </span>
             </button>
@@ -113,31 +83,15 @@ export default function Dashboard() {
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col">
-        <div
-          className="flex-1 p-6"
-          style={{
-            background:
-              "linear-gradient(180.408deg, rgb(255, 255, 255) 54.885%, rgb(249, 245, 242) 102.87%)",
-          }}
-        >
+        <div className="flex-1 p-6 bg-gradient-to-b from-white via-white to-warm-50">
           <div className="max-w-full flex flex-col gap-6">
             {/* Welcome Section */}
             <div className="flex flex-col gap-6">
               <div className="flex flex-col gap-2">
-                <h1
-                  className="text-[#1F2937] text-[34px] font-medium leading-normal tracking-[-1.7px]"
-                  style={{
-                    fontFamily: "Inter Display, -apple-system, sans-serif",
-                  }}
-                >
+                <h1 className="text-neutral-charcoal text-3xl font-inter-display font-medium leading-normal tracking-tight">
                   My Dashboard
                 </h1>
-                <p
-                  className="text-[#4B5563] text-base font-normal leading-5"
-                  style={{
-                    fontFamily: "SF Pro, -apple-system, sans-serif",
-                  }}
-                >
+                <p className="text-text-secondary text-base font-inter font-normal leading-5">
                   Welcome to supercharge your health, John
                 </p>
               </div>
@@ -172,90 +126,50 @@ export default function Dashboard() {
               {/* My Consultations */}
               <div className="flex flex-col gap-6 flex-1 min-w-[588px]">
                 <div className="flex items-center justify-between pr-6">
-                  <h2
-                    className="text-[#1F2937] text-[34px] font-medium leading-normal tracking-[-1.7px]"
-                    style={{
-                      fontFamily: "Inter Display, -apple-system, sans-serif",
-                    }}
-                  >
+                  <h2 className="text-neutral-charcoal text-3xl font-inter-display font-medium leading-normal tracking-tight">
                     My Consultations
                   </h2>
-                  <button
-                    className="text-[#78716C] text-base font-normal leading-5 hover:text-[#1C1917] transition-colors"
-                    style={{
-                      fontFamily: "SF Pro, -apple-system, sans-serif",
-                    }}
-                  >
+                  <button className="text-neutral-dark-gray text-base font-inter font-normal leading-5 hover:text-text-primary transition-colors">
                     View All
                   </button>
                 </div>
 
                 {/* Consultation Card */}
-                <div className="bg-white border border-[#D1D5DB] rounded-[18px] shadow-[0px_4px_8px_0px_rgba(0,0,0,0.04)] p-5 flex flex-col gap-2">
+                <div className="bg-white border border-border-medium rounded-2xl shadow-[0px_4px_8px_0px_rgba(0,0,0,0.04)] p-5 flex flex-col gap-2">
                   <div className="flex items-start justify-between">
-                    <div className="bg-[#F1F8F9] flex items-center justify-center p-3 rounded-full w-[41px] h-[41px]">
-                      <Stethoscope className="w-[17px] h-[17px] text-[#0891B2]" />
+                    <div className="bg-brand-cyan-lighter flex items-center justify-center p-3 rounded-full w-[41px] h-[41px]">
+                      <Stethoscope className="w-[17px] h-[17px] text-brand-cyan" />
                     </div>
-                    <div className="bg-[#F0FDFA] flex items-center justify-center px-2 py-1 rounded-[12px]">
-                      <span
-                        className="text-[#0D9488] text-sm font-normal leading-5"
-                        style={{
-                          fontFamily: "Inter, -apple-system, sans-serif",
-                        }}
-                      >
+                    <div className="bg-teal-50 flex items-center justify-center px-2 py-1 rounded-xl">
+                      <span className="text-teal-700 text-sm font-inter font-normal leading-5">
                         Completed
                       </span>
                     </div>
                   </div>
                   <div className="flex flex-col gap-1 pb-6 pt-1">
-                    <h3
-                      className="text-[#292524] text-[19px] font-semibold leading-6 w-[269px]"
-                      style={{
-                        fontFamily: "Inter Display, -apple-system, sans-serif",
-                      }}
-                    >
+                    <h3 className="text-neutral-slate text-lg font-inter-display font-semibold leading-6 w-[269px]">
                       Consultation with Dr. Reed
                     </h3>
-                    <p
-                      className="text-[#57534E] text-sm font-normal leading-5"
-                      style={{
-                        fontFamily: "Inter, -apple-system, sans-serif",
-                      }}
-                    >
+                    <p className="text-neutral-stone text-sm font-inter font-normal leading-5">
                       Prescription completed
                     </p>
                   </div>
                   <div className="flex gap-3">
-                    <button className="bg-[#FAFAF9] flex gap-[7px] items-center p-3 rounded-[12px] text-[#1C1917] flex-1">
+                    <button className="bg-warm-50 flex gap-[7px] items-center p-3 rounded-xl text-text-primary flex-1">
                       <RefreshCw className="w-6 h-6" />
-                      <span
-                        className="font-medium text-sm leading-5"
-                        style={{
-                          fontFamily: "Inter, -apple-system, sans-serif",
-                        }}
-                      >
+                      <span className="font-inter font-medium text-sm leading-5">
                         Refill Medicine
                       </span>
                     </button>
-                    <button className="bg-[#FAFAF9] flex gap-[7px] items-center p-3 rounded-[12px] text-[#1C1917] flex-1">
+                    <button className="bg-warm-50 flex gap-[7px] items-center p-3 rounded-xl text-text-primary flex-1">
                       <Calendar className="w-6 h-6" />
-                      <span
-                        className="font-medium text-sm leading-5"
-                        style={{
-                          fontFamily: "Inter, -apple-system, sans-serif",
-                        }}
-                      >
+                      <span className="font-inter font-medium text-sm leading-5">
                         Book Consultation
                       </span>
                     </button>
-                    <button className="bg-[#FAFAF9] flex gap-[7px] items-center p-3 rounded-[12px] text-[#1C1917] flex-1">
+                    <button className="bg-warm-50 flex gap-[7px] items-center p-3 rounded-xl text-text-primary flex-1">
                       <Printer className="w-6 h-6" />
-                      <span
-                        className="font-medium text-sm leading-5"
-                        style={{
-                          fontFamily: "Inter, -apple-system, sans-serif",
-                        }}
-                      >
+                      <span className="font-inter font-medium text-sm leading-5">
                         Print Subscription
                       </span>
                     </button>
@@ -266,29 +180,19 @@ export default function Dashboard() {
               {/* My Bookings */}
               <div className="flex flex-col gap-6 flex-1">
                 <div className="flex items-center justify-between pr-6">
-                  <h2
-                    className="text-[#1F2937] text-[34px] font-medium leading-normal tracking-[-1.7px]"
-                    style={{
-                      fontFamily: "Inter Display, -apple-system, sans-serif",
-                    }}
-                  >
+                  <h2 className="text-neutral-charcoal text-3xl font-inter-display font-medium leading-normal tracking-tight">
                     My Bookings
                   </h2>
-                  <button
-                    className="text-[#78716C] text-base font-normal leading-5 hover:text-[#1C1917] transition-colors"
-                    style={{
-                      fontFamily: "SF Pro, -apple-system, sans-serif",
-                    }}
-                  >
+                  <button className="text-neutral-dark-gray text-base font-inter font-normal leading-5 hover:text-text-primary transition-colors">
                     View All
                   </button>
                 </div>
 
                 {/* Booking Card */}
-                <div className="bg-white border border-[#D1D5DB] rounded-[18px] shadow-[0px_4px_8px_0px_rgba(0,0,0,0.04)] p-5 flex flex-col gap-2 relative">
+                <div className="bg-white border border-border-medium rounded-2xl shadow-[0px_4px_8px_0px_rgba(0,0,0,0.04)] p-5 flex flex-col gap-2 relative">
                   <div className="flex items-start">
-                    <div className="bg-[#F1F8F9] flex items-center justify-center p-3 rounded-full w-[41px] h-[41px]">
-                      <ShoppingBag className="w-[17px] h-[17px] text-[#0891B2]" />
+                    <div className="bg-brand-cyan-lighter flex items-center justify-center p-3 rounded-full w-[41px] h-[41px]">
+                      <ShoppingBag className="w-[17px] h-[17px] text-brand-cyan" />
                     </div>
                     {/* QR Code */}
                     <div className="absolute right-[18px] top-[18px] w-[114px] h-[111px]">
@@ -304,32 +208,17 @@ export default function Dashboard() {
                     </div>
                   </div>
                   <div className="flex flex-col gap-1 pb-6 pt-1">
-                    <h3
-                      className="text-[#292524] text-[19px] font-semibold leading-6 w-[269px]"
-                      style={{
-                        fontFamily: "Inter Display, -apple-system, sans-serif",
-                      }}
-                    >
+                    <h3 className="text-neutral-slate text-lg font-inter-display font-semibold leading-6 w-[269px]">
                       Pickup ready at CVS
                     </h3>
-                    <p
-                      className="text-[#57534E] text-sm font-normal leading-5"
-                      style={{
-                        fontFamily: "Inter, -apple-system, sans-serif",
-                      }}
-                    >
+                    <p className="text-neutral-stone text-sm font-inter font-normal leading-5">
                       Amoxyllin x10, Ibuprofen x10
                     </p>
                   </div>
                   <div className="flex items-start">
-                    <button className="bg-[#FAFAF9] flex gap-[7px] items-center p-3 rounded-[12px] text-[#1C1917] flex-1">
+                    <button className="bg-warm-50 flex gap-[7px] items-center p-3 rounded-xl text-text-primary flex-1">
                       <Share2 className="w-6 h-6" />
-                      <span
-                        className="font-medium text-sm leading-5"
-                        style={{
-                          fontFamily: "Inter, -apple-system, sans-serif",
-                        }}
-                      >
+                      <span className="font-inter font-medium text-sm leading-5">
                         Share Reciept
                       </span>
                     </button>
@@ -341,28 +230,19 @@ export default function Dashboard() {
         </div>
 
         {/* Footer */}
-        <div className="bg-[#FCFAF8] border-t border-[#D6D3D1] px-6 py-4">
+        <div className="bg-neutral-off-white border-t border-neutral-gray px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <button
-                className="px-3 py-2 text-[#78716C] font-semibold text-base hover:text-[#1C1917] transition-colors"
-                style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
-              >
+              <button className="px-3 py-2 text-neutral-dark-gray font-inter font-semibold text-base hover:text-text-primary transition-colors">
                 About Us
               </button>
-              <button
-                className="px-3 py-2 text-[#78716C] font-semibold text-base hover:text-[#1C1917] transition-colors"
-                style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
-              >
+              <button className="px-3 py-2 text-neutral-dark-gray font-inter font-semibold text-base hover:text-text-primary transition-colors">
                 Privacy Policy
               </button>
             </div>
-            <div className="flex items-center gap-2 px-3 py-2 border border-[#78716C] rounded-full">
-              <Lock className="w-6 h-6 text-[#78716C]" />
-              <span
-                className="text-[#78716C] font-semibold text-base"
-                style={{ fontFamily: "Inter, -apple-system, sans-serif" }}
-              >
+            <div className="flex items-center gap-2 px-3 py-2 border border-neutral-dark-gray rounded-full">
+              <Lock className="w-6 h-6 text-neutral-dark-gray" />
+              <span className="text-neutral-dark-gray font-inter font-semibold text-base">
                 HIPAA Compliant
               </span>
             </div>
@@ -383,7 +263,7 @@ function FeatureCard({
   description: string;
 }) {
   return (
-    <div className="bg-[#FCFAF8] flex flex-col gap-3 p-6 rounded-[30px] flex-1 min-w-[200px]">
+    <div className="bg-neutral-off-white flex flex-col gap-3 p-6 rounded-3xl flex-1 min-w-[200px]">
       <div className="h-[98px] w-[116px] relative flex items-center justify-center">
         <img
           src={image}
@@ -397,26 +277,15 @@ function FeatureCard({
       </div>
       <div className="flex flex-col gap-1">
         <div className="flex gap-1 items-start">
-          <h3
-            className="text-[#292524] text-[19px] font-semibold leading-6 flex-1"
-            style={{
-              fontFamily: "Inter Display, -apple-system, sans-serif",
-            }}
-          >
+          <h3 className="text-neutral-slate text-lg font-inter-display font-semibold leading-6 flex-1">
             {title}
           </h3>
-          <ChevronRight className="w-6 h-6 text-[#111827] flex-shrink-0" />
+          <ChevronRight className="w-6 h-6 text-text-dark flex-shrink-0" />
         </div>
-        <p
-          className="text-[#57534E] text-sm font-normal leading-5"
-          style={{
-            fontFamily: "Inter, -apple-system, sans-serif",
-          }}
-        >
+        <p className="text-neutral-stone text-sm font-inter font-normal leading-5">
           {description}
         </p>
       </div>
     </div>
   );
 }
-

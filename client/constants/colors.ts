@@ -9,6 +9,7 @@ export const COLORS = {
     cyan: "#0891B2",
     darkCyan: "#164E63",
     darkerCyan: "#045866",
+    messageCyan: "#3e5e6a", // User message bubble color
     lightCyan: "#DCE9EB",
     lighterCyan: "#ECF3F4",
     lightestCyan: "#D9F2F7",

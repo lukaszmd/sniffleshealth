@@ -29,10 +29,10 @@ export function ChatInput({
 
   return (
     <div
-      className={`bg-white border border-[#D1D5DB] rounded-[18px] flex items-center gap-2 h-[57px] pl-5 pr-2 py-5 ${className}`}
+      className={`bg-white border border-border-medium rounded-2xl flex items-center gap-2 h-[57px] pl-5 pr-2 py-5 ${className}`}
     >
       <div className="flex items-center justify-center p-1 rounded-lg opacity-75 flex-shrink-0">
-        <Plus className="w-5 h-5 text-[#4B5563]" />
+        <Plus className="w-5 h-5 text-text-secondary" />
       </div>
       <input
         type="text"
@@ -40,21 +40,17 @@ export function ChatInput({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         onKeyPress={handleKeyPress}
-        className="flex-1 bg-transparent border-none outline-none text-[#374151] text-sm placeholder:text-[#374151] leading-5"
-        style={{
-          fontFamily: FONTS.inter,
-        }}
+        className="flex-1 bg-transparent border-none outline-none text-text-primary text-sm font-inter placeholder:text-text-primary leading-5"
       />
-      <button className="flex items-center justify-center p-2 rounded-xl hover:bg-[#F3F4F6] transition-colors flex-shrink-0">
-        <Mic className="w-6 h-6 text-[#164E63]" />
+      <button className="flex items-center justify-center p-2 rounded-xl hover:bg-neutral-light-gray transition-colors flex-shrink-0">
+        <Mic className="w-6 h-6 text-brand-cyan-dark" />
       </button>
       <button
         onClick={onSend}
-        className="bg-[#164E63] flex items-center justify-center p-2 rounded-xl hover:bg-[#164E63]/90 transition-colors flex-shrink-0 h-10 w-10"
+        className="bg-brand-cyan-dark flex items-center justify-center p-2 rounded-xl hover:bg-brand-cyan-dark/90 transition-colors flex-shrink-0 h-10 w-10"
       >
         <ArrowUp className="w-5 h-5 text-white" />
       </button>
     </div>
   );
 }
-

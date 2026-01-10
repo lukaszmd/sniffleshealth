@@ -39,34 +39,23 @@ export default function HIPAACompliance() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F3F4F6] flex flex-col">
+    <div className="min-h-screen bg-neutral-light-gray flex flex-col">
       <PageHeader showLogo={true} />
 
       {/* Main Content */}
-      <div className="flex-1 overflow-auto bg-[#F3F4F6] flex items-center justify-center">
+      <div className="flex-1 overflow-auto bg-neutral-light-gray flex items-center justify-center">
         <div className="max-w-[1464px] mx-auto p-6 w-full flex items-center justify-center">
-          <div
-            className="w-[966px] border border-[#D6D3D1] rounded-[24px] overflow-hidden relative min-h-[745px] flex flex-col"
-            style={{
-              backgroundImage:
-                "linear-gradient(179.934deg, rgb(249, 245, 242) 0%, rgb(255, 255, 255) 23.573%)",
-            }}
-          >
+          <div className="w-[966px] border border-neutral-gray rounded-3xl overflow-hidden relative min-h-[745px] flex flex-col bg-gradient-to-b from-warm-50 to-white">
             {/* Content */}
             <div className="flex flex-col gap-6 items-center h-full p-6 pt-10 pb-6">
               <div className="flex flex-col gap-6 items-center justify-center w-full max-w-[651px] flex-1">
                 {/* Lock Icon */}
-                <div className="bg-[#ECE8E4] flex items-center justify-center p-1 rounded-[2222px]">
-                  <Lock className="w-6 h-6 text-[#78716C]" />
+                <div className="bg-warm-300 flex items-center justify-center p-1 rounded-full">
+                  <Lock className="w-6 h-6 text-neutral-dark-gray" />
                 </div>
 
                 {/* Main Heading */}
-                <h1
-                  className="text-[44px] font-medium leading-[44px] tracking-[-2.2px] text-center text-[#1F2937]"
-                  style={{
-                    fontFamily: FONTS.interDisplay,
-                  }}
-                >
+                <h1 className="text-5xl font-inter-display font-medium leading-44 tracking-tight text-center text-neutral-charcoal">
                   HIPAA Compliance
                 </h1>
 
@@ -74,20 +63,10 @@ export default function HIPAACompliance() {
                 <div className="flex flex-col gap-10 items-center w-full flex-1 min-h-0">
                   {/* Header Text */}
                   <div className="flex flex-col gap-2 items-center text-center">
-                    <p
-                      className="text-[#111827] text-base font-medium leading-6"
-                      style={{
-                        fontFamily: "Inter, -apple-system, sans-serif",
-                      }}
-                    >
+                    <p className="text-text-dark text-base font-inter font-medium leading-6">
                       Sniffleshealth is compliant to HIPAA
                     </p>
-                    <p
-                      className="text-[#4B5563] text-base font-normal leading-6 whitespace-nowrap"
-                      style={{
-                        fontFamily: "Inter, -apple-system, sans-serif",
-                      }}
-                    >
+                    <p className="text-text-secondary text-base font-inter font-normal leading-6 whitespace-nowrap">
                       Please read the privacy policy to continue with the
                       consultation
                     </p>
@@ -95,12 +74,7 @@ export default function HIPAACompliance() {
 
                   {/* HIPAA Guidelines Section */}
                   <div className="flex flex-col gap-2 items-center w-full flex-1 min-h-0">
-                    <h2
-                      className="text-[#111827] text-base font-medium leading-6 text-center"
-                      style={{
-                        fontFamily: "Inter, -apple-system, sans-serif",
-                      }}
-                    >
+                    <h2 className="text-text-dark text-base font-inter font-medium leading-6 text-center">
                       HIPAA Guidelines
                     </h2>
 
@@ -110,12 +84,7 @@ export default function HIPAACompliance() {
                       className="flex flex-col items-center w-full h-[316px] overflow-y-auto"
                       onScroll={handleScroll}
                     >
-                      <div
-                        className="text-[#4B5563] text-base font-normal leading-6 text-center w-full"
-                        style={{
-                          fontFamily: "Inter, -apple-system, sans-serif",
-                        }}
-                      >
+                      <div className="text-text-secondary text-base font-inter font-normal leading-6 text-center w-full">
                         <p className="mb-0">
                           Lorem ipsum dolor sit amet, consectetur adipiscing
                           elit. Curabitur iaculis nunc nec ipsum pretium, a
@@ -188,14 +157,9 @@ export default function HIPAACompliance() {
                     {/* Scroll Message - Attention-grabbing design */}
                     {!hasScrolledToEnd && (
                       <div className="flex flex-col items-center gap-3 w-full">
-                        <div className="flex items-center gap-3 bg-[#E0F2FE] border-2 border-[#0891B2] rounded-[12px] px-5 py-4 w-full shadow-sm">
-                          <ChevronDown className="w-5 h-5 text-[#0891B2] flex-shrink-0 animate-bounce" />
-                          <p
-                            className="text-[#0891B2] text-base font-semibold leading-6 text-center flex-1"
-                            style={{
-                              fontFamily: "Inter, -apple-system, sans-serif",
-                            }}
-                          >
+                        <div className="flex items-center gap-3 bg-cyan-100 border-2 border-brand-cyan rounded-xl px-5 py-4 w-full shadow-sm">
+                          <ChevronDown className="w-5 h-5 text-brand-cyan flex-shrink-0 animate-bounce" />
+                          <p className="text-brand-cyan text-base font-inter font-semibold leading-6 text-center flex-1">
                             Please scroll to the end of the guidelines to
                             continue
                           </p>
@@ -207,15 +171,11 @@ export default function HIPAACompliance() {
                     <button
                       onClick={handleAccept}
                       disabled={!hasScrolledToEnd}
-                      className={`px-6 py-3 rounded-[18px] font-semibold text-base transition-colors h-[57px] flex items-center justify-center w-full ${
+                      className={`px-6 py-3 font-inter rounded-2xl font-semibold text-base leading-6 transition-colors h-[57px] flex items-center justify-center w-full ${
                         hasScrolledToEnd
-                          ? "bg-[#0E3240] text-white hover:bg-[#0E3240]/90 cursor-pointer"
-                          : "bg-[#D1D5DB] text-[#9CA3AF] cursor-not-allowed"
+                          ? "bg-brand-cyan-dark text-white hover:bg-brand-cyan-dark/90 cursor-pointer"
+                          : "bg-border-medium text-text-light cursor-not-allowed"
                       }`}
-                      style={{
-                        fontFamily: "Inter, -apple-system, sans-serif",
-                        lineHeight: "24px",
-                      }}
                     >
                       Accept and Continue
                     </button>

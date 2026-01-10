@@ -83,7 +83,7 @@ export default function MedicalProfile() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FCFAF8] flex flex-col">
+    <div className="h-screen bg-neutral-off-white flex flex-col overflow-hidden">
       <PageHeader
         backTo={ROUTES.SYMPTOMS}
         step={stepInfo?.step}
@@ -91,10 +91,10 @@ export default function MedicalProfile() {
       />
 
       {/* Main Content */}
-      <div className="flex-1 flex overflow-hidden bg-[#FCFAF8]">
-        <div className="flex-1 max-w-[1464px] mx-auto w-full flex gap-3 p-6 h-full">
+      <div className="flex-1 flex overflow-hidden bg-neutral-off-white min-h-0">
+        <div className="flex-1 max-w-[1464px] mx-auto w-full flex gap-3 p-6 h-full min-h-0">
           {/* Chat Section */}
-          <div className="flex-1 bg-white rounded-xl border border-[#D6D3D1] flex flex-col overflow-hidden max-w-[1110px]">
+          <div className="flex-1 bg-white rounded-xl border border-neutral-gray flex flex-col overflow-hidden max-w-[1110px] min-h-0">
             {/* Scrollable Messages Area */}
             <div className="flex-1 overflow-y-auto min-h-0">
               <div className="p-10">
@@ -121,17 +121,17 @@ export default function MedicalProfile() {
             </div>
 
             {/* Fixed Footer Area */}
-            <div className="flex-shrink-0 bg-white border-t border-[#E5E7EB]">
+            <div className="flex-shrink-0 bg-white border-t border-border-dark">
               {/* Safety Stop Banner */}
               {safetyStopTriggered && safetyStopMessage && (
-                <div className="p-6 bg-[#FEF3C7] border-l-4 border-l-[#F59E0B]">
+                <div className="p-6 bg-yellow-100 border-l-4 border-l-yellow-500">
                   <div className="flex items-start gap-3 max-w-[672px] mx-auto">
-                    <AlertTriangle className="w-5 h-5 text-[#F59E0B] flex-shrink-0 mt-0.5" />
+                    <AlertTriangle className="w-5 h-5 text-yellow-500 flex-shrink-0 mt-0.5" />
                     <div className="flex-1">
-                      <h3 className="text-[#92400E] font-semibold text-sm mb-1">
+                      <h3 className="text-yellow-800 font-inter font-semibold text-sm mb-1">
                         Important Notice
                       </h3>
-                      <p className="text-[#78350F] text-sm">
+                      <p className="text-yellow-900 text-sm font-inter">
                         {safetyStopMessage}
                       </p>
                     </div>
@@ -217,17 +217,11 @@ export default function MedicalProfile() {
                                         onClick={() =>
                                           handleOptionToggle(option)
                                         }
-                                        className={`border rounded-[18px] px-5 py-5 transition-colors ${
+                                        className={`border rounded-2xl px-5 py-5 font-inter text-base font-medium leading-6 transition-colors ${
                                           isSelected
-                                            ? "bg-[#164E63] border-[#164E63] text-white"
-                                            : "bg-white border-[#D1D5DB] text-[#4B5563] hover:bg-[#F9FAFB]"
+                                            ? "bg-brand-cyan-dark border-brand-cyan-dark text-white"
+                                            : "bg-white border-border-medium text-text-secondary hover:bg-gray-50"
                                         }`}
-                                        style={{
-                                          fontFamily: FONTS.inter,
-                                          fontSize: "16px",
-                                          fontWeight: 500,
-                                          lineHeight: "24px",
-                                        }}
                                       >
                                         {option}
                                       </button>
@@ -238,11 +232,7 @@ export default function MedicalProfile() {
                                   <div className="flex justify-end">
                                     <button
                                       onClick={handleSubmit}
-                                      className="bg-[#0E3240] text-white rounded-[18px] px-6 py-3 font-semibold text-base hover:bg-[#0E3240]/90 transition-colors"
-                                      style={{
-                                        fontFamily: FONTS.inter,
-                                        lineHeight: "24px",
-                                      }}
+                                      className="bg-brand-cyan-dark text-white font-inter rounded-2xl px-6 py-3 font-semibold text-base leading-6 hover:bg-brand-cyan-dark/90 transition-colors"
                                     >
                                       Continue
                                     </button>
@@ -259,14 +249,7 @@ export default function MedicalProfile() {
                                 <button
                                   key={index}
                                   onClick={() => sendMessage(option)}
-                                  className="bg-white border border-[#D1D5DB] rounded-[18px] px-5 py-5 hover:bg-[#F9FAFB] transition-colors"
-                                  style={{
-                                    fontFamily: FONTS.inter,
-                                    fontSize: "16px",
-                                    fontWeight: 500,
-                                    lineHeight: "24px",
-                                    color: "#4B5563",
-                                  }}
+                                  className="bg-white border border-border-medium text-text-secondary font-inter text-base font-medium leading-6 rounded-2xl px-5 py-5 hover:bg-gray-50 transition-colors"
                                 >
                                   {option}
                                 </button>
@@ -298,11 +281,7 @@ export default function MedicalProfile() {
                     !(phaseACompleted && phaseBCompleted) &&
                     !safetyStopTriggered
                   }
-                  className="bg-[#0E3240] text-white px-6 py-3 rounded-[18px] font-semibold text-base hover:bg-[#0E3240]/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                  style={{
-                    fontFamily: FONTS.inter,
-                    lineHeight: "24px",
-                  }}
+                  className="bg-brand-cyan-dark text-white font-inter px-6 py-3 rounded-2xl font-semibold text-base leading-6 hover:bg-brand-cyan-dark/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Continue with consultation
                 </button>
@@ -315,12 +294,7 @@ export default function MedicalProfile() {
                       ) as HTMLInputElement;
                       input?.focus();
                     }}
-                    className="text-[#164E63] text-lg font-medium hover:text-[#164E63]/80 transition-colors"
-                    style={{
-                      fontFamily: FONTS.inter,
-                      lineHeight: "24px",
-                      letterSpacing: "-0.3125px",
-                    }}
+                    className="text-brand-cyan-dark text-lg font-inter font-medium leading-6 tracking-body-tight hover:text-brand-cyan-dark/80 transition-colors"
                   >
                     I have to share more information
                   </button>
@@ -330,7 +304,7 @@ export default function MedicalProfile() {
           </div>
 
           {/* Medical Profile Summary */}
-          <div className="w-[342px] flex-shrink-0 bg-white rounded-xl border border-[#D6D3D1] p-5 flex flex-col gap-6 overflow-y-auto h-full">
+          <div className="w-[342px] flex-shrink-0 bg-white rounded-xl border border-neutral-gray p-5 flex flex-col gap-6 overflow-y-auto h-full min-h-0">
             {/* User Info */}
             <div className="flex items-center gap-3">
               <img
@@ -339,34 +313,22 @@ export default function MedicalProfile() {
                 className="w-8 h-8 rounded-full"
               />
               <div className="flex flex-col">
-                <span
-                  className="text-[#6A7282] text-xs font-medium"
-                  style={{ fontFamily: FONTS.inter }}
-                >
+                <span className="text-text-light text-xs font-inter font-medium">
                   Consultation For
                 </span>
-                <span
-                  className="text-[#101828] text-base font-medium"
-                  style={{ fontFamily: FONTS.inter }}
-                >
+                <span className="text-text-primary text-base font-inter font-medium">
                   John Doe
                 </span>
               </div>
             </div>
 
             {/* Info Block */}
-            <div className="bg-[#ECF3F4] rounded-xl p-3 flex flex-col items-center gap-1 text-center">
-              <Info className="w-6 h-6 text-[#4B5563]" />
-              <h3
-                className="text-[#101828] text-base font-medium"
-                style={{ fontFamily: FONTS.inter }}
-              >
+            <div className="bg-brand-cyan-lighter rounded-xl p-3 flex flex-col items-center gap-1 text-center">
+              <Info className="w-6 h-6 text-text-secondary" />
+              <h3 className="text-text-primary text-base font-inter font-medium">
                 Building your medical profile
               </h3>
-              <p
-                className="text-[#1E2939] text-sm"
-                style={{ fontFamily: FONTS.inter }}
-              >
+              <p className="text-text-slate text-sm font-inter">
                 This information will be saved and reviewed by a healthcare
                 professional during consultation
               </p>
@@ -374,10 +336,7 @@ export default function MedicalProfile() {
 
             {/* Personal Details */}
             <div className="flex flex-col gap-3">
-              <h3
-                className="text-[#101828] text-base font-medium"
-                style={{ fontFamily: FONTS.inter }}
-              >
+              <h3 className="text-text-primary text-base font-inter font-medium">
                 Personal Details
               </h3>
               <div className="grid grid-cols-2 gap-2">
@@ -388,14 +347,11 @@ export default function MedicalProfile() {
               </div>
             </div>
 
-            <div className="h-px bg-[#D1D5DB]" />
+            <div className="h-px bg-border-medium" />
 
             {/* Allergies */}
             <div className="flex flex-col gap-2">
-              <h3
-                className="text-[#101828] text-base font-medium"
-                style={{ fontFamily: FONTS.inter }}
-              >
+              <h3 className="text-text-primary text-base font-inter font-medium">
                 Allergies
               </h3>
               {currentMedicalData.allergies.length > 0 ? (
@@ -405,23 +361,15 @@ export default function MedicalProfile() {
                   ))}
                 </div>
               ) : (
-                <p
-                  className="text-[#1E2939] text-sm"
-                  style={{ fontFamily: FONTS.inter }}
-                >
-                  None
-                </p>
+                <p className="text-text-slate text-sm font-inter">None</p>
               )}
             </div>
 
-            <div className="h-px bg-[#D1D5DB]" />
+            <div className="h-px bg-border-medium" />
 
             {/* Chronic Conditions */}
             <div className="flex flex-col gap-2">
-              <h3
-                className="text-[#101828] text-base font-medium"
-                style={{ fontFamily: FONTS.inter }}
-              >
+              <h3 className="text-text-primary text-base font-inter font-medium">
                 Chronic Conditions
               </h3>
               <div className="flex flex-col gap-2">
@@ -431,14 +379,11 @@ export default function MedicalProfile() {
               </div>
             </div>
 
-            <div className="h-px bg-[#D1D5DB]" />
+            <div className="h-px bg-border-medium" />
 
             {/* Past Surgical History */}
             <div className="flex flex-col gap-2">
-              <h3
-                className="text-[#101828] text-base font-medium"
-                style={{ fontFamily: FONTS.inter }}
-              >
+              <h3 className="text-text-primary text-base font-inter font-medium">
                 Past Surgical History
               </h3>
               <div className="flex flex-col gap-2">
@@ -448,21 +393,15 @@ export default function MedicalProfile() {
               </div>
             </div>
 
-            <div className="h-px bg-[#D1D5DB]" />
+            <div className="h-px bg-border-medium" />
 
             {/* Social History */}
             <div className="flex flex-col gap-2">
               <div className="flex flex-col gap-2">
-                <h3
-                  className="text-[#101828] text-base font-medium"
-                  style={{ fontFamily: FONTS.inter }}
-                >
+                <h3 className="text-text-primary text-base font-inter font-medium">
                   Social History
                 </h3>
-                <p
-                  className="text-[#78716C] text-sm"
-                  style={{ fontFamily: FONTS.inter }}
-                >
+                <p className="text-neutral-dark-gray text-sm font-inter">
                   Including smoking, alcohol and illicit drug use (like cocaine,
                   PCP, methamphetamine, marijuana)
                 </p>
@@ -474,21 +413,15 @@ export default function MedicalProfile() {
               </div>
             </div>
 
-            <div className="h-px bg-[#D1D5DB]" />
+            <div className="h-px bg-border-medium" />
 
             {/* Family History */}
             <div className="flex flex-col gap-2">
               <div className="flex flex-col gap-2">
-                <h3
-                  className="text-[#101828] text-base font-medium"
-                  style={{ fontFamily: FONTS.inter }}
-                >
+                <h3 className="text-text-primary text-base font-inter font-medium">
                   Family History
                 </h3>
-                <p
-                  className="text-[#78716C] text-sm"
-                  style={{ fontFamily: FONTS.inter }}
-                >
+                <p className="text-neutral-dark-gray text-sm font-inter">
                   Problems that run in a family like heart disease or other
                   genetic issues
                 </p>
@@ -511,19 +444,11 @@ export default function MedicalProfile() {
 function DataField({ label, value }: { label: string; value: string }) {
   return (
     <div className="col-span-1">
-      <span
-        className="text-[#4A5565] text-sm block mb-1"
-        style={{ fontFamily: FONTS.inter }}
-      >
+      <span className="text-text-secondary text-sm font-inter block mb-1">
         {label}
       </span>
-      <div className="bg-[#FAFAF9] rounded-lg px-2 py-1">
-        <span
-          className="text-[#101828] text-base"
-          style={{ fontFamily: FONTS.inter }}
-        >
-          {value}
-        </span>
+      <div className="bg-warm-50 rounded-lg px-2 py-1">
+        <span className="text-text-primary text-base font-inter">{value}</span>
       </div>
     </div>
   );
@@ -531,36 +456,23 @@ function DataField({ label, value }: { label: string; value: string }) {
 
 function Tag({ text }: { text: string }) {
   return (
-    <div className="flex items-center justify-between gap-1 bg-[#F3F4F6] rounded-lg px-3 py-1">
-      <span
-        className="text-[#1E2939] text-sm"
-        style={{ fontFamily: FONTS.inter }}
-      >
-        {text}
-      </span>
-      <X className="w-4 h-4 text-[#4B5563] cursor-pointer hover:text-[#1C1917]" />
+    <div className="flex items-center justify-between gap-1 bg-neutral-light-gray rounded-lg px-3 py-1">
+      <span className="text-text-slate text-sm font-inter">{text}</span>
+      <X className="w-4 h-4 text-text-secondary cursor-pointer hover:text-text-primary" />
     </div>
   );
 }
 
 function DoubleTag({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex items-center justify-between gap-1 bg-[#F3F4F6] rounded-lg px-3 py-1">
+    <div className="flex items-center justify-between gap-1 bg-neutral-light-gray rounded-lg px-3 py-1">
       <div className="flex items-center gap-2">
-        <span
-          className="text-[#1E2939] text-sm font-medium"
-          style={{ fontFamily: FONTS.inter }}
-        >
+        <span className="text-text-slate text-sm font-inter font-medium">
           {label}
         </span>
-        <span
-          className="text-[#1E2939] text-sm"
-          style={{ fontFamily: FONTS.inter }}
-        >
-          {value}
-        </span>
+        <span className="text-text-slate text-sm font-inter">{value}</span>
       </div>
-      <X className="w-4 h-4 text-[#4B5563] cursor-pointer hover:text-[#1C1917]" />
+      <X className="w-4 h-4 text-text-secondary cursor-pointer hover:text-text-primary" />
     </div>
   );
 }

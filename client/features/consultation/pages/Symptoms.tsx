@@ -40,7 +40,7 @@ export default function Symptoms() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FCFAF8] flex flex-col">
+    <div className="min-h-screen bg-neutral-off-white flex flex-col">
       <PageHeader
         backTo={ROUTES.HOME}
         step={stepInfo?.step}
@@ -50,25 +50,16 @@ export default function Symptoms() {
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
         <div className="flex-1 max-w-[1464px] mx-auto w-full p-6">
-          <div className="bg-white rounded-xl border border-[#D6D3D1] h-full flex flex-col">
+          <div className="bg-white rounded-xl border border-neutral-gray h-full flex flex-col">
             {/* Content Area */}
             <div className="flex-1 overflow-y-auto pt-10 px-6 md:px-12">
-              <div className="max-w-[963px] mx-auto flex flex-col gap-[60px]">
+              <div className="max-w-[963px] mx-auto flex flex-col gap-15">
                 {/* Header */}
                 <div className="flex flex-col items-center gap-2 pt-5">
-                  <h1
-                    className="text-[#1F2937] text-3xl md:text-[32px] font-semibold text-center"
-                    style={{
-                      fontFamily: "SF Pro, -apple-system, sans-serif",
-                      lineHeight: "36px",
-                    }}
-                  >
+                  <h1 className="text-neutral-charcoal text-3xl md:text-2xl font-inter font-semibold text-center leading-36">
                     What are your symptoms
                   </h1>
-                  <p
-                    className="text-[#4B5563] text-base"
-                    style={{ fontFamily: "SF Pro, -apple-system, sans-serif" }}
-                  >
+                  <p className="text-text-secondary text-base font-inter">
                     Select from the list below or type your own
                   </p>
                 </div>
@@ -85,25 +76,23 @@ export default function Symptoms() {
             </div>
 
             {/* Bottom Input Section */}
-            <div className="border-t border-[#E5E7EB] p-6">
+            <div className="border-t border-border-dark p-6">
               <div className="max-w-[963px] mx-auto flex flex-col md:flex-row items-stretch gap-3">
-                <div className="flex-1 flex items-center gap-2 bg-white border border-[#D1D5DB] rounded-[18px] px-5 py-4">
+                <div className="flex-1 flex items-center gap-2 bg-white border border-border-medium rounded-2xl px-5 py-4">
                   <input
                     type="text"
                     placeholder="You can also add any other symptoms directly here"
                     value={customSymptom}
                     onChange={(e) => setCustomSymptom(e.target.value)}
-                    className="flex-1 bg-transparent border-none outline-none text-[#374151] text-sm"
-                    style={{ fontFamily: FONTS.inter }}
+                    className="flex-1 bg-transparent border-none outline-none text-text-primary text-sm font-inter"
                   />
-                  <button className="p-2 bg-[#F5F5F4] rounded-xl">
-                    <Mic className="w-4 h-4 text-[#164E63]" />
+                  <button className="p-2 bg-warm-50 rounded-xl">
+                    <Mic className="w-4 h-4 text-brand-cyan-dark" />
                   </button>
                 </div>
                 <button
                   onClick={handleContinue}
-                  className="w-full md:w-auto px-12 py-4 bg-[#164E63] text-white font-semibold text-base rounded-[18px] hover:bg-[#164E63]/90 transition-colors"
-                  style={{ fontFamily: FONTS.inter }}
+                  className="w-full md:w-auto px-12 py-4 bg-brand-cyan-dark text-white font-inter font-semibold text-base rounded-2xl hover:bg-brand-cyan-dark/90 transition-colors"
                 >
                   Continue
                 </button>

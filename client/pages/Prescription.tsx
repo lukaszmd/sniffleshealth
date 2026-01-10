@@ -9,45 +9,29 @@ export default function Prescription() {
   const doctorName = "Dr. Sarah Johnson";
 
   return (
-    <div className="min-h-screen bg-[#F3F4F6] flex flex-col">
+    <div className="min-h-screen bg-neutral-light-gray flex flex-col">
       <PageHeader showLogo={true} />
 
       {/* Main Content */}
-      <div className="flex-1 overflow-auto bg-[#F3F4F6]">
+      <div className="flex-1 overflow-auto bg-neutral-light-gray">
         <div className="max-w-[1464px] mx-auto p-6">
           <div className="flex items-center justify-center min-h-[750px]">
             {/* Prescription Card */}
-            <div
-              className="border border-[#D6D3D1] rounded-[24px] w-[1110px] h-[750px] flex flex-col p-6"
-              style={{
-                background:
-                  "linear-gradient(180.401deg, rgb(249, 245, 242) 0.51257%, rgb(255, 255, 255) 102.65%)",
-              }}
-            >
+            <div className="border border-neutral-gray rounded-3xl w-[1110px] h-[750px] flex flex-col p-6 bg-gradient-to-b from-warm-50 via-warm-50 to-white">
               {/* Header with Back Button */}
               <div className="flex items-center mb-6">
                 <div className="flex items-center gap-3">
                   <Link
                     to={ROUTES.DOCTOR_CHAT}
-                    className="flex items-center justify-center w-10 h-10 rounded-full border border-[#D6D3D1] bg-[#FCFAF8] shadow-[0px_2px_4px_0px_rgba(0,0,0,0.03)] opacity-90 hover:opacity-100 transition-opacity"
+                    className="flex items-center justify-center w-10 h-10 rounded-full border border-neutral-gray bg-neutral-off-white shadow-[0px_2px_4px_0px_rgba(0,0,0,0.03)] opacity-90 hover:opacity-100 transition-opacity"
                   >
-                    <ArrowLeft className="w-6 h-6 text-[#1C1917]" />
+                    <ArrowLeft className="w-6 h-6 text-text-primary" />
                   </Link>
                   <div className="flex flex-col">
-                    <span
-                      className="text-[#4B5563] text-sm leading-5"
-                      style={{
-                        fontFamily: "Inter, -apple-system, sans-serif",
-                      }}
-                    >
+                    <span className="text-text-secondary text-sm font-inter leading-5">
                       {prescriptionId}
                     </span>
-                    <span
-                      className="text-[#111827] text-base font-medium leading-6"
-                      style={{
-                        fontFamily: "Inter, -apple-system, sans-serif",
-                      }}
-                    >
+                    <span className="text-text-dark text-base font-inter font-medium leading-6">
                       Your Prescription from {doctorName.split(" ")[1]}
                     </span>
                   </div>
@@ -57,52 +41,32 @@ export default function Prescription() {
               {/* Prescription Content */}
               <div className="flex-1 flex flex-col items-center justify-center gap-6 p-6">
                 {/* Prescription Card */}
-                <div className="bg-white border border-[#D1D5DB] rounded-xl shadow-[0px_8px_12px_0px_rgba(0,0,0,0.12)] w-[642px] h-[487px] p-10 relative">
+                <div className="bg-white border border-border-medium rounded-xl shadow-[0px_8px_12px_0px_rgba(0,0,0,0.12)] w-[642px] h-[487px] p-10 relative">
                   {/* Print Button */}
-                  <button className="absolute right-[31px] top-[31px] flex items-center justify-center w-10 h-10 rounded-full border border-[#D6D3D1] bg-[#FCFAF8] shadow-[0px_2px_4px_0px_rgba(0,0,0,0.03)] opacity-90 hover:opacity-100 transition-opacity">
-                    <Printer className="w-6 h-6 text-[#1C1917]" />
+                  <button className="absolute right-[31px] top-[31px] flex items-center justify-center w-10 h-10 rounded-full border border-neutral-gray bg-neutral-off-white shadow-[0px_2px_4px_0px_rgba(0,0,0,0.03)] opacity-90 hover:opacity-100 transition-opacity">
+                    <Printer className="w-6 h-6 text-text-primary" />
                   </button>
 
                   {/* My Diagnosis */}
                   <div className="flex flex-col gap-3 mb-6">
-                    <p
-                      className="text-[#364153] text-sm font-medium leading-5"
-                      style={{
-                        fontFamily: "Inter, -apple-system, sans-serif",
-                        letterSpacing: "-0.1504px",
-                      }}
-                    >
+                    <p className="text-text-slate text-sm font-inter font-medium leading-5 tracking-tight">
                       My Diagnosis
                     </p>
-                    <p
-                      className="text-[#364153] text-xl font-normal leading-5"
-                      style={{
-                        fontFamily: "Inter, -apple-system, sans-serif",
-                      }}
-                    >
+                    <p className="text-text-slate text-xl font-inter font-normal leading-5">
                       Acute Sinusitis
                     </p>
                   </div>
 
                   {/* Symptoms */}
                   <div className="flex flex-col gap-3 mb-6">
-                    <p
-                      className="text-[#364153] text-sm font-medium leading-5"
-                      style={{
-                        fontFamily: "Inter, -apple-system, sans-serif",
-                        letterSpacing: "-0.1504px",
-                      }}
-                    >
+                    <p className="text-text-slate text-sm font-inter font-medium leading-5 tracking-tight">
                       Symptoms
                     </p>
                     <div className="flex flex-wrap gap-3">
                       {symptoms.map((symptom, index) => (
                         <span
                           key={index}
-                          className="bg-[#F3F4F6] border border-transparent rounded-full px-[13px] py-[5px] text-[#364153] text-xs font-medium leading-4"
-                          style={{
-                            fontFamily: "Inter, -apple-system, sans-serif",
-                          }}
+                          className="bg-neutral-light-gray border border-transparent rounded-full px-[13px] py-[5px] text-text-slate text-xs font-inter font-medium leading-4"
                         >
                           {symptom}
                         </span>
@@ -112,22 +76,10 @@ export default function Prescription() {
 
                   {/* My Prescription */}
                   <div className="flex flex-col gap-3 mb-6 flex-1">
-                    <p
-                      className="text-[#364153] text-sm font-medium leading-5"
-                      style={{
-                        fontFamily: "Inter, -apple-system, sans-serif",
-                        letterSpacing: "-0.1504px",
-                      }}
-                    >
+                    <p className="text-text-slate text-sm font-inter font-medium leading-5 tracking-tight">
                       My Prescription
                     </p>
-                    <div
-                      className="text-[#364153] text-sm font-normal leading-5"
-                      style={{
-                        fontFamily: "Inter, -apple-system, sans-serif",
-                        letterSpacing: "-0.1504px",
-                      }}
-                    >
+                    <div className="text-text-slate text-sm font-inter font-normal leading-5 tracking-tight">
                       <p className="mb-0">
                         <span className="font-bold">1. Amoxicillin 500mg</span>
                         <span>
@@ -154,21 +106,10 @@ export default function Prescription() {
                   {/* My Doctor */}
                   <div className="flex items-start justify-between gap-6">
                     <div className="flex flex-col gap-3 flex-1">
-                      <p
-                        className="text-[#364153] text-sm font-medium leading-5"
-                        style={{
-                          fontFamily: "Inter, -apple-system, sans-serif",
-                          letterSpacing: "-0.1504px",
-                        }}
-                      >
+                      <p className="text-text-slate text-sm font-inter font-medium leading-5 tracking-tight">
                         My Doctor
                       </p>
-                      <p
-                        className="text-[#364153] text-xl font-normal leading-5"
-                        style={{
-                          fontFamily: "Inter, -apple-system, sans-serif",
-                        }}
-                      >
+                      <p className="text-text-slate text-xl font-inter font-normal leading-5">
                         {doctorName}:
                       </p>
                     </div>
@@ -179,23 +120,13 @@ export default function Prescription() {
                 {/* Action Section */}
                 <div className="flex items-center justify-between w-[642px] px-3">
                   <div className="flex flex-col flex-1 max-w-[344px]">
-                    <p
-                      className="text-[#292524] text-sm font-semibold leading-5"
-                      style={{
-                        fontFamily: "Inter, -apple-system, sans-serif",
-                      }}
-                    >
+                    <p className="text-neutral-slate text-sm font-inter font-semibold leading-5">
                       Schedule reminder for a follow up in 5 days for recurring
                       consultation
                     </p>
                   </div>
-                  <button className="bg-[#0E3240] h-[57px] px-6 py-2.5 rounded-[18px] hover:bg-[#0E3240]/90 transition-colors flex-shrink-0">
-                    <span
-                      className="text-white text-base font-semibold leading-6"
-                      style={{
-                        fontFamily: "Inter, -apple-system, sans-serif",
-                      }}
-                    >
+                  <button className="bg-brand-cyan-dark h-[57px] px-6 py-2.5 rounded-2xl hover:bg-brand-cyan-dark/90 transition-colors flex-shrink-0">
+                    <span className="text-white text-base font-inter font-semibold leading-6">
                       Select Pharmacy for pickup
                     </span>
                   </button>

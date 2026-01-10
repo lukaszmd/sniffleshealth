@@ -19,46 +19,30 @@ export default function KYC() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F3F4F6] flex flex-col">
+    <div className="min-h-screen bg-neutral-light-gray flex flex-col">
       <PageHeader showLogo={true} />
 
       {/* Main Content */}
-      <div className="flex-1 overflow-auto bg-[#F3F4F6] flex items-center justify-center">
+      <div className="flex-1 overflow-auto bg-neutral-light-gray flex items-center justify-center">
         <div className="max-w-[1464px] mx-auto p-6 w-full flex items-center justify-center">
-          <div
-            className="w-[966px] border border-[#D6D3D1] rounded-[24px] overflow-hidden relative min-h-[745px] flex flex-col"
-            style={{
-              backgroundImage:
-                "linear-gradient(179.934deg, rgb(249, 245, 242) 0%, rgb(255, 255, 255) 23.573%)",
-            }}
-          >
+          <div className="w-[966px] border border-neutral-gray rounded-3xl overflow-hidden relative min-h-[745px] flex flex-col bg-gradient-to-b from-warm-50 to-white">
             {/* Content */}
             <div className="flex flex-col gap-6 items-center h-full p-6 pt-10 pb-6">
               <div className="flex flex-col gap-6 items-center justify-center w-full max-w-[651px] flex-1">
                 {/* Smile Icon */}
-                <div className="bg-[#ECE8E4] flex items-center justify-center p-1 rounded-[2222px]">
-                  <Smile className="w-6 h-6 text-[#78716C]" />
+                <div className="bg-warm-300 flex items-center justify-center p-1 rounded-full">
+                  <Smile className="w-6 h-6 text-neutral-dark-gray" />
                 </div>
 
                 {/* Main Heading */}
-                <h1
-                  className="text-[44px] font-medium leading-[44px] tracking-[-2.2px] text-center text-[#1F2937]"
-                  style={{
-                    fontFamily: FONTS.interDisplay,
-                  }}
-                >
+                <h1 className="text-5xl font-inter-display font-medium leading-44 tracking-tight text-center text-neutral-charcoal">
                   Complete KYC
                 </h1>
 
                 {/* KYC Info Section */}
                 <div className="flex flex-col gap-5 items-center w-full">
                   {/* Description Text */}
-                  <p
-                    className="text-[#4B5563] text-base font-normal leading-6 text-center w-[348px]"
-                    style={{
-                      fontFamily: "Inter, -apple-system, sans-serif",
-                    }}
-                  >
+                  <p className="text-text-secondary text-base font-inter font-normal leading-6 text-center w-[348px]">
                     Legally we are required KYC before a consultation for proper
                     prescription
                   </p>
@@ -68,94 +52,84 @@ export default function KYC() {
                     {/* Driver's License Option */}
                     <button
                       onClick={() => setSelectedOption("license")}
-                      className={`w-[337px] bg-white border rounded-[18px] p-5 flex items-center justify-between transition-all ${
+                      className={`w-[337px] bg-white border rounded-2xl p-5 flex items-center justify-between transition-all ${
                         selectedOption === "license"
-                          ? "border-2 border-[#0891B2]"
-                          : "border border-[#D1D5DB]"
+                          ? "border-2 border-brand-cyan"
+                          : "border border-border-medium"
                       }`}
                     >
                       <div className="flex items-center gap-3 flex-1">
                         <div
-                          className={`flex items-center justify-center p-1 rounded-[2222px] ${
+                          className={`flex items-center justify-center p-1 rounded-full ${
                             selectedOption === "license"
-                              ? "bg-[#C9E7EC]"
-                              : "bg-[#F3F4F6]"
+                              ? "bg-brand-cyan-pale"
+                              : "bg-neutral-light-gray"
                           }`}
                         >
                           <Car
                             className={`w-6 h-6 ${
                               selectedOption === "license"
-                                ? "text-[#0891B2]"
-                                : "text-[#6B7280]"
+                                ? "text-brand-cyan"
+                                : "text-text-light"
                             }`}
                           />
                         </div>
                         <p
-                          className={`text-base leading-6 w-[194px] ${
+                          className={`text-base font-inter leading-6 w-[194px] ${
                             selectedOption === "license"
-                              ? "font-semibold text-[#1C1917] tracking-[-0.3125px]"
-                              : "font-medium text-[#4B5563]"
+                              ? "font-semibold text-text-primary tracking-body-tight"
+                              : "font-medium text-text-secondary"
                           }`}
-                          style={{
-                            fontFamily: "Inter, -apple-system, sans-serif",
-                          }}
                         >
                           Upload driver's license
                         </p>
                       </div>
-                      <ArrowRight className="w-6 h-6 text-[#6B7280]" />
+                      <ArrowRight className="w-6 h-6 text-text-light" />
                     </button>
 
                     {/* Other Documents Option */}
                     <button
                       onClick={() => setSelectedOption("other")}
-                      className={`w-[337px] bg-white border rounded-[18px] p-5 flex items-center justify-between transition-all ${
+                      className={`w-[337px] bg-white border rounded-2xl p-5 flex items-center justify-between transition-all ${
                         selectedOption === "other"
-                          ? "border-2 border-[#0891B2]"
-                          : "border border-[#D1D5DB]"
+                          ? "border-2 border-brand-cyan"
+                          : "border border-border-medium"
                       }`}
                     >
                       <div className="flex items-center gap-3 flex-1">
                         <div
-                          className={`flex items-center justify-center p-1 rounded-[2222px] ${
+                          className={`flex items-center justify-center p-1 rounded-full ${
                             selectedOption === "other"
-                              ? "bg-[#C9E7EC]"
-                              : "bg-[#F3F4F6]"
+                              ? "bg-brand-cyan-pale"
+                              : "bg-neutral-light-gray"
                           }`}
                         >
                           <FileText
                             className={`w-6 h-6 ${
                               selectedOption === "other"
-                                ? "text-[#0891B2]"
-                                : "text-[#6B7280]"
+                                ? "text-brand-cyan"
+                                : "text-text-light"
                             }`}
                           />
                         </div>
                         <p
-                          className={`text-base leading-6 w-[194px] ${
+                          className={`text-base font-inter leading-6 w-[194px] ${
                             selectedOption === "other"
-                              ? "font-semibold text-[#1C1917] tracking-[-0.3125px]"
-                              : "font-medium text-[#4B5563]"
+                              ? "font-semibold text-text-primary tracking-body-tight"
+                              : "font-medium text-text-secondary"
                           }`}
-                          style={{
-                            fontFamily: "Inter, -apple-system, sans-serif",
-                          }}
                         >
                           Upload Other Documents
                         </p>
                       </div>
-                      <ArrowRight className="w-6 h-6 text-[#6B7280]" />
+                      <ArrowRight className="w-6 h-6 text-text-light" />
                     </button>
                   </div>
 
                   {/* Continue Button */}
                   <button
                     onClick={handleContinue}
-                    className="bg-[#0E3240] text-white px-6 py-3 rounded-[18px] font-semibold text-base hover:bg-[#0E3240]/90 transition-colors h-[57px] flex items-center justify-center w-full"
-                    style={{
-                      fontFamily: "Inter, -apple-system, sans-serif",
-                      lineHeight: "24px",
-                    }}
+                    className="bg-brand-cyan-dark text-white font-inter px-6 py-3 rounded-2xl font-semibold text-base leading-6 hover:bg-brand-cyan-dark/90 transition-colors h-[57px] flex items-center justify-center w-full"
                   >
                     Continue
                   </button>

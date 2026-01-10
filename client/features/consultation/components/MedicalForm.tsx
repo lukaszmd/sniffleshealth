@@ -25,10 +25,7 @@ export function MedicalForm({
       <DataField label="Height" value={data.height} showLabel={showLabels} />
       {data.allergies.length > 0 && (
         <div className="col-span-2">
-          <span
-            className="text-[#4A5565] text-sm block mb-2"
-            style={{ fontFamily: FONTS.inter }}
-          >
+          <span className="text-text-secondary text-sm font-inter block mb-2">
             Allergies
           </span>
           <div className="flex flex-wrap gap-2">
@@ -40,10 +37,7 @@ export function MedicalForm({
       )}
       {data.chronicConditions.length > 0 && (
         <div className="col-span-2">
-          <span
-            className="text-[#4A5565] text-sm block mb-2"
-            style={{ fontFamily: FONTS.inter }}
-          >
+          <span className="text-text-secondary text-sm font-inter block mb-2">
             Chronic Conditions
           </span>
           <div className="flex flex-wrap gap-2">
@@ -55,10 +49,7 @@ export function MedicalForm({
       )}
       {data.surgicalHistory.length > 0 && (
         <div className="col-span-2">
-          <span
-            className="text-[#4A5565] text-sm block mb-2"
-            style={{ fontFamily: FONTS.inter }}
-          >
+          <span className="text-text-secondary text-sm font-inter block mb-2">
             Surgical History
           </span>
           <div className="flex flex-wrap gap-2">
@@ -70,10 +61,7 @@ export function MedicalForm({
       )}
       {data.socialHistory.length > 0 && (
         <div className="col-span-2">
-          <span
-            className="text-[#4A5565] text-sm block mb-2"
-            style={{ fontFamily: FONTS.inter }}
-          >
+          <span className="text-text-secondary text-sm font-inter block mb-2">
             Social History
           </span>
           <div className="flex flex-wrap gap-2">
@@ -85,10 +73,7 @@ export function MedicalForm({
       )}
       {data.familyHistory.length > 0 && (
         <div className="col-span-2">
-          <span
-            className="text-[#4A5565] text-sm block mb-2"
-            style={{ fontFamily: FONTS.inter }}
-          >
+          <span className="text-text-secondary text-sm font-inter block mb-2">
             Family History
           </span>
           <div className="flex flex-wrap gap-2">
@@ -112,18 +97,12 @@ function DataField({ label, value, showLabel = true }: DataFieldProps) {
   return (
     <div className="col-span-1">
       {showLabel && (
-        <span
-          className="text-[#4A5565] text-sm block mb-1"
-          style={{ fontFamily: FONTS.inter }}
-        >
+        <span className="text-text-secondary text-sm font-inter block mb-1">
           {label}
         </span>
       )}
-      <div className="bg-[#FAFAF9] rounded-lg px-2 py-1">
-        <span
-          className="text-[#101828] text-base"
-          style={{ fontFamily: FONTS.inter }}
-        >
+      <div className="bg-warm-50 rounded-lg px-2 py-1">
+        <span className="text-text-primary text-base font-inter">
           {value}
         </span>
       </div>
@@ -137,10 +116,7 @@ interface TagProps {
 
 function Tag({ text }: TagProps) {
   return (
-    <span
-      className="bg-[#F3F4F6] border border-transparent rounded-full px-[13px] py-[5px] text-[#364153] text-xs font-medium"
-      style={{ fontFamily: FONTS.inter, lineHeight: "16px" }}
-    >
+    <span className="bg-neutral-light-gray border border-transparent rounded-full px-[13px] py-[5px] text-text-slate text-xs font-inter font-medium leading-4">
       {text}
     </span>
   );

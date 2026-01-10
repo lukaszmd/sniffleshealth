@@ -22,22 +22,26 @@ export function AIMessage({
 }: AIMessageProps) {
   // Different styling for "AI Assistant" vs "Sniffles Health Assitant"
   const isAIAssistant = sender === "AI Assistant";
-  const bgColor = isAIAssistant ? "#F3F4F6" : "#ECF3F4";
-  const textColor = isAIAssistant ? "#1E2939" : "#1C1917";
+  const bgColor = isAIAssistant
+    ? "bg-neutral-light-gray"
+    : "bg-brand-cyan-lighter";
+  const textColor = isAIAssistant ? "text-text-slate" : "text-text-primary";
   const borderRadius = isAIAssistant
-    ? "rounded-bl-[16px] rounded-br-[16px] rounded-tl-[6px] rounded-tr-[16px]"
-    : "rounded-bl-[30px] rounded-br-[30px] rounded-tl-[12px] rounded-tr-[30px]";
-  const senderColor = isAIAssistant ? "#6A7282" : "#292524";
+    ? "rounded-bl-4 rounded-br-4 rounded-tl-sm rounded-tr-4"
+    : "rounded-bl-3xl rounded-br-3xl rounded-tl-xl rounded-tr-3xl";
+  const senderColor = isAIAssistant ? "text-text-light" : "text-neutral-slate";
 
   return (
     <div className="flex items-start gap-3">
       <div
         className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mt-2 ${
-          isAIAssistant ? "border border-[#D1D5DC] bg-white" : "bg-[#DCE9EB]"
+          isAIAssistant
+            ? "border border-border-medium bg-white"
+            : "bg-brand-cyan-light"
         }`}
       >
         {isAIAssistant ? (
-          <div className="w-4 h-4 rounded-full bg-[#164E63]"></div>
+          <div className="w-4 h-4 rounded-full bg-brand-cyan-dark"></div>
         ) : (
           <svg
             width="16"
@@ -54,40 +58,22 @@ export function AIMessage({
         )}
       </div>
       <div className="flex flex-col gap-1 flex-1">
-        <span
-          className="text-xs leading-4"
-          style={{
-            fontFamily: FONTS.inter,
-            color: senderColor,
-          }}
-        >
+        <span className={`text-xs font-inter leading-4 ${senderColor}`}>
           {sender}
         </span>
         <div
-          className={`${bgColor} ${borderRadius}`}
-          style={{
-            paddingLeft: isAIAssistant ? "16px" : "12px",
-            paddingRight: isAIAssistant ? "20px" : "20px",
-            paddingTop: isAIAssistant ? "11.5px" : "20px",
-            paddingBottom: isAIAssistant ? "11.5px" : "20px",
-          }}
+          className={`${bgColor} ${borderRadius} ${
+            isAIAssistant ? "pl-4 pr-5 py-3" : "px-5 py-5"
+          }`}
         >
           <div
-            className="text-base leading-6"
-            style={{
-              fontFamily: FONTS.inter,
-              letterSpacing: "-0.312px",
-              color: textColor,
-            }}
+            className={`text-base font-inter leading-6 tracking-body-tight ${textColor}`}
           >
             <p className="mb-2">{text}</p>
             {linkText && linkUrl && (
               <Link
                 to={linkUrl}
-                className="inline-block mt-2 px-4 py-2 bg-[#164E63] text-white rounded-lg hover:bg-[#164E63]/90 transition-colors font-medium text-sm"
-                style={{
-                  fontFamily: FONTS.inter,
-                }}
+                className="inline-block mt-2 px-4 py-2 bg-brand-cyan-dark text-white font-inter rounded-lg hover:bg-brand-cyan-dark/90 transition-colors font-medium text-sm"
               >
                 {linkText}
               </Link>
@@ -100,42 +86,11 @@ export function AIMessage({
 }
 
 export function UserMessage({ text }: { text: string }) {
-  // Determine message styling based on text length
-  const isShort = text.length <= 10;
-  const bgColor = isShort ? "#101828" : "#3E5E6A";
-  const borderRadius = isShort
-    ? "rounded-bl-[16px] rounded-br-[16px] rounded-tl-[16px] rounded-tr-[6px]"
-    : "rounded-bl-[30px] rounded-br-[24px] rounded-tl-[30px] rounded-tr-[12px]";
-  const paddingX = isShort ? "16px" : "12px";
-  const paddingY = isShort ? "9.5px" : "20px";
-
   return (
     <div className="flex flex-col items-end gap-1">
-      <span
-        className="text-[#6A7282] text-xs leading-4"
-        style={{
-          fontFamily: FONTS.inter,
-        }}
-      >
-        You
-      </span>
-      <div
-        className={`${borderRadius} min-h-[44px] flex items-center`}
-        style={{
-          backgroundColor: bgColor,
-          paddingLeft: paddingX,
-          paddingRight: paddingX,
-          paddingTop: paddingY,
-          paddingBottom: paddingY,
-        }}
-      >
-        <p
-          className="text-white text-base leading-6"
-          style={{
-            fontFamily: FONTS.inter,
-            letterSpacing: "-0.312px",
-          }}
-        >
+      <span className="text-text-light text-xs font-inter leading-4">You</span>
+      <div className="bg-brand-cyan-message rounded-bl-3xl rounded-br-2.5xl rounded-tl-3xl rounded-tr-xl pl-3 pr-5 py-5 min-h-[44px] flex items-center">
+        <p className="text-white text-base font-inter leading-6 tracking-body-tight">
           {text}
         </p>
       </div>

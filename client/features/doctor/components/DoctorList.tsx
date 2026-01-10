@@ -25,7 +25,7 @@ export function DoctorList({
   if (doctors.length === 0) {
     return (
       <div className={cn("text-center py-8", className)}>
-        <p className="text-[#6A7282] text-sm">No doctors available</p>
+        <p className="text-text-light text-sm font-inter">No doctors available</p>
       </div>
     );
   }

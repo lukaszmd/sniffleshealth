@@ -29,49 +29,28 @@ export function DoctorCard({
     <div
       onClick={onClick}
       className={cn(
-        "flex-1 bg-white border rounded-[10px] p-[17px] flex flex-col gap-3 transition-colors",
+        "flex-1 bg-white border rounded-xl p-[17px] flex flex-col gap-3 transition-colors",
         selected
-          ? "border-[#0891B2] border-2 bg-[#F0FDFA]"
-          : "border-[#E5E7EB]",
-        onClick && "cursor-pointer hover:border-[#0891B2]",
+          ? "border-brand-cyan border-2 bg-teal-50"
+          : "border-border-dark",
+        onClick && "cursor-pointer hover:border-brand-cyan",
         className
       )}
     >
       <div className="flex items-start gap-3">
         {/* Avatar */}
-        <div className="w-12 h-12 rounded-full bg-[#E5E7EB] flex items-center justify-center flex-shrink-0">
-          <span
-            className="text-[#4A5565] text-base font-normal"
-            style={{
-              fontFamily: FONTS.inter,
-              lineHeight: "24px",
-              letterSpacing: "-0.312px",
-            }}
-          >
+        <div className="w-12 h-12 rounded-full bg-border-dark flex items-center justify-center flex-shrink-0">
+          <span className="text-text-secondary text-base font-inter font-normal leading-6 tracking-body-tight">
             {initials}
           </span>
         </div>
 
         {/* Doctor Info */}
         <div className="flex flex-col gap-0.5 flex-1 min-w-0">
-          <h3
-            className="text-[#101828] text-base font-normal truncate"
-            style={{
-              fontFamily: FONTS.inter,
-              lineHeight: "24px",
-              letterSpacing: "-0.312px",
-            }}
-          >
+          <h3 className="text-text-primary text-base font-inter font-normal truncate leading-6 tracking-body-tight">
             {doctor.name}
           </h3>
-          <p
-            className="text-[#6A7282] text-sm font-normal"
-            style={{
-              fontFamily: FONTS.inter,
-              lineHeight: "20px",
-              letterSpacing: "-0.1504px",
-            }}
-          >
+          <p className="text-text-light text-sm font-inter font-normal leading-5 tracking-tight">
             {doctor.specialty}
           </p>
         </div>
@@ -81,14 +60,7 @@ export function DoctorCard({
       {waitTime && (
         <div className="flex items-center gap-2">
           {icon}
-          <span
-            className="text-[#4A5565] text-sm font-normal"
-            style={{
-              fontFamily: FONTS.inter,
-              lineHeight: "20px",
-              letterSpacing: "-0.1504px",
-            }}
-          >
+          <span className="text-text-secondary text-sm font-inter font-normal leading-5 tracking-tight">
             {waitTime}
           </span>
         </div>

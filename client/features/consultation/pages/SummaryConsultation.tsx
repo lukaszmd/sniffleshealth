@@ -54,7 +54,7 @@ export default function SummaryConsultation() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FCFAF8] flex flex-col">
+    <div className="min-h-screen bg-neutral-off-white flex flex-col">
       <PageHeader
         backTo={ROUTES.MEDICAL_PROFILE}
         step={stepInfo?.step}
@@ -63,25 +63,16 @@ export default function SummaryConsultation() {
 
       {/* Main Content - AI Summary */}
       <div className="flex-1 max-w-[1464px] mx-auto w-full p-6">
-        <div className="bg-white rounded-xl border border-[#D6D3D1] p-8 md:p-12">
+        <div className="bg-white rounded-xl border border-neutral-gray p-8 md:p-12">
           <div className="max-w-4xl mx-auto flex flex-col gap-8">
             {/* Title */}
-            <h1
-              className="text-[#1F2937] text-3xl md:text-[32px] font-semibold"
-              style={{
-                fontFamily: "SF Pro, -apple-system, sans-serif",
-                lineHeight: "36px",
-              }}
-            >
+            <h1 className="text-neutral-charcoal text-3xl md:text-2xl font-inter font-semibold leading-36">
               AI Summary
             </h1>
 
             {/* Reported Symptoms */}
             <div className="flex flex-col gap-4">
-              <h2
-                className="text-[#111827] text-xl font-semibold"
-                style={{ fontFamily: FONTS.inter }}
-              >
+              <h2 className="text-text-dark text-xl font-inter font-semibold">
                 Reported Symptoms
               </h2>
               <div className="flex flex-wrap gap-3">
@@ -89,43 +80,33 @@ export default function SummaryConsultation() {
                   symptomNames.map((name, idx) => (
                     <span
                       key={idx}
-                      className="bg-[#F3F4F6] text-[#1E2939] text-sm px-3 py-1 rounded-lg"
-                      style={{ fontFamily: FONTS.inter }}
+                      className="bg-neutral-light-gray text-text-slate text-sm font-inter px-3 py-1 rounded-lg"
                     >
                       {name}
                     </span>
                   ))
                 ) : (
-                  <p className="text-[#4B5563] text-sm" style={{ fontFamily: FONTS.inter }}>
+                  <p className="text-text-secondary text-sm font-inter">
                     No symptoms reported
                   </p>
                 )}
               </div>
             </div>
 
-            <div className="h-px bg-[#D1D5DB]" />
+            <div className="h-px bg-border-medium" />
 
             {/* Medical History Summary */}
             <div className="flex flex-col gap-6">
-              <h2
-                className="text-[#111827] text-xl font-semibold"
-                style={{ fontFamily: FONTS.inter }}
-              >
+              <h2 className="text-text-dark text-xl font-inter font-semibold">
                 Medical History Summary
               </h2>
 
               {/* Allergies */}
               <div className="flex flex-col gap-2">
-                <h3
-                  className="text-[#101828] text-base font-medium"
-                  style={{ fontFamily: FONTS.inter }}
-                >
+                <h3 className="text-text-primary text-base font-inter font-medium">
                   Allergies
                 </h3>
-                <p
-                  className="text-[#1E2939] text-sm"
-                  style={{ fontFamily: FONTS.inter }}
-                >
+                <p className="text-text-slate text-sm font-inter">
                   {currentMedicalData.allergies.length > 0
                     ? currentMedicalData.allergies.join(", ")
                     : "None reported"}
@@ -134,16 +115,10 @@ export default function SummaryConsultation() {
 
               {/* Chronic Conditions */}
               <div className="flex flex-col gap-2">
-                <h3
-                  className="text-[#101828] text-base font-medium"
-                  style={{ fontFamily: FONTS.inter }}
-                >
+                <h3 className="text-text-primary text-base font-inter font-medium">
                   Chronic Conditions
                 </h3>
-                <p
-                  className="text-[#1E2939] text-sm"
-                  style={{ fontFamily: FONTS.inter }}
-                >
+                <p className="text-text-slate text-sm font-inter">
                   {currentMedicalData.chronicConditions.length > 0
                     ? currentMedicalData.chronicConditions.join(", ")
                     : "None reported"}
@@ -152,16 +127,10 @@ export default function SummaryConsultation() {
 
               {/* Past Surgeries */}
               <div className="flex flex-col gap-2">
-                <h3
-                  className="text-[#101828] text-base font-medium"
-                  style={{ fontFamily: FONTS.inter }}
-                >
+                <h3 className="text-text-primary text-base font-inter font-medium">
                   Past Surgeries
                 </h3>
-                <p
-                  className="text-[#1E2939] text-sm"
-                  style={{ fontFamily: FONTS.inter }}
-                >
+                <p className="text-text-slate text-sm font-inter">
                   {currentMedicalData.surgicalHistory.length > 0
                     ? currentMedicalData.surgicalHistory.join(", ")
                     : "None reported"}
@@ -170,28 +139,18 @@ export default function SummaryConsultation() {
 
               {/* Social History */}
               <div className="flex flex-col gap-2">
-                <h3
-                  className="text-[#101828] text-base font-medium"
-                  style={{ fontFamily: FONTS.inter }}
-                >
+                <h3 className="text-text-primary text-base font-inter font-medium">
                   Social History
                 </h3>
                 <div className="flex flex-col gap-2">
                   {currentMedicalData.socialHistory.length > 0 ? (
                     currentMedicalData.socialHistory.map((item, idx) => (
-                      <p
-                        key={idx}
-                        className="text-[#1E2939] text-sm"
-                        style={{ fontFamily: FONTS.inter }}
-                      >
+                      <p key={idx} className="text-text-slate text-sm font-inter">
                         {item.type}: {item.level}
                       </p>
                     ))
                   ) : (
-                    <p
-                      className="text-[#1E2939] text-sm"
-                      style={{ fontFamily: FONTS.inter }}
-                    >
+                    <p className="text-text-slate text-sm font-inter">
                       None reported
                     </p>
                   )}
@@ -200,16 +159,10 @@ export default function SummaryConsultation() {
 
               {/* Family History */}
               <div className="flex flex-col gap-2">
-                <h3
-                  className="text-[#101828] text-base font-medium"
-                  style={{ fontFamily: FONTS.inter }}
-                >
+                <h3 className="text-text-primary text-base font-inter font-medium">
                   Family History
                 </h3>
-                <p
-                  className="text-[#1E2939] text-sm"
-                  style={{ fontFamily: FONTS.inter }}
-                >
+                <p className="text-text-slate text-sm font-inter">
                   {currentMedicalData.familyHistory.length > 0
                     ? currentMedicalData.familyHistory.join(", ")
                     : "None reported"}
@@ -217,21 +170,15 @@ export default function SummaryConsultation() {
               </div>
             </div>
 
-            <div className="h-px bg-[#D1D5DB]" />
+            <div className="h-px bg-border-medium" />
 
             {/* AI Preliminary Assessment */}
             <div className="flex flex-col gap-4">
-              <h2
-                className="text-[#111827] text-xl font-semibold"
-                style={{ fontFamily: FONTS.inter }}
-              >
+              <h2 className="text-text-dark text-xl font-inter font-semibold">
                 AI Preliminary Assessment
               </h2>
-              <div className="bg-[#ECF3F4] rounded-xl p-4">
-                <p
-                  className="text-[#1E2939] text-sm leading-relaxed"
-                  style={{ fontFamily: FONTS.inter }}
-                >
+              <div className="bg-brand-cyan-lighter rounded-xl p-4">
+                <p className="text-text-slate text-sm font-inter leading-relaxed">
                   {generateAIAssessment()}
                 </p>
               </div>
