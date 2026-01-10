@@ -305,3 +305,4 @@ The design requires **two independent scrollable containers** that:
 5. Provide appropriate scroll behavior (auto-scroll for chat, manual for profile)
 
 This creates a professional, desktop-app-like experience where users can interact with both panels simultaneously without scroll interference.
+
