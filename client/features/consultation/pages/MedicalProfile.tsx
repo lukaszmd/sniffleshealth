@@ -43,6 +43,40 @@ export default function MedicalProfile() {
   // Ref for chat input field (better React pattern than document.querySelector)
   const chatInputRef = useRef<HTMLInputElement>(null);
 
+  // Track last message count to detect new messages
+  const lastMessageCountRef = useRef(0);
+  const lastMessageRef = useRef<HTMLDivElement>(null);
+
+  // Auto-scroll and focus on new messages (user or AI)
+  useEffect(() => {
+    const currentMessageCount = messages.length;
+
+    // Check if a new message was added
+    if (currentMessageCount > lastMessageCountRef.current) {
+      // New message detected - scroll to it
+      setTimeout(() => {
+        if (lastMessageRef.current) {
+          // Scroll to the last message with smooth behavior
+          lastMessageRef.current.scrollIntoView({
+            behavior: "smooth",
+            block: "end",
+            inline: "nearest",
+          });
+        } else {
+          // Fallback: scroll to bottom
+          messagesEndRef.current?.scrollIntoView({
+            behavior: "smooth",
+            block: "end",
+            inline: "nearest",
+          });
+        }
+      }, 100); // Small delay to ensure DOM is updated
+    }
+
+    // Update the ref
+    lastMessageCountRef.current = currentMessageCount;
+  }, [messages, messagesEndRef]);
+
   // Initialize medical data structure if empty
   useEffect(() => {
     if (!medicalData) {
@@ -106,22 +140,29 @@ export default function MedicalProfile() {
             <div className="flex-1 overflow-y-auto min-h-0">
               <div className="p-10">
                 <div className="flex flex-col gap-[22px] max-w-[672px] mx-auto">
-                  {messages.map((message, index) => (
-                    <div
-                      key={index}
-                      className={
-                        message.type === "ai"
-                          ? "w-full"
-                          : "w-auto max-w-[80%] self-end"
-                      }
-                    >
-                      {message.type === "ai" ? (
-                        <AIMessage text={message.text} />
-                      ) : (
-                        <UserMessage text={message.text} />
-                      )}
-                    </div>
-                  ))}
+                  {messages.map((message, index) => {
+                    // Check if this is the last message (any type)
+                    const isLastMessage = index === messages.length - 1;
+
+                    return (
+                      <div
+                        key={index}
+                        ref={isLastMessage ? lastMessageRef : null}
+                        tabIndex={isLastMessage ? -1 : undefined}
+                        className={
+                          message.type === "ai"
+                            ? "w-full"
+                            : "w-auto max-w-[80%] self-end"
+                        }
+                      >
+                        {message.type === "ai" ? (
+                          <AIMessage text={message.text} />
+                        ) : (
+                          <UserMessage text={message.text} />
+                        )}
+                      </div>
+                    );
+                  })}
                   <div ref={messagesEndRef} />
                 </div>
               </div>
@@ -270,21 +311,23 @@ export default function MedicalProfile() {
                 })()}
 
               {/* Input Area - Only show when questions are in progress */}
-              {!(phaseACompleted && phaseBCompleted) && !safetyStopTriggered && (
-                <div className="p-6">
-                  <div className="max-w-[672px] mx-auto">
-                    <ChatInput
-                      ref={chatInputRef}
-                      value={inputValue}
-                      onChange={setInputValue}
-                      onSend={handleSend}
-                    />
+              {!(phaseACompleted && phaseBCompleted) &&
+                !safetyStopTriggered && (
+                  <div className="p-6">
+                    <div className="max-w-[672px] mx-auto">
+                      <ChatInput
+                        ref={chatInputRef}
+                        value={inputValue}
+                        onChange={setInputValue}
+                        onSend={handleSend}
+                      />
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
 
               {/* Continue Button Section - Only show when all questions are complete */}
-              {((phaseACompleted && phaseBCompleted) || safetyStopTriggered) && (
+              {((phaseACompleted && phaseBCompleted) ||
+                safetyStopTriggered) && (
                 <div className="bg-white flex flex-col gap-5 items-center justify-center px-0 py-10 shadow-[0px_-100px_111px_0px_rgba(255,255,255,0.4)] animate-fade-in-slide-up">
                   <button
                     onClick={goToSummary}
@@ -301,19 +344,19 @@ export default function MedicalProfile() {
                 !safetyStopTriggered &&
                 !isWaitingForAnswer &&
                 !lastMessageIsFromUser && (
-                <div className="bg-white flex flex-col gap-5 items-center justify-center px-0 py-10 shadow-[0px_-100px_111px_0px_rgba(255,255,255,0.4)]">
-                  <button
-                    onClick={() => {
-                      // Focus on input to allow user to continue sharing information
-                      chatInputRef.current?.focus();
-                    }}
-                    className="text-brand-cyan-dark text-lg font-inter font-medium leading-6 tracking-body-tight hover:text-brand-cyan-dark/80 active:text-brand-cyan-dark/70 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-cyan-dark focus:ring-offset-2 rounded-sm"
-                    aria-label="I have to share more information"
-                  >
-                    I have to share more information
-                  </button>
-                </div>
-              )}
+                  <div className="bg-white flex flex-col gap-5 items-center justify-center px-0 py-10 shadow-[0px_-100px_111px_0px_rgba(255,255,255,0.4)]">
+                    <button
+                      onClick={() => {
+                        // Focus on input to allow user to continue sharing information
+                        chatInputRef.current?.focus();
+                      }}
+                      className="text-brand-cyan-dark text-lg font-inter font-medium leading-6 tracking-body-tight hover:text-brand-cyan-dark/80 active:text-brand-cyan-dark/70 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-cyan-dark focus:ring-offset-2 rounded-sm"
+                      aria-label="I have to share more information"
+                    >
+                      I have to share more information
+                    </button>
+                  </div>
+                )}
             </div>
           </div>
 
