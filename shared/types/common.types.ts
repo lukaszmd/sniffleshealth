@@ -11,6 +11,8 @@ export interface Message {
   sender?: string;
   linkText?: string;
   linkUrl?: string;
+  options?: string[];
+  onOptionSelect?: (option: string) => void;
 }
 
 export type ConsultationType = "text" | "video";

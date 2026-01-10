@@ -7,7 +7,11 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import type { Message } from "@shared/types";
 import { useChat } from "./useChat";
 import { useConsultationStore } from "@/stores/consultation.store";
-import { PHASE_A_QUESTIONS, PHASE_B_QUESTIONS, SAFETY_STOPS } from "../constants/chatQuestions";
+import {
+  PHASE_A_QUESTIONS,
+  PHASE_B_QUESTIONS,
+  SAFETY_STOPS,
+} from "../constants/chatQuestions";
 import type { ChatQuestion } from "../constants/chatQuestions";
 import type { HealthCategory } from "@shared/types";
 
@@ -64,7 +68,7 @@ export function useAIChatIntake(): UseAIChatIntakeReturn {
       };
       initializeMessages([welcomeMessage]);
       setIsInitialized(true);
-      
+
       // Ask first question after a brief delay
       setTimeout(() => {
         askQuestion(PHASE_A_QUESTIONS[0]);
@@ -73,169 +77,258 @@ export function useAIChatIntake(): UseAIChatIntakeReturn {
   }, [isInitialized, selectedCategory, messages.length, initializeMessages]);
 
   // Check for safety stops
-  const checkSafetyStops = useCallback((answer: string, category: HealthCategory | null): string | null => {
-    if (!category) return null;
-    
-    for (const stop of SAFETY_STOPS) {
-      if (stop.trigger(answer, category)) {
-        setSafetyStop(true, stop.message);
-        return stop.message;
+  const checkSafetyStops = useCallback(
+    (answer: string, category: HealthCategory | null): string | null => {
+      if (!category) return null;
+
+      for (const stop of SAFETY_STOPS) {
+        if (stop.trigger(answer, category)) {
+          setSafetyStop(true, stop.message);
+          return stop.message;
+        }
       }
-    }
-    return null;
-  }, [setSafetyStop]);
+      return null;
+    },
+    [setSafetyStop],
+  );
 
   // Ask a question
-  const askQuestion = useCallback((question: ChatQuestion) => {
-    sendAIMessage(question.text);
-    setIsWaitingForAnswer(true);
-    lastQuestionKeyRef.current = question.key;
-  }, [sendAIMessage]);
+  const askQuestion = useCallback(
+    (question: ChatQuestion) => {
+      // Determine options based on question type
+      let options: string[] | undefined;
+
+      if (question.type === "yes_no") {
+        options = ["Yes", "No"];
+      } else if (question.type === "multiple_choice" && question.options) {
+        options = question.options;
+      } else if (question.key === "sex") {
+        options = ["Male", "Female"];
+      }
+
+      // Send message with options - we'll set the handler when handleSendMessage is defined
+      sendAIMessage(question.text, undefined, options);
+      setIsWaitingForAnswer(true);
+      lastQuestionKeyRef.current = question.key;
+    },
+    [sendAIMessage],
+  );
 
   // Process answer
-  const processAnswer = useCallback((answer: string, question: ChatQuestion) => {
-    // Check safety stops first
-    const safetyMessage = checkSafetyStops(answer, selectedCategory);
-    if (safetyMessage) {
-      sendAIMessage(safetyMessage);
-      setIsWaitingForAnswer(false);
-      return;
-    }
-
-    const currentData = medicalData || {
-      age: "",
-      sex: "",
-      weight: "",
-      height: "",
-      allergies: [],
-      chronicConditions: [],
-      surgicalHistory: [],
-      socialHistory: [],
-      familyHistory: [],
-      phaseBAnswers: {},
-    };
-
-    // Handle followup questions
-    if (waitingForFollowupRef.current) {
-      // This is a followup answer
-      if (question.key === "allergies") {
-        updateMedicalData({ allergies: [answer] });
-      } else if (question.key === "surgicalHistory") {
-        updateMedicalData({ surgicalHistory: [answer] });
-      } else {
-        const phaseBAnswers = { ...(currentData.phaseBAnswers || {}) };
-        phaseBAnswers[question.key] = answer;
-        updateMedicalData({ phaseBAnswers });
+  const processAnswer = useCallback(
+    (answer: string, question: ChatQuestion) => {
+      // Check safety stops first
+      const safetyMessage = checkSafetyStops(answer, selectedCategory);
+      if (safetyMessage) {
+        sendAIMessage(safetyMessage);
+        setIsWaitingForAnswer(false);
+        return;
       }
-      waitingForFollowupRef.current = null;
-      return; // Will advance to next question below
-    }
 
-    // Process based on question type
-    if (question.type === "yes_no") {
-      const isYes = /^(yes|y|true|1)$/i.test(answer.trim()) || answer.toLowerCase().includes("yes");
-      
-      if (question.key === "smoking") {
-        const existing = currentData.socialHistory.filter(s => s.type !== "Smoking");
-        updateMedicalData({
-          socialHistory: [...existing, { type: "Smoking", level: isYes ? "Yes" : "No" }],
-        });
-      } else if (question.key === "alcohol") {
-        const existing = currentData.socialHistory.filter(s => s.type !== "Alcohol");
-        updateMedicalData({
-          socialHistory: [...existing, { type: "Alcohol", level: isYes ? "Yes" : "No" }],
-        });
-      } else if (question.key === "drugs") {
-        const existing = currentData.socialHistory.filter(s => s.type !== "Recreational Drugs");
-        updateMedicalData({
-          socialHistory: [...existing, { type: "Recreational Drugs", level: isYes ? "Yes" : "No" }],
-        });
-      } else {
-        const phaseBAnswers = { ...(currentData.phaseBAnswers || {}) };
-        phaseBAnswers[question.key] = isYes ? "Yes" : "No";
-        updateMedicalData({ phaseBAnswers });
-      }
-    } else if (question.type === "yes_no_with_followup") {
-      const isYes = /^(yes|y|true|1)$/i.test(answer.trim()) || answer.toLowerCase().includes("yes");
-      
-      if (isYes && question.followup) {
-        // Ask followup
-        waitingForFollowupRef.current = question.key;
-        sendAIMessage(question.followup);
-        setIsWaitingForAnswer(true);
-        return; // Don't advance yet
-      } else {
-        // No followup needed
+      const currentData = medicalData || {
+        age: "",
+        sex: "",
+        weight: "",
+        height: "",
+        allergies: [],
+        chronicConditions: [],
+        surgicalHistory: [],
+        socialHistory: [],
+        familyHistory: [],
+        phaseBAnswers: {},
+      };
+
+      // Handle followup questions
+      if (waitingForFollowupRef.current) {
+        // This is a followup answer
         if (question.key === "allergies") {
-          updateMedicalData({ allergies: ["None"] });
+          updateMedicalData({ allergies: [answer] });
         } else if (question.key === "surgicalHistory") {
-          updateMedicalData({ surgicalHistory: [] });
+          updateMedicalData({ surgicalHistory: [answer] });
+        } else {
+          const phaseBAnswers = { ...(currentData.phaseBAnswers || {}) };
+          phaseBAnswers[question.key] = answer;
+          updateMedicalData({ phaseBAnswers });
+        }
+        waitingForFollowupRef.current = null;
+        return; // Will advance to next question below
+      }
+
+      // Process based on question type
+      if (question.type === "yes_no") {
+        const isYes =
+          /^(yes|y|true|1)$/i.test(answer.trim()) ||
+          answer.toLowerCase().includes("yes");
+
+        if (question.key === "smoking") {
+          const existing = currentData.socialHistory.filter(
+            (s) => s.type !== "Smoking",
+          );
+          updateMedicalData({
+            socialHistory: [
+              ...existing,
+              { type: "Smoking", level: isYes ? "Yes" : "No" },
+            ],
+          });
+        } else if (question.key === "alcohol") {
+          const existing = currentData.socialHistory.filter(
+            (s) => s.type !== "Alcohol",
+          );
+          updateMedicalData({
+            socialHistory: [
+              ...existing,
+              { type: "Alcohol", level: isYes ? "Yes" : "No" },
+            ],
+          });
+        } else if (question.key === "drugs") {
+          const existing = currentData.socialHistory.filter(
+            (s) => s.type !== "Recreational Drugs",
+          );
+          updateMedicalData({
+            socialHistory: [
+              ...existing,
+              { type: "Recreational Drugs", level: isYes ? "Yes" : "No" },
+            ],
+          });
         } else {
           const phaseBAnswers = { ...(currentData.phaseBAnswers || {}) };
           phaseBAnswers[question.key] = isYes ? "Yes" : "No";
           updateMedicalData({ phaseBAnswers });
         }
-      }
-    } else if (question.type === "multiple_choice") {
-      const lowerAnswer = answer.toLowerCase();
-      const matchedOption = question.options?.find(opt => 
-        lowerAnswer.includes(opt.toLowerCase())
-      );
-      
-      if (question.key === "chronicConditions") {
-        const conditions = matchedOption && matchedOption !== "None" 
-          ? [matchedOption] 
-          : matchedOption === "None" 
-            ? [] 
-            : [answer];
-        updateMedicalData({ chronicConditions: conditions });
-      } else if (question.key === "familyHistory") {
-        const history = matchedOption && matchedOption !== "None"
-          ? [matchedOption]
-          : matchedOption === "None"
-            ? []
-            : [answer];
-        updateMedicalData({ familyHistory: history });
-      } else {
-        const phaseBAnswers = { ...(currentData.phaseBAnswers || {}) };
-        phaseBAnswers[question.key] = matchedOption || answer;
-        updateMedicalData({ phaseBAnswers });
-      }
-    } else {
-      // Text input
-      // Handle personal details questions
-      if (question.key === "age") {
-        // Extract age from answer
-        const ageMatch = answer.match(/\d+/);
-        const age = ageMatch ? ageMatch[0] : answer.trim();
-        updateMedicalData({ age });
-      } else if (question.key === "sex") {
-        // Parse sex from answer
-        // Examples: "male", "M", "female", "F", "Male"
-        const lowerAnswer = answer.toLowerCase().trim();
-        let sex = "";
-        if (lowerAnswer.includes("male") || lowerAnswer === "m") {
-          sex = "M";
-        } else if (lowerAnswer.includes("female") || lowerAnswer === "f") {
-          sex = "F";
+      } else if (question.type === "yes_no_with_followup") {
+        const isYes =
+          /^(yes|y|true|1)$/i.test(answer.trim()) ||
+          answer.toLowerCase().includes("yes");
+
+        if (isYes && question.followup) {
+          // Ask followup
+          waitingForFollowupRef.current = question.key;
+          sendAIMessage(question.followup);
+          setIsWaitingForAnswer(true);
+          return; // Don't advance yet
         } else {
-          sex = answer.trim(); // Store as-is if not recognized
+          // No followup needed
+          if (question.key === "allergies") {
+            updateMedicalData({ allergies: ["None"] });
+          } else if (question.key === "surgicalHistory") {
+            updateMedicalData({ surgicalHistory: [] });
+          } else {
+            const phaseBAnswers = { ...(currentData.phaseBAnswers || {}) };
+            phaseBAnswers[question.key] = isYes ? "Yes" : "No";
+            updateMedicalData({ phaseBAnswers });
+          }
         }
-        updateMedicalData({ sex });
-      } else if (question.key === "height") {
-        // Store height as provided
-        updateMedicalData({ height: answer.trim() });
-      } else if (question.key === "weight") {
-        // Store weight as provided
-        updateMedicalData({ weight: answer.trim() });
+      } else if (question.type === "multiple_choice") {
+        // Handle multiple selection
+        if (question.allowMultiple) {
+          // Answer may be comma-separated string or single value
+          const answerParts = answer
+            .split(",")
+            .map((part) => part.trim())
+            .filter((part) => part.length > 0);
+
+          // Match each part to available options
+          const selectedOptions: string[] = [];
+          for (const part of answerParts) {
+            const lowerPart = part.toLowerCase();
+            const matchedOption = question.options?.find(
+              (opt) =>
+                lowerPart.includes(opt.toLowerCase()) ||
+                opt.toLowerCase().includes(lowerPart),
+            );
+            if (matchedOption) {
+              selectedOptions.push(matchedOption);
+            }
+          }
+
+          // Handle "None" option
+          const hasNone = selectedOptions.includes("None");
+          const finalOptions = hasNone
+            ? []
+            : selectedOptions.filter((opt) => opt !== "None");
+
+          if (question.key === "chronicConditions") {
+            updateMedicalData({ chronicConditions: finalOptions });
+          } else if (question.key === "familyHistory") {
+            updateMedicalData({ familyHistory: finalOptions });
+          } else {
+            // For Phase B questions with multiple selection, store as comma-separated string
+            const phaseBAnswers = { ...(currentData.phaseBAnswers || {}) };
+            phaseBAnswers[question.key] = finalOptions.join(", ");
+            updateMedicalData({ phaseBAnswers });
+          }
+        } else {
+          // Single selection (original behavior)
+          const lowerAnswer = answer.toLowerCase();
+          const matchedOption = question.options?.find((opt) =>
+            lowerAnswer.includes(opt.toLowerCase()),
+          );
+
+          if (question.key === "chronicConditions") {
+            const conditions =
+              matchedOption && matchedOption !== "None"
+                ? [matchedOption]
+                : matchedOption === "None"
+                  ? []
+                  : [answer];
+            updateMedicalData({ chronicConditions: conditions });
+          } else if (question.key === "familyHistory") {
+            const history =
+              matchedOption && matchedOption !== "None"
+                ? [matchedOption]
+                : matchedOption === "None"
+                  ? []
+                  : [answer];
+            updateMedicalData({ familyHistory: history });
+          } else {
+            const phaseBAnswers = { ...(currentData.phaseBAnswers || {}) };
+            phaseBAnswers[question.key] = matchedOption || answer;
+            updateMedicalData({ phaseBAnswers });
+          }
+        }
       } else {
-        // Other text inputs go to phaseBAnswers
-        const phaseBAnswers = { ...(currentData.phaseBAnswers || {}) };
-        phaseBAnswers[question.key] = answer;
-        updateMedicalData({ phaseBAnswers });
+        // Text input
+        // Handle personal details questions
+        if (question.key === "age") {
+          // Extract age from answer
+          const ageMatch = answer.match(/\d+/);
+          const age = ageMatch ? ageMatch[0] : answer.trim();
+          updateMedicalData({ age });
+        } else if (question.key === "sex") {
+          // Parse sex from answer
+          // Examples: "male", "M", "female", "F", "Male"
+          const lowerAnswer = answer.toLowerCase().trim();
+          let sex = "";
+          if (lowerAnswer.includes("male") || lowerAnswer === "m") {
+            sex = "M";
+          } else if (lowerAnswer.includes("female") || lowerAnswer === "f") {
+            sex = "F";
+          } else {
+            sex = answer.trim(); // Store as-is if not recognized
+          }
+          updateMedicalData({ sex });
+        } else if (question.key === "height") {
+          // Store height as provided
+          updateMedicalData({ height: answer.trim() });
+        } else if (question.key === "weight") {
+          // Store weight as provided
+          updateMedicalData({ weight: answer.trim() });
+        } else {
+          // Other text inputs go to phaseBAnswers
+          const phaseBAnswers = { ...(currentData.phaseBAnswers || {}) };
+          phaseBAnswers[question.key] = answer;
+          updateMedicalData({ phaseBAnswers });
+        }
       }
-    }
-  }, [medicalData, updateMedicalData, checkSafetyStops, selectedCategory, sendAIMessage]);
+    },
+    [
+      medicalData,
+      updateMedicalData,
+      checkSafetyStops,
+      selectedCategory,
+      sendAIMessage,
+    ],
+  );
 
   // Advance to next question
   const advanceToNextQuestion = useCallback(() => {
@@ -253,7 +346,9 @@ export function useAIChatIntake(): UseAIChatIntakeReturn {
         setCurrentQuestionIndex(0);
         setTimeout(() => {
           if (selectedCategory) {
-            sendAIMessage("Now, let me ask you some questions specific to your condition.");
+            sendAIMessage(
+              "Now, let me ask you some questions specific to your condition.",
+            );
             setTimeout(() => {
               const phaseBQuestions = PHASE_B_QUESTIONS[selectedCategory];
               if (phaseBQuestions.length > 0) {
@@ -276,76 +371,122 @@ export function useAIChatIntake(): UseAIChatIntakeReturn {
         setPhaseBCompleted(true);
         setCurrentPhase("complete");
         setIsWaitingForAnswer(false);
-        sendAIMessage("Thank you for providing this information. Your medical profile has been updated. You can review it in the panel on the right.");
+        sendAIMessage(
+          "Thank you for providing this information. Your medical profile has been updated. You can review it in the panel on the right.",
+        );
       }
     }
-  }, [currentPhase, currentQuestionIndex, selectedCategory, askQuestion, sendAIMessage, setPhaseACompleted, setPhaseBCompleted]);
-
-  // Handle sending message
-  const handleSendMessage = useCallback((text: string) => {
-    if (!text.trim() || !isWaitingForAnswer) return;
-
-    sendUserMessage(text);
-
-    // Determine which question we're answering
-    let currentQuestion: ChatQuestion | null = null;
-    
-    if (waitingForFollowupRef.current) {
-      // Answering a followup
-      const phase = currentPhase === "A" ? PHASE_A_QUESTIONS : 
-                   (selectedCategory ? PHASE_B_QUESTIONS[selectedCategory] : []);
-      currentQuestion = phase.find(q => q.key === waitingForFollowupRef.current) || null;
-    } else {
-      // Answering current question
-      if (currentPhase === "A") {
-        currentQuestion = PHASE_A_QUESTIONS[currentQuestionIndex];
-      } else if (currentPhase === "B" && selectedCategory) {
-        currentQuestion = PHASE_B_QUESTIONS[selectedCategory][currentQuestionIndex];
-      }
-    }
-
-    if (currentQuestion) {
-      const wasWaitingForFollowup = !!waitingForFollowupRef.current;
-      processAnswer(text, currentQuestion);
-      
-      // If we were waiting for followup and now it's processed, advance
-      // Otherwise, if not waiting for followup, advance normally
-      if (wasWaitingForFollowup && !waitingForFollowupRef.current) {
-        // Followup was just processed, advance to next question
-        setIsWaitingForAnswer(false);
-        setTimeout(() => {
-          advanceToNextQuestion();
-        }, 500);
-      } else if (!waitingForFollowupRef.current) {
-        // Normal question answered, advance
-        setIsWaitingForAnswer(false);
-        setTimeout(() => {
-          advanceToNextQuestion();
-        }, 500);
-      }
-      // If still waiting for followup, don't advance yet
-    }
-
-    setInputValue("");
   }, [
-    isWaitingForAnswer,
     currentPhase,
     currentQuestionIndex,
     selectedCategory,
-    sendUserMessage,
-    processAnswer,
-    advanceToNextQuestion,
-    setInputValue,
+    askQuestion,
+    sendAIMessage,
+    setPhaseACompleted,
+    setPhaseBCompleted,
   ]);
+
+  // Handle sending message
+  const handleSendMessage = useCallback(
+    (text: string) => {
+      if (!text.trim() || !isWaitingForAnswer) return;
+
+      sendUserMessage(text);
+
+      // Determine which question we're answering
+      let currentQuestion: ChatQuestion | null = null;
+
+      if (waitingForFollowupRef.current) {
+        // Answering a followup
+        const phase =
+          currentPhase === "A"
+            ? PHASE_A_QUESTIONS
+            : selectedCategory
+              ? PHASE_B_QUESTIONS[selectedCategory]
+              : [];
+        currentQuestion =
+          phase.find((q) => q.key === waitingForFollowupRef.current) || null;
+      } else {
+        // Answering current question
+        if (currentPhase === "A") {
+          currentQuestion = PHASE_A_QUESTIONS[currentQuestionIndex];
+        } else if (currentPhase === "B" && selectedCategory) {
+          currentQuestion =
+            PHASE_B_QUESTIONS[selectedCategory][currentQuestionIndex];
+        }
+      }
+
+      if (currentQuestion) {
+        const wasWaitingForFollowup = !!waitingForFollowupRef.current;
+        processAnswer(text, currentQuestion);
+
+        // If we were waiting for followup and now it's processed, advance
+        // Otherwise, if not waiting for followup, advance normally
+        if (wasWaitingForFollowup && !waitingForFollowupRef.current) {
+          // Followup was just processed, advance to next question
+          setIsWaitingForAnswer(false);
+          setTimeout(() => {
+            advanceToNextQuestion();
+          }, 500);
+        } else if (!waitingForFollowupRef.current) {
+          // Normal question answered, advance
+          setIsWaitingForAnswer(false);
+          setTimeout(() => {
+            advanceToNextQuestion();
+          }, 500);
+        }
+        // If still waiting for followup, don't advance yet
+      }
+
+      setInputValue("");
+    },
+    [
+      isWaitingForAnswer,
+      currentPhase,
+      currentQuestionIndex,
+      selectedCategory,
+      sendUserMessage,
+      processAnswer,
+      advanceToNextQuestion,
+      setInputValue,
+    ],
+  );
+
+  // Update messages with option handlers after handleSendMessage is defined
+  useEffect(() => {
+    if (messages.length > 0 && handleSendMessage) {
+      const updatedMessages = messages.map((msg) => {
+        if (msg.type === "ai" && msg.options && !msg.onOptionSelect) {
+          return {
+            ...msg,
+            onOptionSelect: (option: string) => handleSendMessage(option),
+          };
+        }
+        return msg;
+      });
+      // Only update if there's a change
+      const hasChanges = updatedMessages.some(
+        (msg, idx) => msg.onOptionSelect !== messages[idx]?.onOptionSelect,
+      );
+      if (hasChanges) {
+        // Use addMessage to update - we need to check if we can update existing messages
+        // For now, we'll handle this in the component by passing handleSendMessage
+      }
+    }
+  }, [messages, handleSendMessage]);
 
   // Get current question
   const getCurrentQuestion = (): ChatQuestion | null => {
     if (waitingForFollowupRef.current) {
-      const phase = currentPhase === "A" ? PHASE_A_QUESTIONS : 
-                   (selectedCategory ? PHASE_B_QUESTIONS[selectedCategory] : []);
-      return phase.find(q => q.key === waitingForFollowupRef.current) || null;
+      const phase =
+        currentPhase === "A"
+          ? PHASE_A_QUESTIONS
+          : selectedCategory
+            ? PHASE_B_QUESTIONS[selectedCategory]
+            : [];
+      return phase.find((q) => q.key === waitingForFollowupRef.current) || null;
     }
-    
+
     if (currentPhase === "A") {
       return PHASE_A_QUESTIONS[currentQuestionIndex] || null;
     } else if (currentPhase === "B" && selectedCategory) {

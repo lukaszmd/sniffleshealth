@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { X, Info, AlertTriangle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import type { MedicalData } from "@shared/types";
@@ -13,6 +13,7 @@ import {
 } from "../hooks";
 import { useScrollToBottom } from "@/hooks";
 import { useConsultationStore } from "@/stores/consultation.store";
+import type { ChatQuestion } from "../constants/chatQuestions";
 
 export default function MedicalProfile() {
   const navigate = useNavigate();
@@ -28,10 +29,16 @@ export default function MedicalProfile() {
     sendMessage,
     safetyStopTriggered,
     safetyStopMessage,
+    phaseACompleted,
     phaseBCompleted,
+    currentQuestion,
+    isWaitingForAnswer,
   } = useAIChatIntake();
 
   const { messagesEndRef } = useScrollToBottom(messages);
+
+  // Track selected options for multiple selection questions
+  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 
   // Initialize medical data structure if empty
   useEffect(() => {
@@ -50,6 +57,13 @@ export default function MedicalProfile() {
       });
     }
   }, [medicalData, setMedicalData]);
+
+  // Reset selected options when question changes
+  useEffect(() => {
+    if (currentQuestion) {
+      setSelectedOptions([]);
+    }
+  }, [currentQuestion?.id]);
 
   const handleSend = () => {
     sendMessage(inputValue);
@@ -100,6 +114,141 @@ export default function MedicalProfile() {
               </div>
             </div>
 
+            {/* Options Section - Just above input */}
+            {isWaitingForAnswer && currentQuestion && (
+              <>
+                {/* Horizontal line above options */}
+                <div className="border-t border-[#E5E7EB]"></div>
+                <div className="p-6">
+                  <div className="max-w-[672px]">
+                    {(() => {
+                      // Determine options based on question type
+                      let options: string[] | undefined;
+                      const isMultipleSelect =
+                        currentQuestion.type === "multiple_choice" &&
+                        currentQuestion.allowMultiple === true;
+
+                      if (currentQuestion.type === "yes_no") {
+                        options = ["Yes", "No"];
+                      } else if (
+                        currentQuestion.type === "multiple_choice" &&
+                        currentQuestion.options
+                      ) {
+                        options = currentQuestion.options;
+                      } else if (currentQuestion.key === "sex") {
+                        options = ["Male", "Female"];
+                      }
+
+                      if (!options) return null;
+
+                      // Handle multiple selection
+                      if (isMultipleSelect) {
+                        const handleOptionToggle = (option: string) => {
+                          if (option === "None") {
+                            // Selecting "None" clears all other selections
+                            setSelectedOptions(["None"]);
+                          } else {
+                            // Selecting any option removes "None" if present
+                            setSelectedOptions((prev) => {
+                              const withoutNone = prev.filter(
+                                (o) => o !== "None",
+                              );
+                              if (withoutNone.includes(option)) {
+                                // Deselect if already selected
+                                return withoutNone.filter((o) => o !== option);
+                              } else {
+                                // Add to selection
+                                return [...withoutNone, option];
+                              }
+                            });
+                          }
+                        };
+
+                        const handleSubmit = () => {
+                          if (selectedOptions.length === 0) return;
+                          // Send selected options as comma-separated string or handle in processing
+                          const answer =
+                            selectedOptions.length === 1 &&
+                            selectedOptions[0] === "None"
+                              ? "None"
+                              : selectedOptions
+                                  .filter((o) => o !== "None")
+                                  .join(", ");
+                          sendMessage(answer);
+                        };
+
+                        return (
+                          <div className="flex flex-col gap-3">
+                            <div className="flex gap-3 flex-wrap">
+                              {options.map((option, index) => {
+                                const isSelected =
+                                  selectedOptions.includes(option);
+                                return (
+                                  <button
+                                    key={index}
+                                    onClick={() => handleOptionToggle(option)}
+                                    className={`border rounded-[18px] px-5 py-5 transition-colors ${
+                                      isSelected
+                                        ? "bg-[#164E63] border-[#164E63] text-white"
+                                        : "bg-white border-[#D1D5DB] text-[#4B5563] hover:bg-[#F9FAFB]"
+                                    }`}
+                                    style={{
+                                      fontFamily: FONTS.inter,
+                                      fontSize: "16px",
+                                      fontWeight: 500,
+                                      lineHeight: "24px",
+                                    }}
+                                  >
+                                    {option}
+                                  </button>
+                                );
+                              })}
+                            </div>
+                            {selectedOptions.length > 0 && (
+                              <div className="flex justify-end">
+                                <button
+                                  onClick={handleSubmit}
+                                  className="bg-[#0E3240] text-white rounded-[18px] px-6 py-3 font-semibold text-base hover:bg-[#0E3240]/90 transition-colors"
+                                  style={{
+                                    fontFamily: FONTS.inter,
+                                    lineHeight: "24px",
+                                  }}
+                                >
+                                  Continue
+                                </button>
+                              </div>
+                            )}
+                          </div>
+                        );
+                      }
+
+                      // Single selection (original behavior)
+                      return (
+                        <div className="flex gap-3 flex-wrap">
+                          {options.map((option, index) => (
+                            <button
+                              key={index}
+                              onClick={() => sendMessage(option)}
+                              className="bg-white border border-[#D1D5DB] rounded-[18px] px-5 py-5 hover:bg-[#F9FAFB] transition-colors"
+                              style={{
+                                fontFamily: FONTS.inter,
+                                fontSize: "16px",
+                                fontWeight: 500,
+                                lineHeight: "24px",
+                                color: "#4B5563",
+                              }}
+                            >
+                              {option}
+                            </button>
+                          ))}
+                        </div>
+                      );
+                    })()}
+                  </div>
+                </div>
+              </>
+            )}
+
             {/* Input Area */}
             <div className="border-t border-[#E5E7EB] p-6">
               <div className="max-w-[672px]">
@@ -132,7 +281,9 @@ export default function MedicalProfile() {
             <div className="bg-white flex flex-col gap-5 items-center justify-center px-0 py-10 shadow-[0px_-100px_111px_0px_rgba(255,255,255,0.4)]">
               <button
                 onClick={goToSummary}
-                disabled={!phaseBCompleted && !safetyStopTriggered}
+                disabled={
+                  !(phaseACompleted && phaseBCompleted) && !safetyStopTriggered
+                }
                 className="bg-[#0E3240] text-white px-6 py-3 rounded-[18px] font-semibold text-base hover:bg-[#0E3240]/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 style={{
                   fontFamily: FONTS.inter,
@@ -141,7 +292,7 @@ export default function MedicalProfile() {
               >
                 Continue with consultation
               </button>
-              {!phaseBCompleted && (
+              {!(phaseACompleted && phaseBCompleted) && (
                 <button
                   onClick={() => {
                     // Focus on input to allow user to continue sharing information

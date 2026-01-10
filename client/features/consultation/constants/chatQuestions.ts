@@ -11,6 +11,7 @@ export interface ChatQuestion {
   type: "text" | "yes_no" | "yes_no_with_followup" | "multiple_choice";
   followup?: string;
   options?: string[];
+  allowMultiple?: boolean; // Allow multiple selections for multiple_choice questions
   key: string; // Key for storing answer in medical data
 }
 
@@ -58,6 +59,7 @@ export const PHASE_A_QUESTIONS: ChatQuestion[] = [
       "Heart disease",
       "None",
     ],
+    allowMultiple: true,
     key: "chronicConditions",
   },
   {
@@ -90,6 +92,7 @@ export const PHASE_A_QUESTIONS: ChatQuestion[] = [
     text: "Do any medical conditions run in your family?",
     type: "multiple_choice",
     options: ["Heart disease", "Diabetes", "Cancer", "None"],
+    allowMultiple: true,
     key: "familyHistory",
   },
 ];

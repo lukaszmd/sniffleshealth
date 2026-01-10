@@ -13,9 +13,10 @@ export interface UseChatReturn {
   setInputValue: (value: string) => void;
   sendMessage: (text: string) => void;
   sendUserMessage: (text: string) => void;
-  sendAIMessage: (text: string, sender?: string) => void;
+  sendAIMessage: (text: string, sender?: string, options?: string[], onOptionSelect?: (option: string) => void) => void;
   clearMessages: () => void;
   initializeMessages: (messages: Message[]) => void;
+  addMessage: (message: Message) => void;
 }
 
 /**
@@ -56,7 +57,7 @@ export function useChat(options: UseChatOptions = {}): UseChatReturn {
     });
   };
 
-  const sendAIMessage = (text: string, sender?: string) => {
+  const sendAIMessage = (text: string, sender?: string, options?: string[], onOptionSelect?: (option: string) => void) => {
     if (!text.trim()) return;
 
     addMessage({
@@ -64,6 +65,8 @@ export function useChat(options: UseChatOptions = {}): UseChatReturn {
       text: text.trim(),
       sender,
       timestamp: new Date(),
+      options,
+      onOptionSelect,
     });
   };
 
@@ -85,6 +88,7 @@ export function useChat(options: UseChatOptions = {}): UseChatReturn {
     sendAIMessage,
     clearMessages,
     initializeMessages,
+    addMessage,
   };
 }
 
