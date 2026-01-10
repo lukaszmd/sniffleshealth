@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { X, Info, AlertTriangle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import type { MedicalData } from "@shared/types";
@@ -39,6 +39,9 @@ export default function MedicalProfile() {
 
   // Track selected options for multiple selection questions
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+
+  // Ref for chat input field (better React pattern than document.querySelector)
+  const chatInputRef = useRef<HTMLInputElement>(null);
 
   // Initialize medical data structure if empty
   useEffect(() => {
@@ -81,6 +84,10 @@ export default function MedicalProfile() {
     familyHistory: [],
     phaseBAnswers: {},
   };
+
+  // Check if last message is from user (indicates transition state)
+  const lastMessageIsFromUser =
+    messages.length > 0 && messages[messages.length - 1]?.type === "user";
 
   return (
     <div className="h-screen bg-neutral-off-white flex flex-col overflow-hidden">
@@ -262,44 +269,51 @@ export default function MedicalProfile() {
                   );
                 })()}
 
-              {/* Input Area */}
-              <div className="p-6">
-                <div className="max-w-[672px] mx-auto">
-                  <ChatInput
-                    value={inputValue}
-                    onChange={setInputValue}
-                    onSend={handleSend}
-                  />
+              {/* Input Area - Only show when questions are in progress */}
+              {!(phaseACompleted && phaseBCompleted) && !safetyStopTriggered && (
+                <div className="p-6">
+                  <div className="max-w-[672px] mx-auto">
+                    <ChatInput
+                      ref={chatInputRef}
+                      value={inputValue}
+                      onChange={setInputValue}
+                      onSend={handleSend}
+                    />
+                  </div>
                 </div>
-              </div>
+              )}
 
-              {/* Continue Button Section */}
-              <div className="bg-white flex flex-col gap-5 items-center justify-center px-0 py-10 shadow-[0px_-100px_111px_0px_rgba(255,255,255,0.4)]">
-                <button
-                  onClick={goToSummary}
-                  disabled={
-                    !(phaseACompleted && phaseBCompleted) &&
-                    !safetyStopTriggered
-                  }
-                  className="bg-brand-cyan-dark text-white font-inter px-6 py-3 rounded-2xl font-semibold text-base leading-6 hover:bg-brand-cyan-dark/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Continue with consultation
-                </button>
-                {!(phaseACompleted && phaseBCompleted) && (
+              {/* Continue Button Section - Only show when all questions are complete */}
+              {((phaseACompleted && phaseBCompleted) || safetyStopTriggered) && (
+                <div className="bg-white flex flex-col gap-5 items-center justify-center px-0 py-10 shadow-[0px_-100px_111px_0px_rgba(255,255,255,0.4)] animate-fade-in-slide-up">
+                  <button
+                    onClick={goToSummary}
+                    className="bg-brand-cyan-dark text-white font-inter px-6 py-3 rounded-2xl font-semibold text-base leading-6 hover:bg-brand-cyan-dark/90 active:bg-brand-cyan-dark/85 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-cyan-dark focus:ring-offset-2"
+                    aria-label="Continue with consultation"
+                  >
+                    Continue with consultation
+                  </button>
+                </div>
+              )}
+
+              {/* Secondary Link - Hidden during active Q&A, only show when questions incomplete and not waiting for answer */}
+              {!(phaseACompleted && phaseBCompleted) &&
+                !safetyStopTriggered &&
+                !isWaitingForAnswer &&
+                !lastMessageIsFromUser && (
+                <div className="bg-white flex flex-col gap-5 items-center justify-center px-0 py-10 shadow-[0px_-100px_111px_0px_rgba(255,255,255,0.4)]">
                   <button
                     onClick={() => {
                       // Focus on input to allow user to continue sharing information
-                      const input = document.querySelector(
-                        'input[type="text"]',
-                      ) as HTMLInputElement;
-                      input?.focus();
+                      chatInputRef.current?.focus();
                     }}
-                    className="text-brand-cyan-dark text-lg font-inter font-medium leading-6 tracking-body-tight hover:text-brand-cyan-dark/80 transition-colors"
+                    className="text-brand-cyan-dark text-lg font-inter font-medium leading-6 tracking-body-tight hover:text-brand-cyan-dark/80 active:text-brand-cyan-dark/70 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-cyan-dark focus:ring-offset-2 rounded-sm"
+                    aria-label="I have to share more information"
                   >
                     I have to share more information
                   </button>
-                )}
-              </div>
+                </div>
+              )}
             </div>
           </div>
 
