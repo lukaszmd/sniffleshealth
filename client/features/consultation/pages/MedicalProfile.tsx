@@ -92,58 +92,80 @@ export default function MedicalProfile() {
 
       {/* Main Content */}
       <div className="flex-1 flex overflow-hidden bg-[#FCFAF8]">
-        <div className="flex-1 max-w-[1464px] mx-auto w-full flex gap-3 p-6">
+        <div className="flex-1 max-w-[1464px] mx-auto w-full flex gap-3 p-6 h-full">
           {/* Chat Section */}
           <div className="flex-1 bg-white rounded-xl border border-[#D6D3D1] flex flex-col overflow-hidden max-w-[1110px]">
-            {/* Messages Area */}
-            <div className="flex-1 overflow-y-auto p-10">
-              <div className="flex flex-col gap-[22px] items-end max-w-[672px]">
-                {messages.map((message, index) => (
-                  <div
-                    key={index}
-                    className={message.type === "ai" ? "w-full" : "w-auto"}
-                  >
-                    {message.type === "ai" ? (
-                      <AIMessage text={message.text} />
-                    ) : (
-                      <UserMessage text={message.text} />
-                    )}
-                  </div>
-                ))}
-                <div ref={messagesEndRef} />
+            {/* Scrollable Messages Area */}
+            <div className="flex-1 overflow-y-auto min-h-0">
+              <div className="p-10">
+                <div className="flex flex-col gap-[22px] max-w-[672px] mx-auto">
+                  {messages.map((message, index) => (
+                    <div
+                      key={index}
+                      className={
+                        message.type === "ai"
+                          ? "w-full"
+                          : "w-auto max-w-[80%] self-end"
+                      }
+                    >
+                      {message.type === "ai" ? (
+                        <AIMessage text={message.text} />
+                      ) : (
+                        <UserMessage text={message.text} />
+                      )}
+                    </div>
+                  ))}
+                  <div ref={messagesEndRef} />
+                </div>
               </div>
             </div>
 
-            {/* Options Section - Just above input */}
-            {isWaitingForAnswer &&
-              currentQuestion &&
-              (() => {
-                // Determine options based on question type
-                let options: string[] | undefined;
-                const isMultipleSelect =
-                  currentQuestion.type === "multiple_choice" &&
-                  currentQuestion.allowMultiple === true;
+            {/* Fixed Footer Area */}
+            <div className="flex-shrink-0 bg-white border-t border-[#E5E7EB]">
+              {/* Safety Stop Banner */}
+              {safetyStopTriggered && safetyStopMessage && (
+                <div className="p-6 bg-[#FEF3C7] border-l-4 border-l-[#F59E0B]">
+                  <div className="flex items-start gap-3 max-w-[672px] mx-auto">
+                    <AlertTriangle className="w-5 h-5 text-[#F59E0B] flex-shrink-0 mt-0.5" />
+                    <div className="flex-1">
+                      <h3 className="text-[#92400E] font-semibold text-sm mb-1">
+                        Important Notice
+                      </h3>
+                      <p className="text-[#78350F] text-sm">
+                        {safetyStopMessage}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
 
-                if (currentQuestion.type === "yes_no") {
-                  options = ["Yes", "No"];
-                } else if (
-                  currentQuestion.type === "multiple_choice" &&
-                  currentQuestion.options
-                ) {
-                  options = currentQuestion.options;
-                } else if (currentQuestion.key === "sex") {
-                  options = ["Male", "Female"];
-                }
+              {/* Options Section */}
+              {isWaitingForAnswer &&
+                currentQuestion &&
+                (() => {
+                  // Determine options based on question type
+                  let options: string[] | undefined;
+                  const isMultipleSelect =
+                    currentQuestion.type === "multiple_choice" &&
+                    currentQuestion.allowMultiple === true;
 
-                // Only render section if options exist
-                if (!options || options.length === 0) return null;
+                  if (currentQuestion.type === "yes_no") {
+                    options = ["Yes", "No"];
+                  } else if (
+                    currentQuestion.type === "multiple_choice" &&
+                    currentQuestion.options
+                  ) {
+                    options = currentQuestion.options;
+                  } else if (currentQuestion.key === "sex") {
+                    options = ["Male", "Female"];
+                  }
 
-                return (
-                  <>
-                    {/* Horizontal line above options */}
-                    <div className="border-t border-[#E5E7EB]"></div>
+                  // Only render section if options exist
+                  if (!options || options.length === 0) return null;
+
+                  return (
                     <div className="p-6">
-                      <div className="max-w-[672px]">
+                      <div className="max-w-[672px] mx-auto">
                         {(() => {
                           // Handle multiple selection
                           if (isMultipleSelect) {
@@ -254,77 +276,61 @@ export default function MedicalProfile() {
                         })()}
                       </div>
                     </div>
-                  </>
-                );
-              })()}
+                  );
+                })()}
 
-            {/* Input Area */}
-            <div className="border-t border-[#E5E7EB] p-6">
-              <div className="max-w-[672px]">
-                <ChatInput
-                  value={inputValue}
-                  onChange={setInputValue}
-                  onSend={handleSend}
-                />
-              </div>
-            </div>
-
-            {/* Safety Stop Banner */}
-            {safetyStopTriggered && safetyStopMessage && (
-              <div className="border-t border-[#E5E7EB] p-6 bg-[#FEF3C7] border-l-4 border-l-[#F59E0B]">
-                <div className="flex items-start gap-3">
-                  <AlertTriangle className="w-5 h-5 text-[#F59E0B] flex-shrink-0 mt-0.5" />
-                  <div className="flex-1">
-                    <h3 className="text-[#92400E] font-semibold text-sm mb-1">
-                      Important Notice
-                    </h3>
-                    <p className="text-[#78350F] text-sm">
-                      {safetyStopMessage}
-                    </p>
-                  </div>
+              {/* Input Area */}
+              <div className="p-6">
+                <div className="max-w-[672px] mx-auto">
+                  <ChatInput
+                    value={inputValue}
+                    onChange={setInputValue}
+                    onSend={handleSend}
+                  />
                 </div>
               </div>
-            )}
 
-            {/* Continue Button Section */}
-            <div className="bg-white flex flex-col gap-5 items-center justify-center px-0 py-10 shadow-[0px_-100px_111px_0px_rgba(255,255,255,0.4)]">
-              <button
-                onClick={goToSummary}
-                disabled={
-                  !(phaseACompleted && phaseBCompleted) && !safetyStopTriggered
-                }
-                className="bg-[#0E3240] text-white px-6 py-3 rounded-[18px] font-semibold text-base hover:bg-[#0E3240]/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                style={{
-                  fontFamily: FONTS.inter,
-                  lineHeight: "24px",
-                }}
-              >
-                Continue with consultation
-              </button>
-              {!(phaseACompleted && phaseBCompleted) && (
+              {/* Continue Button Section */}
+              <div className="bg-white flex flex-col gap-5 items-center justify-center px-0 py-10 shadow-[0px_-100px_111px_0px_rgba(255,255,255,0.4)]">
                 <button
-                  onClick={() => {
-                    // Focus on input to allow user to continue sharing information
-                    const input = document.querySelector(
-                      'input[type="text"]',
-                    ) as HTMLInputElement;
-                    input?.focus();
-                  }}
-                  className="text-[#164E63] text-lg font-medium hover:text-[#164E63]/80 transition-colors"
+                  onClick={goToSummary}
+                  disabled={
+                    !(phaseACompleted && phaseBCompleted) &&
+                    !safetyStopTriggered
+                  }
+                  className="bg-[#0E3240] text-white px-6 py-3 rounded-[18px] font-semibold text-base hover:bg-[#0E3240]/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   style={{
                     fontFamily: FONTS.inter,
                     lineHeight: "24px",
-                    letterSpacing: "-0.3125px",
                   }}
                 >
-                  I have to share more information
+                  Continue with consultation
                 </button>
-              )}
+                {!(phaseACompleted && phaseBCompleted) && (
+                  <button
+                    onClick={() => {
+                      // Focus on input to allow user to continue sharing information
+                      const input = document.querySelector(
+                        'input[type="text"]',
+                      ) as HTMLInputElement;
+                      input?.focus();
+                    }}
+                    className="text-[#164E63] text-lg font-medium hover:text-[#164E63]/80 transition-colors"
+                    style={{
+                      fontFamily: FONTS.inter,
+                      lineHeight: "24px",
+                      letterSpacing: "-0.3125px",
+                    }}
+                  >
+                    I have to share more information
+                  </button>
+                )}
+              </div>
             </div>
           </div>
 
           {/* Medical Profile Summary */}
-          <div className="flex-1 bg-white rounded-xl border border-[#D6D3D1] p-5 flex flex-col gap-6 overflow-y-auto min-w-[342px]">
+          <div className="w-[342px] flex-shrink-0 bg-white rounded-xl border border-[#D6D3D1] p-5 flex flex-col gap-6 overflow-y-auto h-full">
             {/* User Info */}
             <div className="flex items-center gap-3">
               <img
