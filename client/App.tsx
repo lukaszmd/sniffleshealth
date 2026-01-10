@@ -21,6 +21,7 @@ import {
 import HIPAACompliance from "./pages/HIPAACompliance";
 import { KYC, AddressDetails, Dashboard } from "@/features/user/pages";
 import { FindingDoctor, DoctorChat } from "@/features/doctor/pages";
+import { PharmacySelection, PharmacyConfirmation } from "@/features/pharmacy/pages";
 import Prescription from "./pages/Prescription";
 import NotFound from "./pages/NotFound";
 
@@ -52,6 +53,8 @@ const App = () => (
           <Route path={ROUTES.FINDING_DOCTOR} element={<FindingDoctor />} />
           <Route path={ROUTES.DOCTOR_CHAT} element={<DoctorChat />} />
           <Route path={ROUTES.PRESCRIPTION} element={<Prescription />} />
+          <Route path={ROUTES.PHARMACY_SELECTION} element={<PharmacySelection />} />
+          <Route path={ROUTES.PHARMACY_CONFIRMATION} element={<PharmacyConfirmation />} />
           <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

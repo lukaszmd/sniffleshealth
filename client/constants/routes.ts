@@ -17,8 +17,9 @@ export const ROUTES = {
   FINDING_DOCTOR: "/finding-doctor",
   DOCTOR_CHAT: "/doctor-chat",
   PRESCRIPTION: "/prescription",
+  PHARMACY_SELECTION: "/pharmacy-selection",
+  PHARMACY_CONFIRMATION: "/pharmacy-confirmation",
   DASHBOARD: "/dashboard",
 } as const;
 
 export type RoutePath = (typeof ROUTES)[keyof typeof ROUTES];
-

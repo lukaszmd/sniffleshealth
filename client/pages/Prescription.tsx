@@ -1,12 +1,25 @@
 import { Printer, ArrowLeft } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ROUTES, FONTS } from "@/constants";
 import { PageHeader, AppFooter, Logo } from "@/components/layout";
+import { usePharmacyStore } from "@/stores";
 
 export default function Prescription() {
+  const navigate = useNavigate();
+  const { setPrescriptionItems } = usePharmacyStore();
   const symptoms = ["Fever", "Persistent Cough", "Headache", "Fatigue"];
   const prescriptionId = "#34FDMDF";
   const doctorName = "Dr. Sarah Johnson";
+
+  const handleSelectPharmacy = () => {
+    // Set prescription items for the pharmacy selection page
+    setPrescriptionItems([
+      { id: "1", name: "Amoxicillin 500mg", type: "tablets", quantity: "10 Caps" },
+      { id: "2", name: "Ibuprofen 400mg", type: "tablets", quantity: "10 Caps" },
+      { id: "3", name: "B-Complex Caps", type: "capsules", quantity: "10 Caps" },
+    ]);
+    navigate(ROUTES.PHARMACY_SELECTION);
+  };
 
   return (
     <div className="min-h-screen bg-neutral-light-gray flex flex-col">
@@ -125,7 +138,10 @@ export default function Prescription() {
                       consultation
                     </p>
                   </div>
-                  <button className="bg-brand-cyan-dark h-[57px] px-6 py-2.5 rounded-2xl hover:bg-brand-cyan-dark/90 transition-colors flex-shrink-0">
+                  <button
+                    onClick={handleSelectPharmacy}
+                    className="bg-brand-cyan-dark h-[57px] px-6 py-2.5 rounded-2xl hover:bg-brand-cyan-dark/90 transition-colors flex-shrink-0"
+                  >
                     <span className="text-white text-base font-inter font-semibold leading-6">
                       Select Pharmacy for pickup
                     </span>
