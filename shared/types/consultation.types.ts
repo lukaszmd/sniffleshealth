@@ -4,6 +4,8 @@
 
 import { SocialHistoryItem } from "./common.types";
 
+export type HealthCategory = "FEVER_FLU" | "SKIN_ISSUES" | "INFECTIONS" | "SEXUAL_HEALTH";
+
 export interface Symptom {
   id: string;
   name: string;
@@ -20,12 +22,20 @@ export interface MedicalData {
   surgicalHistory: string[];
   socialHistory: SocialHistoryItem[];
   familyHistory: string[];
+  // Phase B category-specific answers
+  phaseBAnswers?: Record<string, string>;
 }
 
 export interface ConsultationState {
+  selectedCategory: HealthCategory | null;
   selectedSymptoms: string[];
   medicalData: MedicalData | null;
   aiAssessment: string | null;
   additionalInfo: string;
+  // Track chat phase completion
+  phaseACompleted: boolean;
+  phaseBCompleted: boolean;
+  safetyStopTriggered: boolean;
+  safetyStopMessage: string | null;
 }
 

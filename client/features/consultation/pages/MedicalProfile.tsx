@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { X, Info } from "lucide-react";
+import { X, Info, AlertTriangle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import type { MedicalData } from "@shared/types";
 import { ROUTES, FONTS } from "@/constants";
@@ -9,74 +9,44 @@ import { ChatInput } from "@/components/chat/ChatInput";
 import {
   useConsultationFlow,
   useFormNavigation,
-  useChat,
+  useAIChatIntake,
 } from "../hooks";
 import { useScrollToBottom } from "@/hooks";
+import { useConsultationStore } from "@/stores/consultation.store";
 
 export default function MedicalProfile() {
   const navigate = useNavigate();
+  const { selectedCategory } = useConsultationStore();
   const { medicalData, setMedicalData, goToSummary } = useConsultationFlow();
   const { getStepInfo } = useFormNavigation();
   const stepInfo = getStepInfo();
+
   const {
     messages,
     inputValue,
     setInputValue,
     sendMessage,
-    initializeMessages,
-  } = useChat({
-    autoInitialize: true,
-    initialMessages: [
-      {
-        type: "ai",
-        text: "Hello! I'm your AI assistant. To get started, I need to gather some basic medical information. All your data is kept private and secure. First, what is your age and sex assigned at birth?",
-        timestamp: new Date(),
-      },
-      {
-        type: "user",
-        text: "23 years old",
-        timestamp: new Date(),
-      },
-      {
-        type: "ai",
-        text: "Thank you. What is your approximate height and weight?",
-        timestamp: new Date(),
-      },
-      {
-        type: "user",
-        text: "180, 6'3",
-        timestamp: new Date(),
-      },
-      {
-        type: "ai",
-        text: "Do you have any known allergies to medications?",
-        timestamp: new Date(),
-      },
-      {
-        type: "user",
-        text: "Not that I am aware of",
-        timestamp: new Date(),
-      },
-    ],
-  });
+    safetyStopTriggered,
+    safetyStopMessage,
+    phaseBCompleted,
+  } = useAIChatIntake();
+
   const { messagesEndRef } = useScrollToBottom(messages);
 
-  // Initialize medical data if empty
+  // Initialize medical data structure if empty
   useEffect(() => {
     if (!medicalData) {
       setMedicalData({
-        age: "23",
-        sex: "M",
-        weight: "190 lbs",
-        height: "6'1\"",
-        allergies: ["None"],
-        chronicConditions: ["Type II Diabetes, 4 Years", "Blood Pressure"],
-        surgicalHistory: ["Type II Diabetes, 4 Years", "Blood Pressure"],
-        socialHistory: [
-          { type: "Smoking", level: "Mild Use" },
-          { type: "Alcohol", level: "Heavy Use" },
-        ],
-        familyHistory: ["Heart Disease"],
+        age: "",
+        sex: "",
+        weight: "",
+        height: "",
+        allergies: [],
+        chronicConditions: [],
+        surgicalHistory: [],
+        socialHistory: [],
+        familyHistory: [],
+        phaseBAnswers: {},
       });
     }
   }, [medicalData, setMedicalData]);
@@ -86,18 +56,16 @@ export default function MedicalProfile() {
   };
 
   const currentMedicalData = medicalData || {
-    age: "23",
-    sex: "M",
-    weight: "190 lbs",
-    height: "6'1\"",
-    allergies: ["None"],
-    chronicConditions: ["Type II Diabetes, 4 Years", "Blood Pressure"],
-    surgicalHistory: ["Type II Diabetes, 4 Years", "Blood Pressure"],
-    socialHistory: [
-      { type: "Smoking", level: "Mild Use" },
-      { type: "Alcohol", level: "Heavy Use" },
-    ],
-    familyHistory: ["Heart Disease"],
+    age: "",
+    sex: "",
+    weight: "",
+    height: "",
+    allergies: [],
+    chronicConditions: [],
+    surgicalHistory: [],
+    socialHistory: [],
+    familyHistory: [],
+    phaseBAnswers: {},
   };
 
   return (
@@ -143,11 +111,29 @@ export default function MedicalProfile() {
               </div>
             </div>
 
+            {/* Safety Stop Banner */}
+            {safetyStopTriggered && safetyStopMessage && (
+              <div className="border-t border-[#E5E7EB] p-6 bg-[#FEF3C7] border-l-4 border-l-[#F59E0B]">
+                <div className="flex items-start gap-3">
+                  <AlertTriangle className="w-5 h-5 text-[#F59E0B] flex-shrink-0 mt-0.5" />
+                  <div className="flex-1">
+                    <h3 className="text-[#92400E] font-semibold text-sm mb-1">
+                      Important Notice
+                    </h3>
+                    <p className="text-[#78350F] text-sm">
+                      {safetyStopMessage}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* Continue Button Section */}
             <div className="bg-white flex flex-col gap-5 items-center justify-center px-0 py-10 shadow-[0px_-100px_111px_0px_rgba(255,255,255,0.4)]">
               <button
                 onClick={goToSummary}
-                className="bg-[#0E3240] text-white px-6 py-3 rounded-[18px] font-semibold text-base hover:bg-[#0E3240]/90 transition-colors"
+                disabled={!phaseBCompleted && !safetyStopTriggered}
+                className="bg-[#0E3240] text-white px-6 py-3 rounded-[18px] font-semibold text-base hover:bg-[#0E3240]/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 style={{
                   fontFamily: FONTS.inter,
                   lineHeight: "24px",
@@ -155,23 +141,25 @@ export default function MedicalProfile() {
               >
                 Continue with consultation
               </button>
-              <button
-                onClick={() => {
-                  // Focus on input to allow user to continue sharing information
-                  const input = document.querySelector(
-                    'input[type="text"]',
-                  ) as HTMLInputElement;
-                  input?.focus();
-                }}
-                className="text-[#164E63] text-lg font-medium hover:text-[#164E63]/80 transition-colors"
-                style={{
-                  fontFamily: FONTS.inter,
-                  lineHeight: "24px",
-                  letterSpacing: "-0.3125px",
-                }}
-              >
-                I have to share more information
-              </button>
+              {!phaseBCompleted && (
+                <button
+                  onClick={() => {
+                    // Focus on input to allow user to continue sharing information
+                    const input = document.querySelector(
+                      'input[type="text"]',
+                    ) as HTMLInputElement;
+                    input?.focus();
+                  }}
+                  className="text-[#164E63] text-lg font-medium hover:text-[#164E63]/80 transition-colors"
+                  style={{
+                    fontFamily: FONTS.inter,
+                    lineHeight: "24px",
+                    letterSpacing: "-0.3125px",
+                  }}
+                >
+                  I have to share more information
+                </button>
+              )}
             </div>
           </div>
 
@@ -244,12 +232,20 @@ export default function MedicalProfile() {
               >
                 Allergies
               </h3>
-              <p
-                className="text-[#1E2939] text-sm"
-                style={{ fontFamily: FONTS.inter }}
-              >
-                None
-              </p>
+              {currentMedicalData.allergies.length > 0 ? (
+                <div className="flex flex-col gap-2">
+                  {currentMedicalData.allergies.map((allergy, idx) => (
+                    <Tag key={idx} text={allergy} />
+                  ))}
+                </div>
+              ) : (
+                <p
+                  className="text-[#1E2939] text-sm"
+                  style={{ fontFamily: FONTS.inter }}
+                >
+                  None
+                </p>
+              )}
             </div>
 
             <div className="h-px bg-[#D1D5DB]" />

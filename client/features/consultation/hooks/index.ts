@@ -11,5 +11,7 @@ export type {
   FormStep,
   UseFormNavigationReturn,
 } from "./useFormNavigation";
+export { useAIChatIntake } from "./useAIChatIntake";
+export type { UseAIChatIntakeReturn } from "./useAIChatIntake";
 
 

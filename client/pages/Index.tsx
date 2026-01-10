@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Search,
   MapPin,
@@ -17,6 +17,9 @@ import {
 } from "lucide-react";
 import { useDebounce } from "@/hooks";
 import { Logo } from "@/components/layout";
+import { ROUTES } from "@/constants";
+import type { HealthCategory } from "@shared/types";
+import { useConsultationStore } from "@/stores/consultation.store";
 
 export default function Index() {
   const observerRef = useRef<IntersectionObserver | null>(null);
@@ -133,21 +136,25 @@ export default function Index() {
                   title="Fever and Flu"
                   description="Cold, cough and flu like symptoms"
                   image="https://api.builder.io/api/v1/image/assets/TEMP/2a54dd3f127905324c4ca0ea85747e7b1a044797?width=390"
+                  category="FEVER_FLU"
                 />
                 <HealthCard
                   title="Skin Issues"
                   description="Rashes, acne, and skin concerns"
                   image="https://api.builder.io/api/v1/image/assets/TEMP/aa9faffe1110604dcdf0c3c3820831b0b5c53ba7?width=390"
+                  category="SKIN_ISSUES"
                 />
                 <HealthCard
                   title="Infections"
                   description="Rashes, acne, and skin concerns"
                   image="https://api.builder.io/api/v1/image/assets/TEMP/9fb210009a698441291125022f5997ec6aba0e3f?width=390"
+                  category="INFECTIONS"
                 />
                 <HealthCard
                   title="Sexual Health"
                   description="Rashes, acne, and skin concerns"
                   image="https://api.builder.io/api/v1/image/assets/TEMP/5b2757d6b7f35f77966035b8cc5904d5bdff6fc9?width=390"
+                  category="SEXUAL_HEALTH"
                 />
               </div>
 
@@ -422,14 +429,25 @@ function HealthCard({
   title,
   description,
   image,
+  category,
 }: {
   title: string;
   description: string;
   image: string;
+  category: HealthCategory;
 }) {
+  const navigate = useNavigate();
+  const { setSelectedCategory } = useConsultationStore();
+
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setSelectedCategory(category);
+    navigate(ROUTES.SYMPTOMS);
+  };
+
   return (
-    <Link
-      to="/symptoms"
+    <div
+      onClick={handleClick}
       className="fade-in-card opacity-0 bg-[#FCFAF8] rounded-[30px] p-6 flex flex-col justify-center items-center gap-3 transition-all duration-500 hover:shadow-lg cursor-pointer"
     >
       <div className="w-full flex flex-col justify-center items-start gap-1">
@@ -455,7 +473,7 @@ function HealthCard({
         className="w-full max-w-[195px] h-auto aspect-[39/34] object-contain"
         loading="lazy"
       />
-    </Link>
+    </div>
   );
 }
 

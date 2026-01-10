@@ -1,31 +1,17 @@
 import { Mic } from "lucide-react";
-import type { Symptom } from "@shared/types";
+import { useNavigate } from "react-router-dom";
+import type { HealthCategory } from "@shared/types";
 import { ROUTES, FONTS } from "@/constants";
 import { PageHeader, AppFooter } from "@/components/layout";
 import { SymptomSelector } from "../components";
-import {
-  useConsultationFlow,
-  useFormNavigation,
-} from "../hooks";
+import { useConsultationFlow, useFormNavigation } from "../hooks";
 import { useLocalStorage } from "@/hooks";
-
-const commonSymptoms: Symptom[] = [
-  { id: "1", name: "Sweatness", category: "common" },
-  { id: "2", name: "Sore Throat", category: "common" },
-  { id: "3", name: "Body Ache", category: "common" },
-  { id: "4", name: "Headache", category: "common" },
-  { id: "5", name: "Fatigue", category: "common" },
-];
-
-const stomachSymptoms: Symptom[] = [
-  { id: "6", name: "Nausea", category: "stomach" },
-  { id: "7", name: "Diarrhoea", category: "stomach" },
-  { id: "8", name: "Ache", category: "stomach" },
-  { id: "9", name: "Heartburn", category: "stomach" },
-  { id: "10", name: "Fatigue", category: "stomach" },
-];
+import { useConsultationStore } from "@/stores/consultation.store";
+import { CATEGORY_SYMPTOMS } from "../constants/symptoms";
 
 export default function Symptoms() {
+  const navigate = useNavigate();
+  const { selectedCategory } = useConsultationStore();
   const {
     selectedSymptoms,
     toggleSymptom,
@@ -34,10 +20,18 @@ export default function Symptoms() {
   } = useConsultationFlow();
   const { getStepInfo } = useFormNavigation();
   const stepInfo = getStepInfo();
-  
+
   // Persist custom symptom input across page refreshes
   const { value: customSymptom, setValue: setCustomSymptom } =
     useLocalStorage<string>("custom-symptom-input", { defaultValue: "" });
+
+  // Redirect to home if no category selected
+  if (!selectedCategory) {
+    navigate(ROUTES.HOME);
+    return null;
+  }
+
+  const symptoms = CATEGORY_SYMPTOMS[selectedCategory];
 
   const handleContinue = () => {
     if (canProceedToMedicalProfile) {
@@ -81,21 +75,10 @@ export default function Symptoms() {
 
                 {/* Symptoms Sections */}
                 <div className="flex flex-col gap-[19px]">
-                  {/* Common Symptoms */}
                   <SymptomSelector
-                    symptoms={commonSymptoms}
+                    symptoms={symptoms}
                     selectedSymptomIds={selectedSymptoms}
                     onToggleSymptom={toggleSymptom}
-                    title="Common symptoms"
-                  />
-
-                  {/* Stomach & Digestion */}
-                  <SymptomSelector
-                    symptoms={stomachSymptoms}
-                    selectedSymptomIds={selectedSymptoms}
-                    onToggleSymptom={toggleSymptom}
-                    title="Stomach & Digestion"
-                    className="mt-8"
                   />
                 </div>
               </div>
