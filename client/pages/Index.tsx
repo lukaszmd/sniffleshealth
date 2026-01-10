@@ -395,9 +395,7 @@ function HealthCard({
           </h3>
           <ChevronRight className="w-6 h-6 text-text-dark" />
         </div>
-        <p className="text-neutral-stone text-sm font-inter">
-          {description}
-        </p>
+        <p className="text-neutral-stone text-sm font-inter">{description}</p>
       </div>
       <img
         src={image}

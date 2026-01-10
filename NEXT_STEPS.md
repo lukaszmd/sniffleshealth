@@ -3,6 +3,7 @@
 ## 🎉 Migration Status: Phase 1 & 2 Complete
 
 All critical CSS migration work has been completed:
+
 - ✅ 28 files migrated
 - ✅ 392 hardcoded colors replaced
 - ✅ 217 inline styles replaced
@@ -17,6 +18,7 @@ All critical CSS migration work has been completed:
 **Goal**: Prevent regression of hardcoded colors and inline styles
 
 **Tasks**:
+
 - [ ] Install `eslint-plugin-tailwindcss` or create custom rules
 - [ ] Add rule to prevent `bg-[#...]`, `text-[#...]`, `border-[#...]` patterns
 - [ ] Add rule to prevent inline `style={{ fontFamily: ... }}` attributes
@@ -24,6 +26,7 @@ All critical CSS migration work has been completed:
 - [ ] Configure ESLint to run in CI/CD pipeline
 
 **Example ESLint Configuration**:
+
 ```json
 {
   "rules": {
@@ -45,11 +48,13 @@ All critical CSS migration work has been completed:
 **Options**:
 
 **Option A: Remove** (if no longer needed)
+
 - [ ] Verify no imports of `COLORS` remain
 - [ ] Delete `client/constants/colors.ts`
 - [ ] Update any documentation references
 
 **Option B: Convert to Documentation** (recommended)
+
 - [ ] Convert to markdown documentation file
 - [ ] Include color usage examples
 - [ ] Add visual color swatches
@@ -64,6 +69,7 @@ All critical CSS migration work has been completed:
 **Goal**: Create comprehensive design system documentation
 
 **Tasks**:
+
 - [ ] Create `DESIGN_SYSTEM.md` document
 - [ ] Document all color tokens with usage guidelines
 - [ ] Document typography scale and usage
@@ -73,26 +79,31 @@ All critical CSS migration work has been completed:
 - [ ] Document dark mode color mappings
 
 **Document Structure**:
+
 ```markdown
 # Design System Documentation
 
 ## Colors
+
 - Brand Colors
 - Neutral Colors
 - Semantic Colors
 - Usage Guidelines
 
 ## Typography
+
 - Font Families
 - Font Sizes
 - Line Heights
 - Letter Spacing
 
 ## Spacing
+
 - Spacing Scale
 - Usage Patterns
 
 ## Components
+
 - Common Patterns
 - Code Examples
 ```
@@ -106,6 +117,7 @@ All critical CSS migration work has been completed:
 **Goal**: Verify dark mode works correctly
 
 **Tasks**:
+
 - [ ] Review dark mode CSS variables in `global.css`
 - [ ] Test theme switching functionality
 - [ ] Verify all components render correctly in dark mode
@@ -122,6 +134,7 @@ All critical CSS migration work has been completed:
 **Goal**: Improve type safety for design token usage
 
 **Tasks**:
+
 - [ ] Create TypeScript types for color tokens
 - [ ] Create TypeScript types for typography tokens
 - [ ] Add JSDoc comments to Tailwind config
@@ -139,6 +152,7 @@ All critical CSS migration work has been completed:
 **Goal**: Improve font loading performance
 
 **Tasks**:
+
 - [ ] Add `font-display: swap` to Google Fonts imports
 - [ ] Preload critical fonts in `index.html`
 - [ ] Consider self-hosting fonts for better performance
@@ -146,9 +160,17 @@ All critical CSS migration work has been completed:
 - [ ] Optimize font subset loading (if needed)
 
 **Example**:
+
 ```html
-<link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter" as="style">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter&display=swap">
+<link
+  rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Inter"
+  as="style"
+/>
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Inter&display=swap"
+/>
 ```
 
 **Estimated Time**: 2-3 hours
@@ -160,6 +182,7 @@ All critical CSS migration work has been completed:
 **Goal**: Ensure CSS bundle is optimized
 
 **Tasks**:
+
 - [ ] Measure current CSS bundle size
 - [ ] Run Tailwind purge analysis
 - [ ] Identify unused CSS classes
@@ -168,6 +191,7 @@ All critical CSS migration work has been completed:
 - [ ] Document bundle size targets
 
 **Tools**:
+
 - `purgecss` for analysis
 - Webpack Bundle Analyzer
 - Lighthouse Performance audit
@@ -181,6 +205,7 @@ All critical CSS migration work has been completed:
 **Goal**: Ensure WCAG AA compliance
 
 **Tasks**:
+
 - [ ] Run automated accessibility audit (axe, Lighthouse)
 - [ ] Check color contrast ratios for all text/background combinations
 - [ ] Verify focus states are visible
@@ -189,6 +214,7 @@ All critical CSS migration work has been completed:
 - [ ] Fix any contrast issues found
 
 **Tools**:
+
 - axe DevTools
 - Lighthouse Accessibility audit
 - WAVE browser extension
@@ -203,6 +229,7 @@ All critical CSS migration work has been completed:
 **Goal**: Ensure consistent responsive patterns
 
 **Tasks**:
+
 - [ ] Document breakpoint strategy
 - [ ] Review all components for responsive consistency
 - [ ] Test on multiple device sizes
@@ -218,6 +245,7 @@ All critical CSS migration work has been completed:
 **Goal**: Set up ongoing performance monitoring
 
 **Tasks**:
+
 - [ ] Set up Lighthouse CI
 - [ ] Monitor CSS bundle size in CI/CD
 - [ ] Track Core Web Vitals
@@ -231,17 +259,20 @@ All critical CSS migration work has been completed:
 ## 📊 Priority Summary
 
 ### High Priority (Do First)
+
 1. **Add ESLint Rules** - Prevent regressions
 2. **Document Design System** - Help team maintain consistency
 3. **Accessibility Audit** - Ensure compliance
 
 ### Medium Priority (Do Soon)
+
 4. **Test Dark Mode** - Verify functionality
 5. **Repurpose colors.ts** - Clean up codebase
 6. **Optimize Font Loading** - Improve performance
 7. **Responsive Design Review** - Ensure consistency
 
 ### Low Priority (Nice to Have)
+
 8. **Add TypeScript Types** - Improve developer experience
 9. **Audit CSS Bundle Size** - Optimize if needed
 10. **CSS Performance Monitoring** - Long-term tracking
