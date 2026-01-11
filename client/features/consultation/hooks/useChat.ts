@@ -13,7 +13,14 @@ export interface UseChatReturn {
   setInputValue: (value: string) => void;
   sendMessage: (text: string) => void;
   sendUserMessage: (text: string) => void;
-  sendAIMessage: (text: string, sender?: string, options?: string[], onOptionSelect?: (option: string) => void) => void;
+  sendAIMessage: (
+    text: string,
+    sender?: string,
+    options?: string[],
+    onOptionSelect?: (option: string) => void,
+    linkText?: string,
+    linkUrl?: string,
+  ) => void;
   clearMessages: () => void;
   initializeMessages: (messages: Message[]) => void;
   addMessage: (message: Message) => void;
@@ -25,8 +32,12 @@ export interface UseChatReturn {
  */
 export function useChat(options: UseChatOptions = {}): UseChatReturn {
   const { initialMessages, autoInitialize = false } = options;
-  const { messages, addMessage, setMessages, clearMessages: clearStoreMessages } =
-    useChatStore();
+  const {
+    messages,
+    addMessage,
+    setMessages,
+    clearMessages: clearStoreMessages,
+  } = useChatStore();
   const [inputValue, setInputValue] = useState("");
 
   // Auto-initialize messages if provided and messages are empty
@@ -57,7 +68,14 @@ export function useChat(options: UseChatOptions = {}): UseChatReturn {
     });
   };
 
-  const sendAIMessage = (text: string, sender?: string, options?: string[], onOptionSelect?: (option: string) => void) => {
+  const sendAIMessage = (
+    text: string,
+    sender?: string,
+    options?: string[],
+    onOptionSelect?: (option: string) => void,
+    linkText?: string,
+    linkUrl?: string,
+  ) => {
     if (!text.trim()) return;
 
     addMessage({
@@ -67,6 +85,8 @@ export function useChat(options: UseChatOptions = {}): UseChatReturn {
       timestamp: new Date(),
       options,
       onOptionSelect,
+      linkText,
+      linkUrl,
     });
   };
 
@@ -91,4 +111,3 @@ export function useChat(options: UseChatOptions = {}): UseChatReturn {
     addMessage,
   };
 }
-
