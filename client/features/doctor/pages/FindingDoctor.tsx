@@ -5,28 +5,23 @@ import { ROUTES, FONTS } from "@/constants";
 import { PageHeader, AppFooter } from "@/components/layout";
 import { ChatInput } from "@/components/chat/ChatInput";
 import { useConsultationFlow } from "@/features/consultation/hooks";
+import { useDoctorStore } from "@/stores/doctor.store";
+import { getSymptomNamesFromIds } from "@/features/consultation/utils/symptomUtils";
 
 export default function FindingDoctor() {
   const navigate = useNavigate();
   const { selectedSymptoms, aiAssessment, additionalInfo, setAdditionalInfo } =
     useConsultationFlow();
+  const { selectedDoctor } = useDoctorStore(); // Preserve doctor selection
   const [localAdditionalInfo, setLocalAdditionalInfo] =
     useState(additionalInfo);
   const [activeTab, setActiveTab] = useState<"ai" | "medical">("ai");
 
-  // Get symptoms from store or use defaults
+  // Get symptoms from store using proper mapping
   const symptoms =
     selectedSymptoms.length > 0
-      ? selectedSymptoms.map((id) => {
-          const symptomNames: Record<string, string> = {
-            "4": "Headache",
-            "5": "Fatigue",
-            "9": "Heartburn",
-            "10": "Fatigue",
-          };
-          return symptomNames[id] || `Symptom ${id}`;
-        })
-      : ["Fever", "Persistent Cough", "Headache", "Fatigue"];
+      ? getSymptomNamesFromIds(selectedSymptoms)
+      : ["Fever", "Persistent Cough", "Headache", "Fatigue"]; // Fallback for demo
 
   const currentAiAssessment =
     aiAssessment ||

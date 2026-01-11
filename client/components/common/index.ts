@@ -10,3 +10,6 @@ export type { ErrorDisplayProps } from "./ErrorDisplay";
 
 export { FormField } from "./FormField";
 export type { FormFieldProps } from "./FormField";
+
+export { DataField } from "./DataField";
+export { Tag } from "./Tag";

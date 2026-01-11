@@ -4,6 +4,10 @@
  */
 
 import type { HealthCategory } from "@shared/types";
+import {
+  getSymptomName,
+  getSymptomNamesFromIds,
+} from "@/features/consultation/utils/symptomUtils";
 
 export interface DoctorChatQuestion {
   id: string;
@@ -76,7 +80,8 @@ export const PHASE_1_QUESTIONS: DoctorChatQuestion[] = [
     id: "phase_1_otc",
     text: "Have you tried any over-the-counter medications or home remedies for these symptoms?",
     type: "yes_no_with_followup",
-    followup: "Which medications or remedies have you tried, and did they help?",
+    followup:
+      "Which medications or remedies have you tried, and did they help?",
     key: "tried_otc_medications",
     phase: 1,
   },
@@ -403,12 +408,22 @@ export const PHASE_4_QUESTIONS: DoctorChatQuestion[] = [
 
 /**
  * Get primary symptom from selected symptoms
+ * Maps symptom ID to actual symptom name
  */
 export function getPrimarySymptom(selectedSymptoms: string[]): string {
   if (selectedSymptoms.length === 0) return "your symptoms";
-  // In a real app, you'd look up symptom names by ID
-  // For now, return first symptom or a default
-  return selectedSymptoms[0] || "your symptoms";
+
+  // Map first symptom ID to name
+  const firstSymptomId = selectedSymptoms[0];
+  if (firstSymptomId) {
+    const symptomName = getSymptomName(firstSymptomId);
+    // If mapping found, return name; otherwise return generic
+    return symptomName !== `Symptom ${firstSymptomId}`
+      ? symptomName
+      : "your symptoms";
+  }
+
+  return "your symptoms";
 }
 
 /**
@@ -423,11 +438,16 @@ export function formatQuestionText(
   // Replace placeholders
   if (text.includes("{primarySymptom}")) {
     const primarySymptom =
-      context.primarySymptom || getPrimarySymptom(context.selectedSymptoms || []);
+      context.primarySymptom ||
+      getPrimarySymptom(context.selectedSymptoms || []);
     text = text.replace(/{primarySymptom}/g, primarySymptom);
   }
 
-  if (text.includes("{allergyName}") && context.allergies && context.allergies.length > 0) {
+  if (
+    text.includes("{allergyName}") &&
+    context.allergies &&
+    context.allergies.length > 0
+  ) {
     text = text.replace(/{allergyName}/g, context.allergies[0]);
   }
 
@@ -455,7 +475,9 @@ export function getPhase3Questions(
 
   // Check for allergies
   if (medicalData.allergies && medicalData.allergies.length > 0) {
-    const allergyQuestion = PHASE_3_QUESTIONS.find((q) => q.id === "phase_3_allergy");
+    const allergyQuestion = PHASE_3_QUESTIONS.find(
+      (q) => q.id === "phase_3_allergy",
+    );
     if (allergyQuestion) questions.push(allergyQuestion);
   }
 
@@ -495,20 +517,21 @@ export function getPhase2Questions(
 ): DoctorChatQuestion[] {
   const questions = PHASE_2_QUESTIONS[category] || [];
 
+  // Map symptom IDs to names for comparison
+  const symptomNames = getSymptomNamesFromIds(selectedSymptoms);
+
   // Filter questions based on conditional requirements
   return questions.filter((question) => {
     if (!question.conditional) return true;
 
-    // Check symptom requirement
+    // Check symptom requirement - compare with symptom names, not IDs
     if (question.conditional.requiresSymptom) {
-      const hasSymptom = selectedSymptoms.some(
-        (symptom) =>
-          symptom.toLowerCase().includes(
-            question.conditional!.requiresSymptom!.toLowerCase(),
-          ) ||
-          question.conditional!.requiresSymptom!.toLowerCase().includes(
-            symptom.toLowerCase(),
-          ),
+      const requiredSymptom =
+        question.conditional.requiresSymptom.toLowerCase();
+      const hasSymptom = symptomNames.some(
+        (symptomName) =>
+          symptomName.toLowerCase().includes(requiredSymptom) ||
+          requiredSymptom.includes(symptomName.toLowerCase()),
       );
       if (!hasSymptom) return false;
     }
@@ -531,21 +554,19 @@ export function shouldAskQuestion(
     if (context.sex !== question.conditional.requiresGender) return false;
   }
 
-  // Check symptom requirement
+  // Check symptom requirement - map symptom IDs to names for comparison
   if (question.conditional.requiresSymptom) {
-    const hasSymptom =
-      context.selectedSymptoms?.some(
-        (symptom) =>
-          symptom.toLowerCase().includes(
-            question.conditional!.requiresSymptom!.toLowerCase(),
-          ) ||
-          question.conditional!.requiresSymptom!.toLowerCase().includes(
-            symptom.toLowerCase(),
-          ),
-      ) || false;
+    const symptomIds = context.selectedSymptoms || [];
+    const symptomNames = getSymptomNamesFromIds(symptomIds);
+    const requiredSymptom = question.conditional.requiresSymptom.toLowerCase();
+
+    const hasSymptom = symptomNames.some(
+      (symptomName) =>
+        symptomName.toLowerCase().includes(requiredSymptom) ||
+        requiredSymptom.includes(symptomName.toLowerCase()),
+    );
     if (!hasSymptom) return false;
   }
 
   return true;
 }
-

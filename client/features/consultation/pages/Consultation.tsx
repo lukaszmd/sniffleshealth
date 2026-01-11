@@ -1,17 +1,62 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MessageSquare, Video, Info } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { ROUTES, FONTS } from "@/constants";
 import { PageHeader, AppFooter } from "@/components/layout";
 import { DoctorCard } from "@/features/doctor/components";
 import { useFormNavigation } from "../hooks";
+import { useDoctorStore } from "@/stores/doctor.store";
+import type { Doctor } from "@shared/types";
 
 export default function Consultation() {
   const navigate = useNavigate();
   const { getStepInfo } = useFormNavigation();
   const stepInfo = getStepInfo();
+  const { setSelectedDoctor, selectedDoctor } = useDoctorStore();
+  
   // Pre-select the text chat doctor (Dr. Evelyn Reed)
   const [selectedDoctorId, setSelectedDoctorId] = useState<string>("1");
+  
+  // Define available doctors
+  const doctors: Record<string, Doctor> = {
+    "1": {
+      id: "1",
+      name: "Evelyn Reed", // Store without "Dr." prefix for consistency
+      title: "MD",
+      specialty: "General Practice",
+      experience: "12 yrs experience",
+      location: "New York",
+      initials: "ER",
+      isConnected: true,
+    },
+    "2": {
+      id: "2",
+      name: "Marcus Chen",
+      title: "DO",
+      specialty: "Internal Medicine",
+      experience: "10 yrs experience",
+      location: "New York",
+      initials: "MC",
+      isConnected: true,
+    },
+  };
+  
+  // Initialize pre-selected doctor on mount
+  useEffect(() => {
+    if (!selectedDoctor || selectedDoctor.id !== "1") {
+      setSelectedDoctor(doctors["1"]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Only run on mount
+  
+  // Handle doctor selection
+  const handleDoctorSelect = (doctorId: string) => {
+    setSelectedDoctorId(doctorId);
+    const doctor = doctors[doctorId];
+    if (doctor) {
+      setSelectedDoctor(doctor);
+    }
+  };
 
   // Sample data - in a real app, this would come from state/API
   const symptoms = ["Fever", "Persistent Cough", "Headache", "Fatigue"];
@@ -66,37 +111,27 @@ export default function Consultation() {
                       {/* Doctor 1 - Text Chat (Pre-selected) */}
                       <DoctorCard
                         doctor={{
-                          id: "1",
-                          name: "Dr. Evelyn Reed, MD",
-                          title: "MD",
-                          specialty: "General Practice",
-                          experience: "12 yrs experience",
-                          location: "New York",
-                          initials: "ER",
+                          ...doctors["1"],
+                          name: "Dr. Evelyn Reed, MD", // Display name with prefix
                         }}
                         waitTime="~ Text 2 min wait"
                         icon={
                           <MessageSquare className="w-4 h-4 text-text-secondary" />
                         }
                         selected={selectedDoctorId === "1"}
-                        onClick={() => setSelectedDoctorId("1")}
+                        onClick={() => handleDoctorSelect("1")}
                       />
 
                       {/* Doctor 2 */}
                       <DoctorCard
                         doctor={{
-                          id: "2",
-                          name: "Dr. Marcus Chen, DO",
-                          title: "DO",
-                          specialty: "Internal Medicine",
-                          experience: "10 yrs experience",
-                          location: "New York",
-                          initials: "MC",
+                          ...doctors["2"],
+                          name: "Dr. Marcus Chen, DO", // Display name with prefix
                         }}
                         waitTime="~ Video/Audio 15 min wait"
                         icon={<Video className="w-4 h-4 text-text-secondary" />}
                         selected={selectedDoctorId === "2"}
-                        onClick={() => setSelectedDoctorId("2")}
+                        onClick={() => handleDoctorSelect("2")}
                       />
                     </div>
 
