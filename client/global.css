@@ -23,7 +23,7 @@
   }
 
   .animate-fade-in-slide-up {
-    animation: fadeInSlideUp 200ms ease-out forwards;
+    animation: fadeInSlideUp 150ms ease-out forwards;
   }
 
   @keyframes fadeInSlideUp {

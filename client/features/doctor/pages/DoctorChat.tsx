@@ -163,6 +163,7 @@ export default function DoctorChat() {
               messages={messages}
               messagesEndRef={messagesEndRef}
               lastMessageRef={lastMessageRef}
+              isWaitingForAnswer={isWaitingForAnswer}
             />
 
             <DoctorChatFooter

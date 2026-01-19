@@ -6,17 +6,20 @@
 import { RefObject } from "react";
 import type { Message } from "@shared/types";
 import { AIMessage, UserMessage } from "@/components/chat/MessageBubble";
+import { TypingIndicator } from "@/components/chat";
 
 interface DoctorChatMessagesProps {
   messages: Message[];
   messagesEndRef: RefObject<HTMLDivElement>;
   lastMessageRef: RefObject<HTMLDivElement>;
+  isWaitingForAnswer?: boolean;
 }
 
 export function DoctorChatMessages({
   messages,
   messagesEndRef,
   lastMessageRef,
+  isWaitingForAnswer = false,
 }: DoctorChatMessagesProps) {
   return (
     <div className="flex-1 overflow-y-auto min-h-0">
@@ -33,6 +36,7 @@ export function DoctorChatMessages({
                     ? "w-full"
                     : "w-auto max-w-[80%] self-end"
                 }
+                style={{ animationDelay: `${index * 30}ms` }}
               >
                 {message.type === "ai" ? (
                   <AIMessage
@@ -49,6 +53,11 @@ export function DoctorChatMessages({
               </div>
             );
           })}
+          {isWaitingForAnswer && messages.length > 0 && messages[messages.length - 1]?.type === "user" && (
+            <div className="w-full">
+              <TypingIndicator sender="Sniffles Health Assistant" />
+            </div>
+          )}
           <div ref={messagesEndRef} />
         </div>
       </div>

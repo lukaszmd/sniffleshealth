@@ -6,6 +6,7 @@ import { ROUTES, FONTS } from "@/constants";
 import { PageHeader, AppFooter } from "@/components/layout";
 import { AIMessage, UserMessage } from "@/components/chat/MessageBubble";
 import { ChatInput } from "@/components/chat/ChatInput";
+import { TypingIndicator } from "@/components/chat";
 import {
   useConsultationFlow,
   useFormNavigation,
@@ -154,6 +155,7 @@ export default function MedicalProfile() {
                             ? "w-full"
                             : "w-auto max-w-[80%] self-end"
                         }
+                        style={{ animationDelay: `${index * 30}ms` }}
                       >
                         {message.type === "ai" ? (
                           <AIMessage text={message.text} />
@@ -163,6 +165,11 @@ export default function MedicalProfile() {
                       </div>
                     );
                   })}
+                  {isWaitingForAnswer && messages.length > 0 && messages[messages.length - 1]?.type === "user" && (
+                    <div className="w-full">
+                      <TypingIndicator sender="AI Assistant" />
+                    </div>
+                  )}
                   <div ref={messagesEndRef} />
                 </div>
               </div>

@@ -50,9 +50,9 @@ export default function Symptoms() {
       {/* Main Content */}
       <div className="flex-1 flex flex-col h-full">
         <div className="flex-1 max-w-[1464px] mx-auto w-full h-full p-5">
-          <div className="bg-white rounded-xl border border-neutral-gray h-full">
+          <div className="flex-1 bg-white rounded-xl border border-neutral-gray flex flex-col overflow-hidden w-full min-h-0">
             {/* Content Area */}
-            <div className="flex-1 overflow-y-auto pt-10 px-6 md:px-12">
+            <div className="flex-1 overflow-y-auto pt-10 pb-10 px-6 md:px-12 flex flex-col overflow-hidden w-full min-h-[65vh]">
               <div className="max-w-[963px] mx-auto flex flex-col gap-15">
                 {/* Header */}
                 <div className="flex flex-col items-center gap-2 pt-5">

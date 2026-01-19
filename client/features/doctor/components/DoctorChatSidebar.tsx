@@ -32,7 +32,7 @@ export function DoctorChatSidebar({
   medicalData,
 }: DoctorChatSidebarProps) {
   return (
-    <div className="w-[342px] flex-shrink-0 border border-neutral-gray rounded-xl overflow-hidden flex flex-col bg-gradient-to-b from-brand-cyan-lightest to-white h-full min-h-0">
+    <div className="w-[342px] flex-shrink-0 border border-neutral-gray rounded-xl overflow-hidden flex flex-col bg-white h-full min-h-0">
       {/* Icon */}
       <div className="flex justify-center p-6 flex-shrink-0">
         <div className="w-[57px] h-[57px] flex items-center justify-center">
