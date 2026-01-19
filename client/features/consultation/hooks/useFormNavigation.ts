@@ -25,17 +25,12 @@ export const CONSULTATION_STEPS: FormStep[] = [
   },
   {
     route: ROUTES.CONSULTATION,
-    step: "Step 5 of 7",
-    title: "Building your medical profile",
-  },
-  {
-    route: ROUTES.SELECT_CONSULTATION_TYPE,
-    step: "Step 6 of 7",
-    title: "Building your medical profile",
+    step: "Step 5 of 6",
+    title: "Choose your consultation",
   },
   {
     route: ROUTES.PAYMENT_CONFIRMATION,
-    step: "Step 7 of 7",
+    step: "Step 6 of 6",
     title: "Payment confirmation",
   },
 ];

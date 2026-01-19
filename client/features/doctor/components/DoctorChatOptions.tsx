@@ -45,7 +45,7 @@ export function DoctorChatOptions({
                   <button
                     key={index}
                     onClick={() => onOptionToggle(option)}
-                    className={`border rounded-2xl px-5 py-5 font-inter text-base font-medium leading-6 transition-colors ${
+                    className={`border rounded-2xl px-2 py-2 font-inter text-base font-medium leading-6 transition-colors ${
                       isSelected
                         ? "bg-brand-cyan-dark border-brand-cyan-dark text-white"
                         : "bg-white border-border-medium text-text-secondary hover:bg-gray-50"
@@ -81,7 +81,7 @@ export function DoctorChatOptions({
             <button
               key={index}
               onClick={() => onOptionToggle(option)}
-              className="bg-white border border-border-medium text-text-secondary font-inter text-base font-medium leading-6 rounded-2xl px-5 py-5 hover:bg-gray-50 transition-colors"
+              className="bg-white border border-border-medium text-text-secondary font-inter text-base font-medium leading-6 rounded-2xl px-3 py-2 hover:bg-gray-50 transition-colors"
             >
               {option}
             </button>

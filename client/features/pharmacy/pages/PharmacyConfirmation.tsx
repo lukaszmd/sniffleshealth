@@ -32,9 +32,9 @@ export default function PharmacyConfirmation() {
       {/* Main Content */}
       <div className="flex-1 overflow-auto bg-neutral-off-white">
         <div className="max-w-[1464px] mx-auto p-6">
-          <div className="flex items-center justify-center min-h-[750px]">
+          <div className="flex items-center justify-center ]">
             {/* Confirmation Card */}
-            <div className="border border-neutral-gray rounded-3xl w-[786px] h-[745px] flex flex-col p-6 bg-gradient-to-b from-warm-50 via-warm-50 to-white">
+            <div className="border border-neutral-gray rounded-3xl w-[786px]  flex flex-col p-6 bg-gradient-to-b from-warm-50 via-warm-50 to-white">
               {/* Header with Back Button */}
               <div className="flex items-center mb-6">
                 <div className="flex items-center gap-3">

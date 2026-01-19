@@ -133,7 +133,7 @@ export default function MedicalProfile() {
 
       {/* Main Content */}
       <div className="flex-1 flex overflow-hidden bg-neutral-off-white min-h-0">
-        <div className="flex-1 max-w-[1464px] mx-auto w-full flex gap-3 p-6 h-full min-h-0">
+        <div className="flex-1 max-w-[1464px] mx-auto w-full flex gap-3 p-4 h-full min-h-0">
           {/* Chat Section */}
           <div className="flex-1 bg-white rounded-xl border border-neutral-gray flex flex-col overflow-hidden max-w-[1110px] min-h-0">
             {/* Scrollable Messages Area */}
@@ -212,7 +212,7 @@ export default function MedicalProfile() {
                   if (!options || options.length === 0) return null;
 
                   return (
-                    <div className="p-6">
+                    <div className="py-4 pb-0 px-6">
                       <div className="max-w-[672px] mx-auto">
                         {(() => {
                           // Handle multiple selection
@@ -265,9 +265,9 @@ export default function MedicalProfile() {
                                         onClick={() =>
                                           handleOptionToggle(option)
                                         }
-                                        className={`border rounded-2xl px-5 py-5 font-inter text-base font-medium leading-6 transition-colors ${
+                                        className={`border rounded-xl px-4 py-2 font-inter text-base font-medium leading-6 transition-colors ${
                                           isSelected
-                                            ? "bg-brand-cyan-dark border-brand-cyan-dark text-white"
+                                            ? "bg-white border-brand-cyan-dark text-brand-cyan-dark border-2"
                                             : "bg-white border-border-medium text-text-secondary hover:bg-gray-50"
                                         }`}
                                       >
@@ -280,7 +280,7 @@ export default function MedicalProfile() {
                                   <div className="flex justify-end">
                                     <button
                                       onClick={handleSubmit}
-                                      className="bg-brand-cyan-dark text-white font-inter rounded-2xl px-6 py-3 font-semibold text-base leading-6 hover:bg-brand-cyan-dark/90 transition-colors"
+                                      className="bg-brand-cyan-dark text-white font-inter rounded-xl px-4 py-2 font-semibold text-base leading-6 hover:bg-brand-cyan-dark/90 transition-colors"
                                     >
                                       Continue
                                     </button>
@@ -297,7 +297,7 @@ export default function MedicalProfile() {
                                 <button
                                   key={index}
                                   onClick={() => sendMessage(option)}
-                                  className="bg-white border border-border-medium text-text-secondary font-inter text-base font-medium leading-6 rounded-2xl px-5 py-5 hover:bg-gray-50 transition-colors"
+                                  className="bg-white border border-border-medium text-text-secondary font-inter text-base font-medium leading-6 rounded-xl px-4 py-2 hover:bg-gray-50 transition-colors"
                                 >
                                   {option}
                                 </button>

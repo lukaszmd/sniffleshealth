@@ -69,7 +69,7 @@ export default function PharmacySelection() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-off-white flex flex-col">
+      <div className="min-h-screen bg-neutral-off-white flex flex-col">
       <PageHeader
         backTo={ROUTES.PRESCRIPTION}
         step="#ISDS3434"
@@ -80,7 +80,7 @@ export default function PharmacySelection() {
       {/* Main Content */}
       <div className="flex-1 overflow-auto bg-neutral-off-white">
         <div className="max-w-[1464px] mx-auto p-6">
-          <div className="flex gap-3 h-[750px]">
+          <div className="flex gap-3 ">
             {/* Left Section - Pharmacy Selection */}
             <div className="flex-1 bg-white border border-neutral-gray rounded-xl overflow-hidden relative">
               {/* Background Pattern */}

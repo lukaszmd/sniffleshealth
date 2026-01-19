@@ -62,7 +62,7 @@ export default function SummaryConsultation() {
       />
 
       {/* Main Content - AI Summary */}
-      <div className="flex-1 max-w-[1464px] mx-auto w-full p-6">
+      <div className="flex-1 max-w-[1464px] mx-auto w-full p-5">
         <div className="bg-white rounded-xl border border-neutral-gray p-8 md:p-12">
           <div className="max-w-4xl mx-auto flex flex-col gap-8">
             {/* Title */}

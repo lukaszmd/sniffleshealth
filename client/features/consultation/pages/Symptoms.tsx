@@ -48,9 +48,9 @@ export default function Symptoms() {
       />
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <div className="flex-1 max-w-[1464px] mx-auto w-full p-6">
-          <div className="bg-white rounded-xl border border-neutral-gray h-full flex flex-col">
+      <div className="flex-1 flex flex-col h-full">
+        <div className="flex-1 max-w-[1464px] mx-auto w-full h-full p-5">
+          <div className="bg-white rounded-xl border border-neutral-gray h-full">
             {/* Content Area */}
             <div className="flex-1 overflow-y-auto pt-10 px-6 md:px-12">
               <div className="max-w-[963px] mx-auto flex flex-col gap-15">

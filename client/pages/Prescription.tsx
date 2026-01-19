@@ -22,15 +22,15 @@ export default function Prescription() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-light-gray flex flex-col">
+    <div className="min-h-screen bg-neutral-off-white flex flex-col pt-4">
       <PageHeader showLogo={true} />
 
       {/* Main Content */}
-      <div className="flex-1 overflow-auto bg-neutral-light-gray">
-        <div className="max-w-[1464px] mx-auto p-6">
-          <div className="flex items-center justify-center min-h-[750px]">
+      <div className="flex-1 overflow-auto bg-neutral-off-white">
+        <div className="max-w-[720px] mx-auto p-6">
+          <div className="flex items-center justify-center ">
             {/* Prescription Card */}
-            <div className="border border-neutral-gray rounded-3xl w-[1110px] h-[750px] flex flex-col p-6 bg-gradient-to-b from-warm-50 via-warm-50 to-white">
+            <div className="border border-neutral-gray rounded-3xl w-[1110px] flex flex-col p-6 bg-gradient-to-b from-warm-50 via-warm-50 to-white h-full min-h-full">
               {/* Header with Back Button */}
               <div className="flex items-center mb-6">
                 <div className="flex items-center gap-3">

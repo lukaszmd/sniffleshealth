@@ -34,7 +34,7 @@ export const ChatInput = forwardRef<HTMLInputElement, ChatInputProps>(
 
     return (
       <div
-        className={`bg-white border border-border-medium rounded-2xl flex items-center gap-2 h-[57px] pl-5 pr-2 py-5 ${className}`}
+        className={`bg-white border border-border-medium active:border-brand-cyan-dark hover:border-brand-cyan-dark/80 focus-within:border-brand-cyan-dark/50 duration-75 transition-colors focus-within:border-2 rounded-2xl flex items-center gap-2 h-[57px] pl-5 pr-2 py-5 ${className}`}
       >
         <div className="flex items-center justify-center p-1 rounded-lg opacity-75 flex-shrink-0">
           <Plus className="w-5 h-5 text-text-secondary" />

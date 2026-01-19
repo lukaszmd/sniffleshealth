@@ -22,7 +22,7 @@ export function PageHeader({
   showLogo = true,
 }: PageHeaderProps) {
   return (
-    <div className="bg-neutral-off-white border-b border-neutral-gray px-6 py-4">
+    <div className="bg-neutral-off-white px-6 py-4">
       <div className="max-w-[1464px] mx-auto flex items-center justify-between relative">
         {/* Left Side - Back Button & Title */}
         {(backTo || step || title) && (

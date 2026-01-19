@@ -153,7 +153,7 @@ export default function DoctorChat() {
   return (
     <DoctorChatLayout>
       {/* Main Content */}
-      <div className="flex-1 flex overflow-hidden bg-neutral-light-gray min-h-0">
+      <div className="flex-1 flex overflow-hidden bg-neutral-off-white min-h-0">
         <div className="flex-1 max-w-[1464px] mx-auto w-full flex gap-3 p-6 h-full min-h-0">
           {/* Left Panel - Chat */}
           <div className="flex-1 bg-white border border-neutral-gray rounded-xl overflow-hidden flex flex-col max-w-[1110px] min-h-0">

@@ -43,19 +43,19 @@ export default function FindingDoctor() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-light-gray flex flex-col">
+    <div className="min-h-screen bg-neutral-off-white  flex flex-col">
       <PageHeader
-        backTo={ROUTES.ADDRESS_DETAILS}
+        backTo={ROUTES.KYC}
         step="Step 3 of 4"
         title="Building your medical profile"
       />
 
       {/* Main Content */}
-      <div className="flex-1 overflow-auto bg-neutral-light-gray">
+      <div className="flex-1 overflow-auto bg-neutral-off-white">
         <div className="max-w-[1464px] mx-auto p-6">
-          <div className="flex gap-3 h-full min-h-[750px]">
+          <div className="flex gap-3 h-full">
             {/* Left Panel - Finding Doctor */}
-            <div className="flex-1 bg-white border border-neutral-gray rounded-xl overflow-hidden relative">
+            <div className="flex-1 bg-white border border-neutral-gray rounded-xl overflow-hidden relative h-full min-h-full">
               {/* Content */}
               <div className="relative z-10 flex flex-col items-center justify-center h-full p-10">
                 <div className="flex flex-col gap-5 items-center max-w-[620px]">
@@ -92,7 +92,7 @@ export default function FindingDoctor() {
             </div>
 
             {/* Right Panel - AI Summary */}
-            <div className="w-[393px] border border-neutral-gray rounded-xl overflow-hidden flex flex-col bg-gradient-to-b from-brand-cyan-lightest to-white">
+            <div className="w-[393px] border border-neutral-gray rounded-xl overflow-hidden flex flex-col bg-gradient-to-b from-brand-cyan-lightest to-white h-full min-h-full">
               {/* Icon */}
               <div className="flex justify-center pt-6">
                 <div className="w-[57px] h-[57px] flex items-center justify-center">

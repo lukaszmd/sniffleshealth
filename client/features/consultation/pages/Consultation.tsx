@@ -1,22 +1,24 @@
 import { useState, useEffect } from "react";
-import { MessageSquare, Video, Info } from "lucide-react";
+import { MessageSquare, Video, Mic, Info } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { ROUTES, FONTS } from "@/constants";
 import { PageHeader, AppFooter } from "@/components/layout";
 import { DoctorCard } from "@/features/doctor/components";
 import { useFormNavigation } from "../hooks";
 import { useDoctorStore } from "@/stores/doctor.store";
-import type { Doctor } from "@shared/types";
+import type { Doctor, ConsultationType } from "@shared/types";
 
 export default function Consultation() {
   const navigate = useNavigate();
   const { getStepInfo } = useFormNavigation();
   const stepInfo = getStepInfo();
   const { setSelectedDoctor, selectedDoctor } = useDoctorStore();
-  
+
   // Pre-select the text chat doctor (Dr. Evelyn Reed)
   const [selectedDoctorId, setSelectedDoctorId] = useState<string>("1");
-  
+  const [selectedType, setSelectedType] =
+    useState<ConsultationType>("video");
+
   // Define available doctors
   const doctors: Record<string, Doctor> = {
     "1": {
@@ -40,7 +42,7 @@ export default function Consultation() {
       isConnected: true,
     },
   };
-  
+
   // Initialize pre-selected doctor on mount
   useEffect(() => {
     if (!selectedDoctor || selectedDoctor.id !== "1") {
@@ -63,8 +65,12 @@ export default function Consultation() {
   const aiAssessment =
     "The AI has identified a potential viral infection based on the symptoms provided. Common causes could include influenza or a common cold. This is not a final diagnosis.";
 
+  const handleContinue = () => {
+    navigate(ROUTES.PAYMENT_CONFIRMATION);
+  };
+
   return (
-    <div className="min-h-screen bg-neutral-light-gray flex flex-col">
+    <div className="min-h-screen flex flex-col">
       <PageHeader
         backTo={ROUTES.SUMMARY}
         step={stepInfo?.step}
@@ -72,10 +78,10 @@ export default function Consultation() {
       />
 
       {/* Main Content */}
-      <div className="flex-1 overflow-auto bg-neutral-light-gray">
-        <div className="max-w-[1464px] mx-auto p-6">
-          <div className="flex gap-3 h-full min-h-[750px]">
-            {/* Left Panel - Consultation Options */}
+      <div className="flex-1 overflow-hidden bg-neutral-off-white">
+        <div className="max-w-[1464px] mx-auto h-full p-5">
+          <div className="flex gap-3 h-full ">
+            {/* Left Panel - Consultation Options + Type Selection */}
             <div className="flex-1 bg-white border border-neutral-gray rounded-xl overflow-hidden relative">
               {/* Background decoration */}
               <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -94,57 +100,175 @@ export default function Consultation() {
 
               {/* Content */}
               <div className="relative z-10 flex flex-col items-center justify-center h-full p-10">
-                <div className="flex flex-col gap-6 items-center max-w-[614px]">
+                <div className="flex flex-col gap-8 items-center max-w-[740px]">
                   {/* Header */}
-                  <div className="flex flex-col gap-6 items-center text-center">
-                    <h1 className="text-6xl font-inter-display font-medium leading-52 tracking-display-tight text-center">
+                  <div className="flex flex-col gap-3 items-center text-center">
+                    <h1 className="text-5xl font-inter-display font-medium leading-44 tracking-display-tight text-center">
                       <span className="text-neutral-charcoal">
                         Consult with a doctor now
                       </span>
                       <br />
-                      <span className="text-neutral-charcoal">starting at </span>
+                      <span className="text-neutral-charcoal">
+                        starting at{" "}
+                      </span>
                       <span className="text-cyan-500">$25</span>
                     </h1>
-
-                    {/* Doctor Cards */}
-                    <div className="flex gap-4 w-full">
-                      {/* Doctor 1 - Text Chat (Pre-selected) */}
-                      <DoctorCard
-                        doctor={{
-                          ...doctors["1"],
-                          name: "Dr. Evelyn Reed, MD", // Display name with prefix
-                        }}
-                        waitTime="~ Text 2 min wait"
-                        icon={
-                          <MessageSquare className="w-4 h-4 text-text-secondary" />
-                        }
-                        selected={selectedDoctorId === "1"}
-                        onClick={() => handleDoctorSelect("1")}
-                      />
-
-                      {/* Doctor 2 */}
-                      <DoctorCard
-                        doctor={{
-                          ...doctors["2"],
-                          name: "Dr. Marcus Chen, DO", // Display name with prefix
-                        }}
-                        waitTime="~ Video/Audio 15 min wait"
-                        icon={<Video className="w-4 h-4 text-text-secondary" />}
-                        selected={selectedDoctorId === "2"}
-                        onClick={() => handleDoctorSelect("2")}
-                      />
-                    </div>
-
-                    {/* Recommendation Text */}
-                    <p className="text-text-secondary text-base font-inter text-center max-w-[347px] leading-5">
-                      You AI Summary is ready, we recommend you to connect to a
-                      doctor for your query
+                    <p className="text-text-secondary text-base font-inter text-center max-w-[420px] leading-6">
+                      Your AI summary is ready. Choose how you want to connect
+                      and see transparent, upfront pricing before you continue.
                     </p>
+                  </div>
+
+                  {/* Doctor Cards */}
+                  {/* <div className="flex gap-4 w-full">
+                    {/* Doctor 1 - Text Chat (Pre-selected) 
+                    <DoctorCard
+                      doctor={{
+                        ...doctors["1"],
+                        name: "Dr. Evelyn Reed, MD", // Display name with prefix
+                      }}
+                      waitTime="~ Text 2 min wait"
+                      icon={
+                        <MessageSquare className="w-4 h-4 text-text-secondary" />
+                      }
+                      selected={selectedDoctorId === "1"}
+                      onClick={() => handleDoctorSelect("1")}
+                    />
+
+
+                    <DoctorCard
+                      doctor={{
+                        ...doctors["2"],
+                        name: "Dr. Marcus Chen, DO", // Display name with prefix
+                      }}
+                      waitTime="~ Video/Audio 15 min wait"
+                      icon={<Video className="w-4 h-4 text-text-secondary" />}
+                      selected={selectedDoctorId === "2"}
+                      onClick={() => handleDoctorSelect("2")}
+                    />
+                  </div> 
+                  */}
+
+                  {/* Consultation Type & Pricing */}
+                  <div className="flex flex-col gap-4 w-full items-center">
+                    {/* <h2 className="text-lg font-inter font-medium text-text-primary">
+                      Select your consultation type
+                    </h2> */}
+                    <div className="flex gap-4 items-start">
+                      {/* Text Based Consultation Card */}
+                      <button
+                        onClick={() => setSelectedType("text")}
+                        className={`w-[302px] bg-white border rounded-2xl p-5 flex flex-col gap-2 items-start transition-all ${
+                          selectedType === "text"
+                            ? "border-2 border-brand-cyan"
+                            : "border border-border-medium"
+                        }`}
+                      >
+                        <p
+                          className={`text-base font-inter leading-6 ${
+                            selectedType === "text"
+                              ? "font-semibold text-text-primary tracking-body-tight"
+                              : "font-medium text-text-secondary"
+                          }`}
+                        >
+                          Single Text Based Consultation
+                        </p>
+                        <div className="flex items-center justify-between w-full">
+                          <p
+                            className={`text-2xl font-inter-display font-medium leading-8 tracking-tight ${
+                              selectedType === "text"
+                                ? "text-cyan-500"
+                                : "text-neutral-charcoal"
+                            }`}
+                          >
+                            $25
+                          </p>
+                          <div
+                            className={`flex items-center p-1 rounded-full ${
+                              selectedType === "text"
+                                ? "bg-brand-cyan-pale"
+                                : "bg-neutral-light-gray"
+                            }`}
+                          >
+                            <MessageSquare
+                              className={`w-6 h-6 ${
+                                selectedType === "text"
+                                  ? "text-brand-cyan"
+                                  : "text-text-light"
+                              }`}
+                            />
+                          </div>
+                        </div>
+                      </button>
+
+                      {/* Voice or Video call consultation Card */}
+                      <button
+                        onClick={() => setSelectedType("video")}
+                        className={`w-[302px] bg-white border rounded-2xl p-5 flex flex-col gap-2 items-start transition-all ${
+                          selectedType === "video"
+                            ? "border-2 border-brand-cyan"
+                            : "border border-border-medium"
+                        }`}
+                      >
+                        <p
+                          className={`text-base font-inter leading-6 ${
+                            selectedType === "video"
+                              ? "font-semibold text-text-primary tracking-body-tight"
+                              : "font-medium text-text-secondary"
+                          }`}
+                        >
+                          Voice or Video call consultation
+                        </p>
+                        <div className="flex items-center justify-between w-full">
+                          <p
+                            className={`text-2xl font-inter-display font-medium leading-8 tracking-tight ${
+                              selectedType === "video"
+                                ? "text-cyan-500"
+                                : "text-neutral-charcoal"
+                            }`}
+                          >
+                            $40
+                          </p>
+                          <div className="flex gap-[7px] items-center">
+                            <div
+                              className={`flex items-center justify-center p-1 rounded-full ${
+                                selectedType === "video"
+                                  ? "bg-brand-cyan-pale"
+                                  : "bg-neutral-light-gray"
+                              }`}
+                            >
+                              <Video
+                                className={`w-6 h-6 ${
+                                  selectedType === "video"
+                                    ? "text-brand-cyan"
+                                    : "text-text-light"
+                                }`}
+                              />
+                            </div>
+                            <div
+                              className={`flex items-center justify-center p-1 rounded-full ${
+                                selectedType === "video"
+                                  ? "bg-brand-cyan-pale"
+                                  : "bg-neutral-light-gray"
+                              }`}
+                            >
+                              <Mic
+                                className={`w-6 h-6 ${
+                                  selectedType === "video"
+                                    ? "text-brand-cyan"
+                                    : "text-text-light"
+                                }`}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </button>
+                    </div>
 
                     {/* CTA Button */}
                     <button
-                      onClick={() => navigate(ROUTES.SELECT_CONSULTATION_TYPE)}
-                      className="bg-brand-cyan-dark text-white font-inter px-6 py-3 rounded-2xl font-semibold text-base leading-6 hover:bg-brand-cyan-dark/90 transition-colors"
+                      onClick={handleContinue}
+                      className="bg-brand-cyan-dark text-white font-inter px-6 py-3 rounded-2xl font-semibold text-base leading-6 hover:bg-brand-cyan-dark/90 transition-colors h-[57px] flex items-center justify-center"
                     >
                       Continue with consultation
                     </button>

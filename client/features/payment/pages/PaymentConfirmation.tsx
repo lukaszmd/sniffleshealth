@@ -24,14 +24,14 @@ export default function PaymentConfirmation() {
 
   return (
     <div className="min-h-screen bg-neutral-light-gray flex flex-col">
-      <PageHeader showLogo={true} />
+     <div className="bg-neutral-off-white pt-4"> <PageHeader showLogo={true} /></div>
 
       {/* Main Content */}
-      <div className="flex-1 overflow-auto bg-neutral-light-gray flex items-center justify-center">
+      <div className="flex-1 overflow-auto bg-neutral-off-white  flex items-center justify-center">
         <div className="max-w-[1464px] mx-auto p-6 w-full flex items-center justify-center">
-          <div className="w-[482px] border border-neutral-gray rounded-3xl overflow-hidden relative min-h-[745px] flex flex-col bg-gradient-to-b from-brand-cyan-lightest to-white">
+          <div className="w-[482px] border border-neutral-gray rounded-3xl overflow-hidden relative  flex flex-col bg-gradient-to-b from-brand-cyan-lightest to-white">
             {/* Content */}
-            <div className="flex flex-col items-center justify-center h-full p-6 pt-10 pb-0">
+            <div className="flex flex-col items-center justify-center h-full p-6 pt-10 pb-10">
               <div className="flex flex-col gap-6 items-center w-full max-w-[400px]">
                 {/* Success Icon */}
                 <div className="bg-brand-cyan-pale flex items-center justify-center p-1 rounded-full">
@@ -50,7 +50,7 @@ export default function PaymentConfirmation() {
                 </p>
 
                 {/* Invoice Card */}
-                <div className="w-[302px] bg-white border border-border-medium rounded-2xl p-5 flex flex-col gap-2">
+                <div className="w-full bg-white border border-border-medium rounded-2xl p-5 flex flex-col gap-2">
                   {/* Invoice Details */}
                   <div className="flex flex-col gap-2 items-start w-full">
                     <p className="text-text-secondary text-base font-inter font-medium leading-6">

@@ -44,8 +44,8 @@ export function AIMessage({
           <div className="w-4 h-4 rounded-full bg-brand-cyan-dark"></div>
         ) : (
           <svg
-            width="16"
-            height="16"
+            width="32"
+            height="32"
             viewBox="0 0 32 32"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -57,19 +57,19 @@ export function AIMessage({
           </svg>
         )}
       </div>
-      <div className="flex flex-col gap-1 flex-1">
+      <div className="flex flex-col gap-1">
         <span className={`text-xs font-inter leading-4 ${senderColor}`}>
           {sender}
         </span>
         <div
           className={`${bgColor} ${borderRadius} ${
-            isAIAssistant ? "pl-4 pr-5 py-3" : "px-5 py-5"
+            isAIAssistant ? "pl-4 pr-4 py-3" : "px-4 py-3"
           }`}
         >
           <div
-            className={`text-base font-inter leading-6 tracking-body-tight ${textColor}`}
+            className={`text-base font-inter leading-5  ${textColor}`}
           >
-            <p className="mb-2">{text}</p>
+            <p className="mb-1">{text}</p>
             {linkText && linkUrl && (
               <Link
                 to={linkUrl}
@@ -89,7 +89,7 @@ export function UserMessage({ text }: { text: string }) {
   return (
     <div className="flex flex-col items-end gap-1">
       <span className="text-text-light text-xs font-inter leading-4">You</span>
-      <div className="bg-brand-cyan-message rounded-bl-3xl rounded-br-2.5xl rounded-tl-3xl rounded-tr-xl pl-3 pr-5 py-5 min-h-[44px] flex items-center">
+      <div className="bg-brand-cyan-message rounded-bl-3xl rounded-br-2.5xl rounded-tl-3xl rounded-tr-xl pl-3 pr-3 py-3 min-h-[44px] flex items-center">
         <p className="text-white text-base font-inter leading-6 tracking-body-tight">
           {text}
         </p>
