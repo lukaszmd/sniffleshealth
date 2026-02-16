@@ -335,6 +335,10 @@ export const PHASE_2_QUESTIONS: Record<HealthCategory, DoctorChatQuestion[]> = {
       category: "SEXUAL_HEALTH",
     },
   ],
+  MEDICATION_REFILL: [],
+  ASTHMA_ALLERGIES: [],
+  UTIS_YEAST_INFECTION: [],
+  WEIGHT_LOSS: [],
 };
 
 // Phase 3: Medical History Review (Conditional)

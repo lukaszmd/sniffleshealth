@@ -46,6 +46,50 @@
     animation: bounce 1.5s infinite;
     animation-delay: 0.4s;
   }
+
+  .animate-fade-in-from-bottom {
+    animation: fadeInFromBottom 0.6s ease-out forwards;
+  }
+
+  @keyframes fadeInFromBottom {
+    from {
+      opacity: 0;
+      transform: translateY(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-feature-ticker {
+    animation: featureTicker 2s linear infinite;
+  }
+
+  @keyframes featureTicker {
+    0% {
+      opacity: 1;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(-20px);
+    }
+  }
+
+  .animate-conditions-ticker {
+    animation: conditionsTicker 18s linear infinite;
+  }
+
+  @keyframes conditionsTicker {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      /* Move left by half the width; with duplicate items this creates a seamless loop */
+      transform: translateX(-50%);
+    }
+  }
 }
 
 @layer base {

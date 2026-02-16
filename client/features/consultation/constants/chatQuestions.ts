@@ -291,6 +291,10 @@ export const PHASE_B_QUESTIONS: Record<HealthCategory, ChatQuestion[]> = {
       key: "pregnancy_risk",
     },
   ],
+  MEDICATION_REFILL: [],
+  ASTHMA_ALLERGIES: [],
+  UTIS_YEAST_INFECTION: [],
+  WEIGHT_LOSS: [],
 };
 
 // Safety stop conditions
