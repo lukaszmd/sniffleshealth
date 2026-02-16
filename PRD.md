@@ -2,7 +2,7 @@
 
 ## SnifflesHealth - Telemedicine Platform
 
-**Version:** 1.0  
+**Version:** 1.0.1  
 **Date:** December 2025  
 **Status:** Active Development  
 **Product Manager:** [To be assigned]
