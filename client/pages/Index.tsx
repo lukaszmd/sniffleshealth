@@ -367,16 +367,16 @@ export default function Index() {
                     <CarouselItem className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/4">
                       <HealthCard
                         title="Medication Refill"
-                        description="Prescription refills and medication management"
-                        image="https://api.builder.io/api/v1/image/assets/TEMP/placeholder_medication?width=390"
+                        description="Prescription and Medicine refills"
+                        image="/images/medication.png"
                         category="MEDICATION_REFILL"
                       />
                     </CarouselItem>
                     <CarouselItem className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/4">
                       <HealthCard
                         title="Asthma & Allergies"
-                        description="Respiratory issues and allergic reactions"
-                        image="https://api.builder.io/api/v1/image/assets/TEMP/placeholder_asthma?width=390"
+                        description="Respiratory issues and asthma"
+                        image="/images/asthma.png"
                         category="ASTHMA_ALLERGIES"
                       />
                     </CarouselItem>
@@ -384,15 +384,15 @@ export default function Index() {
                       <HealthCard
                         title="UTIs and Yeast Infection"
                         description="Urinary and vaginal health concerns"
-                        image="https://api.builder.io/api/v1/image/assets/TEMP/placeholder_uti?width=390"
+                        image="/images/uti.png"
                         category="UTIS_YEAST_INFECTION"
                       />
                     </CarouselItem>
                     <CarouselItem className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/4">
                       <HealthCard
                         title="Weight Loss"
-                        description="Weight management and consultation"
-                        image="https://api.builder.io/api/v1/image/assets/TEMP/placeholder_weight?width=390"
+                        description="Weight loss and management"
+                        image="/images/weight.png"
                         category="WEIGHT_LOSS"
                       />
                     </CarouselItem>
@@ -750,7 +750,7 @@ function HealthCard({
       <img
         src={image}
         alt={title}
-        className="w-full max-w-[195px] h-auto aspect-[39/34] object-contain"
+        className="w-full max-w-[195px] object-contain"
         loading="lazy"
       />
     </div>
